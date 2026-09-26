@@ -227,6 +227,42 @@
       <!-- ================= 通用选项 ================= -->
       <div class="options">
         <details class="sub-group" open>
+          <summary>设备参数（行程 / 原点 / 限速）</summary>
+          <div class="grid2">
+            <label class="field">
+              <span class="field-label">行程 X (mm)</span>
+              <input id="devTravelX" class="input" type="number" value="400" min="1" step="10" />
+            </label>
+            <label class="field">
+              <span class="field-label">行程 Y (mm)</span>
+              <input id="devTravelY" class="input" type="number" value="400" min="1" step="10" />
+            </label>
+          </div>
+          <div class="grid2">
+            <label class="field">
+              <span class="field-label">机器原点</span>
+              <select id="devOrigin" class="input">
+                <option value="bottom-left">左下角（GRBL 默认）</option>
+                <option value="top-left">左上角（Y 轴向下）</option>
+                <option value="center">机床中心</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field-label">安全边距 (mm)</span>
+              <input id="devMargin" class="input" type="number" value="5" min="0" step="1" />
+            </label>
+          </div>
+          <label class="field">
+            <span class="field-label">机器最大进给 (mm/min)</span>
+            <input id="devMaxFeed" class="input" type="number" value="3000" min="1" step="100" />
+          </label>
+          <label class="check"><input id="devAutoFit" type="checkbox" checked /> 自适应：超出安全区时自动缩放并居中</label>
+          <p class="hint">关闭自适应后按下方「尺寸与定位」手动放置；预览会实时标出行程范围并提示越界。</p>
+          <p class="status" id="deviceStatus"></p>
+          <button id="btnDeviceReset" class="btn btn-inline" type="button">恢复默认设备参数</button>
+        </details>
+
+        <details class="sub-group" open>
           <summary>尺寸与定位</summary>
           <div class="grid2">
             <label class="field">
@@ -442,7 +478,8 @@
       <ol>
         <li><b>选择输入</b>：文字标签页直接输入文本；图片标签页上传位图（照片 / 线稿均可）；SVG 标签页上传或粘贴矢量源码。</li>
         <li><b>选择生成模式</b>：矢量图形（文字轮廓 / SVG）生成干净的描边或填充路径；位图可选抖动、灰度、半色调或矢量化描边。</li>
-        <li><b>设置尺寸</b>：填写目标宽度（毫米），高度会在锁定宽高比时自动计算。</li>
+        <li><b>填写设备参数</b>：先在「设备参数」中填写机器行程 X / Y、原点位置、安全边距与最大进给，参数会自动记忆；开启「自适应」后超出安全区的图形会自动缩放并居中，预览中的蓝框为行程范围、橙虚线为安全区。</li>
+        <li><b>设置尺寸</b>：关闭自适应时，填写目标宽度（毫米），高度会在锁定宽高比时自动计算。</li>
         <li><b>路径优化</b>：默认使用「贪心 + 2-opt」重排走线，自动选择每段路径的最近端点并允许反向，配合衔接阈值把断点连成连续雕刻，可显著减少空移与激光开关次数。</li>
         <li><b>预览与导出</b>：右侧画布可缩放 / 拖动查看，支持模拟雕刻动画；确认后下载 .gcode 或复制到其它软件。</li>
       </ol>

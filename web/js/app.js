@@ -4,8 +4,18 @@
 
 import { buildJob } from './core/pipeline.js';
 import { Preview } from './render/preview.js';
+import { DEVICE_DEFAULTS, normalizeDevice, usableArea, originLabel } from './core/device.js';
 
 const $ = (id) => document.getElementById(id);
+
+/** 设备参数在 localStorage 中的键 */
+const DEVICE_KEY = 'lg-device';
+
+/** 设备参数相关控件 id */
+const DEVICE_IDS = ['devTravelX', 'devTravelY', 'devOrigin', 'devMargin', 'devMaxFeed', 'devAutoFit'];
+
+/** 自适应开启时会被覆盖的手动定位控件 */
+const PLACEMENT_IDS = ['optAnchor', 'optOffsetX', 'optOffsetY'];
 
 const state = {
   tab: 'text',
@@ -35,8 +45,50 @@ const int = (id, def) => {
 const bool = (id) => !!$(id).checked;
 const val = (id) => $(id).value;
 
+/** 读取设备参数控件 */
+function readDevice() {
+  return normalizeDevice({
+    travelX: num('devTravelX', DEVICE_DEFAULTS.travelX),
+    travelY: num('devTravelY', DEVICE_DEFAULTS.travelY),
+    origin: val('devOrigin'),
+    margin: num('devMargin', DEVICE_DEFAULTS.margin),
+    maxFeed: num('devMaxFeed', DEVICE_DEFAULTS.maxFeed),
+    autoFit: bool('devAutoFit')
+  });
+}
+
+/** 把设备参数写回控件 */
+function applyDevice(dev) {
+  const d = normalizeDevice(dev);
+  $('devTravelX').value = String(d.travelX);
+  $('devTravelY').value = String(d.travelY);
+  $('devOrigin').value = d.origin;
+  $('devMargin').value = String(d.margin);
+  $('devMaxFeed').value = String(d.maxFeed);
+  $('devAutoFit').checked = d.autoFit;
+}
+
+function saveDevice() {
+  try {
+    localStorage.setItem(DEVICE_KEY, JSON.stringify(readDevice()));
+  } catch {
+    /* 隐私模式等场景下忽略 */
+  }
+}
+
+function loadDevice() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(DEVICE_KEY) || 'null');
+    if (raw) applyDevice({ ...DEVICE_DEFAULTS, ...raw });
+  } catch {
+    applyDevice(DEVICE_DEFAULTS);
+  }
+}
+
 function readOptions() {
   return {
+    // 设备参数
+    ...readDevice(),
     // 尺寸与定位
     width: Math.max(1, num('optWidth', 100)),
     height: Math.max(1, num('optHeight', 100)),
@@ -129,6 +181,9 @@ function scheduleGenerate(delay = 260) {
 async function generate() {
   const token = ++genToken;
 
+  // 设备参数先同步到预览，保证行程框始终可见
+  preview.setDevice(readDevice());
+
   // 输入缺失时给出提示而不是报错
   if (state.tab === 'image' && !state.imageEl) {
     preview.setJob(null);
@@ -136,6 +191,7 @@ async function generate() {
     clearStats();
     setExportEnabled(false);
     showHint('请先选择一张图片');
+    updateDeviceStatus(null);
     return;
   }
   if (state.tab === 'svg' && !state.svgSource.trim()) {
@@ -144,6 +200,7 @@ async function generate() {
     clearStats();
     setExportEnabled(false);
     showHint('请上传或粘贴 SVG 内容');
+    updateDeviceStatus(null);
     return;
   }
 
@@ -165,6 +222,7 @@ async function generate() {
     setExportEnabled(false);
     showHint(err && err.message ? err.message : '生成失败');
     toast(err && err.message ? err.message : '生成失败');
+    updateDeviceStatus(null);
   } finally {
     if (token === genToken) setBusy(false);
   }
@@ -177,10 +235,38 @@ function applyJob(job, opts) {
   preview.setJob(job);
   renderStats(job.stats);
   renderGcode(job.gcode.lines);
+  updateDeviceStatus(job);
   setExportEnabled(true);
   stopPlay();
   $('playProgress').value = '1000';
   preview.setProgress(1);
+}
+
+/** 设备参数状态行：安全区尺寸 / 自适应缩放 / 越界与限速提示 */
+function updateDeviceStatus(job) {
+  const el = $('deviceStatus');
+  const dev = readDevice();
+  const area = usableArea(dev);
+  el.classList.remove('is-ok', 'is-warn');
+
+  if (!job) {
+    el.textContent = `安全区 ${area.width.toFixed(1)} × ${area.height.toFixed(1)} mm · 原点${originLabel(dev.origin)} · 已扣除边距 ${area.margin} mm`;
+    return;
+  }
+
+  const d = job.device;
+  const parts = [];
+  if (d.fits) {
+    el.classList.add('is-ok');
+    parts.push('✓ 在行程安全区内');
+  } else {
+    el.classList.add('is-warn');
+    parts.push(`⚠ 超出安全区 ${d.overflowMm.toFixed(1)} mm`);
+  }
+  parts.push(`安全区 ${area.width.toFixed(1)} × ${area.height.toFixed(1)} mm`);
+  if (dev.autoFit && d.scale < 1) parts.push(`自动缩放至 ${Math.round(d.scale * 100)}%`);
+  if (d.feedLimited) parts.push(`进给已限速至 F${dev.maxFeed}`);
+  el.textContent = parts.join(' · ');
 }
 
 function setExportEnabled(on) {
@@ -212,6 +298,8 @@ function renderStats(s) {
   const rows = [
     ['路径段数', s.rawStrokes !== s.strokes ? `${s.strokes}（原 ${s.rawStrokes}）` : String(s.strokes)],
     ['雕刻尺寸', `${s.width.toFixed(1)} × ${s.height.toFixed(1)} mm`],
+    ['行程范围', `${s.travelX} × ${s.travelY} mm`],
+    ['安全区适配', s.fits ? (s.fitScale < 1 ? `缩放 ${Math.round(s.fitScale * 100)}%` : '合适') : `越界 ${s.overflowMm.toFixed(1)} mm`],
     ['雕刻长度', mm(s.markLength)],
     ['空移长度', mm(s.travelLength)],
     ['连续衔接', `${s.chainCount} 处`],
@@ -424,6 +512,13 @@ function syncDerivedUI() {
   // 锁定宽高比时高度不可手改
   $('optHeight').readOnly = bool('optLockAspect');
   $('optHeight').classList.toggle('muted-input', bool('optLockAspect'));
+  // 自适应开启时由程序居中，手动定位控件失效
+  const autoFit = bool('devAutoFit');
+  for (const id of PLACEMENT_IDS) {
+    const el = $(id);
+    el.disabled = autoFit;
+    el.classList.toggle('muted-input', autoFit);
+  }
 }
 
 function bindZoomLabel() {
@@ -438,6 +533,7 @@ function bindZoomLabel() {
 
 /** 需要触发重新生成的控件 */
 const REGEN_IDS = [
+  'devTravelX', 'devTravelY', 'devOrigin', 'devMargin', 'devMaxFeed', 'devAutoFit',
   'textValue', 'textFont', 'textSize', 'textMode', 'textWeight', 'textItalic',
   'textAlign', 'textWrap', 'textSpacing', 'textLineHeight',
   'imgMode', 'imgDither', 'imgDitherStrength', 'imgSpacing', 'imgAngle', 'imgSerpentine',
@@ -454,6 +550,21 @@ const REGEN_IDS = [
 function init() {
   preview = new Preview($('preview'), $('canvasWrap'));
   bindZoomLabel();
+
+  // 设备参数：初始化填入上次保存的值（首次为默认行程）
+  loadDevice();
+  for (const id of DEVICE_IDS) {
+    const el = $(id);
+    const evt = el.tagName === 'SELECT' || el.type === 'checkbox' ? 'change' : 'input';
+    el.addEventListener(evt, saveDevice);
+  }
+  $('btnDeviceReset').addEventListener('click', () => {
+    applyDevice(DEVICE_DEFAULTS);
+    saveDevice();
+    syncDerivedUI();
+    generate();
+    toast('已恢复默认设备参数');
+  });
 
   // 主题
   if (localStorage.getItem('lg-theme') === 'light') document.body.classList.add('theme-light');

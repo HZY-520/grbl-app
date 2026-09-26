@@ -5,6 +5,8 @@
  * - 支持进度动画：按累计线段长度逐段点亮，模拟雕刻过程
  */
 
+import { workArea, usableArea, normalizeDevice, originLabel } from '../core/device.js';
+
 const BUCKETS = 24;
 const GRID_STEPS = [0.1, 0.25, 0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000];
 
@@ -25,6 +27,7 @@ export class Preview {
     this.onChange = onChange || (() => {});
     this.view = { scale: 6, ox: 40, oy: 200 };
     this.bounds = null;
+    this.device = null;
     this.plan = null;
     this.totalLength = 0;
     this.progress = 1;
@@ -76,16 +79,24 @@ export class Preview {
     this.render();
   }
 
+  /** 更新设备参数：始终绘制行程范围；无任务时按行程范围取景 */
+  setDevice(dev) {
+    this.device = normalizeDevice(dev);
+    if (!this.plan) this.fit();
+    this.render();
+  }
+
   /** 载入任务并自动适应窗口 */
   setJob(job) {
     this.plan = job ? job.plan : null;
     this.bounds = job ? job.bounds : null;
+    if (job && job.device) this.device = normalizeDevice(job.device);
     this.totalLength = 0;
     this.paths = null;
     this.travelPath = null;
 
     if (!this.plan) {
-      this.render();
+      this.fit();
       return;
     }
     let points = 0;
@@ -174,21 +185,21 @@ export class Preview {
   }
 
   fit() {
-    if (!this.bounds) return;
-    const b = this.bounds;
+    // 有任务时按雕刻内容取景；否则按设备行程范围取景
+    const b = this.bounds || (this.device ? workArea(this.device) : null);
+    if (!b) return;
     const pad = 26;
     const bw = Math.max(1e-3, b.maxX - b.minX);
     const bh = Math.max(1e-3, b.maxY - b.minY);
     const scale = Math.min((this.w - pad * 2) / bw, (this.h - pad * 2) / bh);
     this.view.scale = Math.max(0.05, Math.min(400, scale));
     this.fitScale = this.view.scale;
-    this._centerContent();
+    this._centerContent(b);
     this.render();
     this.onChange();
   }
 
-  _centerContent() {
-    const b = this.bounds;
+  _centerContent(b = this.bounds) {
     if (!b) return;
     const bw = (b.maxX - b.minX) * this.view.scale;
     const bh = (b.maxY - b.minY) * this.view.scale;
@@ -305,6 +316,9 @@ export class Preview {
 
     if (this.flags.showGrid) this._drawGrid(ctx, scale, ox, oy, dark);
 
+    // 设备行程范围与安全区（画在路径下层）
+    this._drawWorkArea(ctx, dark);
+
     // 世界坐标 → 屏幕（Y 轴翻转）
     ctx.save();
     ctx.transform(scale, 0, 0, -scale, ox, oy);
@@ -386,6 +400,43 @@ export class Preview {
     ctx.fillStyle = dark ? 'rgba(200,210,230,0.4)' : 'rgba(60,72,95,0.55)';
     ctx.font = '10px ui-monospace, monospace';
     ctx.fillText(`${step} mm`, 8, this.h - 8);
+    ctx.restore();
+  }
+
+  /** 绘制设备行程范围（实线）与安全区（虚线） */
+  _drawWorkArea(ctx, dark) {
+    const dev = this.device;
+    if (!dev) return;
+    const a = workArea(dev);
+    const u = usableArea(dev);
+    const s = this.view.scale;
+    const sx = (x) => this.view.ox + x * s;
+    const sy = (y) => this.view.oy - y * s;
+    const rw = (a.maxX - a.minX) * s;
+    const rh = (a.maxY - a.minY) * s;
+    if (sx(a.maxX) < 0 || sx(a.minX) > this.w || sy(a.maxY) > this.h || sy(a.minY) < 0) return;
+
+    ctx.save();
+    // 行程范围
+    ctx.fillStyle = dark ? 'rgba(90,140,220,0.05)' : 'rgba(70,120,200,0.05)';
+    ctx.fillRect(sx(a.minX), sy(a.maxY), rw, rh);
+    ctx.strokeStyle = dark ? 'rgba(120,170,255,0.5)' : 'rgba(40,90,180,0.45)';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(sx(a.minX) + 0.5, sy(a.maxY) + 0.5, rw, rh);
+    // 安全区
+    ctx.setLineDash([5, 4]);
+    ctx.strokeStyle = dark ? 'rgba(255,122,47,0.5)' : 'rgba(220,90,20,0.5)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(sx(u.minX) + 0.5, sy(u.maxY) + 0.5, u.width * s, u.height * s);
+    ctx.setLineDash([]);
+    // 标注
+    ctx.font = '11px ui-monospace, monospace';
+    ctx.fillStyle = dark ? 'rgba(160,200,255,0.9)' : 'rgba(30,70,150,0.9)';
+    ctx.fillText(
+      `行程 ${dev.travelX} × ${dev.travelY} mm · 原点${originLabel(dev.origin)}`,
+      sx(a.minX) + 6,
+      sy(a.maxY) - 6
+    );
     ctx.restore();
   }
 

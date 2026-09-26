@@ -252,6 +252,31 @@ input[type="range"]::-moz-range-thumb {
   color: var(--text-mute);
 }
 
+/* 设备参数状态行 */
+.status {
+  display: block;
+  margin: 2px 0 10px;
+  padding: 7px 9px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+.status.is-ok { border-color: rgba(61, 220, 151, 0.45); color: var(--ok); }
+.status.is-warn { border-color: rgba(255, 90, 90, 0.5); color: var(--danger); }
+
+.input.muted-input, .input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* 分组内的整宽按钮 */
+.btn-inline {
+  flex: 0 0 auto;
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 12.5px;
+}
+
 /* 折叠分组 */
 .sub-group {
   border: 1px solid var(--border-soft);
