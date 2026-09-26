@@ -1,0 +1,26 @@
+# 依赖
+node_modules/
+
+# 前端构建产物
+dist/
+
+# 日志与临时文件
+*.log
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.idea/
+.vscode/
+*.iml
+
+# Capacitor / Android 生成内容
+android/.gradle/
+android/build/
+android/app/build/
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+android/app/src/main/res/xml/config.xml
+android/capacitor-cordova-android-plugins/
+android/local.properties
