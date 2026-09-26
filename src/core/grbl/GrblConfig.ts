@@ -23,6 +23,12 @@ export const DEFAULT_SETTINGS: AnyRecord = {
   'Max Power': 1000,
   'Laser On Command': 'M4',
   'Laser Off Command': 'M5',
+  // 设备行程 (mm)：生成 G 代码时用于尺寸自适应
+  'Travel X': 300,
+  'Travel Y': 200,
+  // 测试激光默认参数
+  'Test Laser Power': 200,
+  'Test Laser Duration': 300,
   'Jog Speed': 1000,
   'Jog Step': 1,
   'Last Port': '',

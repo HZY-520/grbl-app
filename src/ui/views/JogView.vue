@@ -11,15 +11,22 @@ import {
   setNewZero,
   unlock,
   homing,
+  laserTest,
+  sendCommand,
   MacStatus,
   JogDirection
 } from '../store'
+import { AppSettings } from '../../core/grbl/GrblConfig'
 import { fmt, toast } from '../utils'
 
 const STEPS = [0.1, 1, 5, 10, 50]
 
 const targetX = ref('0')
 const targetY = ref('0')
+
+/** 测试激光参数（记忆上次使用值） */
+const testPower = ref(AppSettings.get<number>('Test Laser Power', 200))
+const testDuration = ref(AppSettings.get<number>('Test Laser Duration', 300))
 
 const step = computed(() => state.jog.step)
 const speed = computed(() => state.jog.speed)
@@ -84,6 +91,39 @@ function onUnlock() {
   if (disabled.value) return
   unlock()
   toast('已发送解锁指令 $X', 'info')
+}
+
+/** 测试激光：短暂出光，用于对焦 / 功率检查 */
+function onTestLaser() {
+  const p = Number(testPower.value)
+  const d = Number(testDuration.value)
+  if (!Number.isFinite(p) || !Number.isFinite(d)) {
+    toast('请输入有效的功率与时长', 'error')
+    return
+  }
+  if (laserTest(p, d)) {
+    AppSettings.set('Test Laser Power', p)
+    AppSettings.set('Test Laser Duration', d)
+    toast(`测试激光 S${Math.round(p)} · ${Math.round(d)}ms`, 'success')
+  }
+}
+
+/** 立即关闭激光 */
+function onLaserOff() {
+  if (disabled.value) {
+    toast('未连接设备', 'warning')
+    return
+  }
+  sendCommand(AppSettings.get<string>('Laser Off Command', 'M5'))
+  toast('已发送关闭激光指令', 'info')
+}
+
+function onTestNum(key: 'power' | 'duration', ev: Event) {
+  const t = ev.target as HTMLInputElement
+  const v = parseFloat(t.value)
+  if (!Number.isFinite(v)) return
+  if (key === 'power') testPower.value = v
+  else testDuration.value = v
 }
 
 function feedOverride(v: number | number[]) {
@@ -211,6 +251,32 @@ function rapidOverride(v: number | number[]) {
         </div>
       </section>
 
+      <!-- 测试激光 -->
+      <section class="lg-section">
+        <div class="lg-title"><span>测试激光</span></div>
+        <div class="num-grid">
+          <div class="num-item">
+            <span class="lg-dim">功率 S</span>
+            <var-input :model-value="String(testPower)" type="number" variant="outlined" @blur="onTestNum('power', $event)" />
+          </div>
+          <div class="num-item">
+            <span class="lg-dim">持续时间 (ms)</span>
+            <var-input :model-value="String(testDuration)" type="number" variant="outlined" @blur="onTestNum('duration', $event)" />
+          </div>
+        </div>
+        <div class="lg-grid-2 lg-mt">
+          <var-button block type="warning" :disabled="disabled" @click="onTestLaser">
+            <AppIcon name="flame" :size="17" />
+            <span class="btn-text">点亮测试</span>
+          </var-button>
+          <var-button block plain :disabled="disabled" @click="onLaserOff">
+            <AppIcon name="power" :size="17" />
+            <span class="btn-text">关闭激光</span>
+          </var-button>
+        </div>
+        <div class="lg-dim lg-mt">测试激光会短暂出光，请佩戴护目镜并确认光路安全。</div>
+      </section>
+
       <!-- 坐标操作 -->
       <section class="lg-section">
         <div class="lg-title"><span>坐标操作</span></div>
@@ -244,6 +310,19 @@ function rapidOverride(v: number | number[]) {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.num-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.num-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 }
 
 .coord-row {

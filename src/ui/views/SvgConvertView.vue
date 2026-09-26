@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 import AppIcon from '../components/AppIcon.vue'
 import GcodePreview from '../components/GcodePreview.vue'
 import { convertSvgToGcode, type SvgConvertResult } from '../../core/vector/SvgToGcode'
+import { fitSizeToTravel, checkGcodeWithinTravel } from '../../core/grbl/DeviceProfile'
 import type { GcodeFileData } from '../../core/gcode/GrblFile'
 import { AppSettings } from '../../core/grbl/GrblConfig'
 import { loadGcodeLines } from '../store'
@@ -18,6 +19,7 @@ const svgName = ref('')
 const svgText = ref('')
 const generated = ref<GcodeFileData | null>(null)
 const info = ref<SvgConvertResult | null>(null)
+const warn = ref('')
 const busy = ref(false)
 
 const opts = reactive({
@@ -51,28 +53,45 @@ async function pick() {
   toast(`已导入 ${file.name}`, 'success')
 }
 
+/** 组装转换参数（尺寸可变，便于行程自适应后重算） */
+function buildOptions(w: number, h?: number) {
+  return {
+    targetWidthMm: w,
+    targetHeightMm: h,
+    tolerance: opts.tolerance,
+    markSpeed: opts.markSpeed,
+    travelSpeed: opts.travelSpeed,
+    laserOn: opts.laserOn,
+    laserOff: opts.laserOff,
+    pwm: opts.pwm,
+    maxPower: opts.maxPower,
+    offsetX: opts.offsetX,
+    offsetY: opts.offsetY,
+    header: AppSettings.get<string>('Header', 'G90'),
+    footer: AppSettings.get<string>('Footer', 'M5')
+  }
+}
+
 function generate() {
   if (!canGenerate.value) {
     toast('请先导入 SVG 文件', 'error')
     return
   }
   busy.value = true
+  warn.value = ''
   try {
-    const res = convertSvgToGcode(svgText.value, {
-      targetWidthMm: opts.widthMm,
-      targetHeightMm: opts.autoHeight ? undefined : opts.heightMm,
-      tolerance: opts.tolerance,
-      markSpeed: opts.markSpeed,
-      travelSpeed: opts.travelSpeed,
-      laserOn: opts.laserOn,
-      laserOff: opts.laserOff,
-      pwm: opts.pwm,
-      maxPower: opts.maxPower,
-      offsetX: opts.offsetX,
-      offsetY: opts.offsetY,
-      header: AppSettings.get<string>('Header', 'G90'),
-      footer: AppSettings.get<string>('Footer', 'M5')
-    })
+    let res = convertSvgToGcode(svgText.value, buildOptions(opts.widthMm, opts.autoHeight ? undefined : opts.heightMm))
+
+    // 按设备行程做尺寸自适应：超出时等比缩小后重算
+    const fit = fitSizeToTravel(res.widthMm, res.heightMm, { mode: 'Fit' })
+    if (fit.adjusted) {
+      warn.value = fit.message ?? ''
+      res = convertSvgToGcode(svgText.value, buildOptions(fit.widthMm, opts.autoHeight ? undefined : fit.heightMm))
+    }
+
+    const chk = checkGcodeWithinTravel(res.lines)
+    if (!chk.ok && chk.message) warn.value = warn.value ? `${warn.value}；${chk.message}` : chk.message
+
     info.value = res
     const name = `${svgName.value.replace(/\.svg$/i, '') || 'vector'}.gcode`
     generated.value = loadGcodeLines(name, res.lines)
@@ -189,6 +208,8 @@ function onNum(
           </template>
         </var-cell>
       </section>
+
+      <var-alert v-if="warn" type="warning" :title="warn" class="lg-mb" />
 
       <var-button block type="primary" :loading="busy" :disabled="!canGenerate" @click="generate">
         <AppIcon name="layers" :size="17" />

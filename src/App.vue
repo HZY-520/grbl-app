@@ -2,6 +2,7 @@
 import { computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import AppIcon from './ui/components/AppIcon.vue'
+import SetupWizard from './ui/components/SetupWizard.vue'
 import { applyTheme } from './ui/theme'
 import { state, STATUS_LABELS, MacStatus } from './ui/store'
 
@@ -103,6 +104,9 @@ watch(
         </template>
       </var-bottom-navigation-item>
     </var-bottom-navigation>
+
+    <!-- 首次连接新设备的初始化向导 -->
+    <SetupWizard v-if="state.needsSetup" :device-id="state.setupDeviceId" />
   </div>
 </template>
 

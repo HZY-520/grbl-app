@@ -8,6 +8,11 @@ import { Firmware, JogDirection, MacStatus, StreamingMode, ThreadingMode } from 
 import { GrblCommand, MessageType } from '../core/grbl/GrblCommand'
 import { parseGcode, type GcodeFileData } from '../core/gcode/GrblFile'
 import { AppSettings } from '../core/grbl/GrblConfig'
+import {
+  applyProfileToSettings,
+  findProfileByDevice,
+  isDeviceKnown
+} from '../core/grbl/DeviceProfile'
 import type { UsbDeviceInfo } from '../core/serial/types'
 
 export interface LogItem {
@@ -63,13 +68,19 @@ export const state = reactive({
   issue: grbl.lastIssue as number,
   devices: [] as UsbDeviceInfo[],
   scanning: false,
+  /** 当前连接的 USB 设备编号（未连接为 -1） */
+  deviceId: -1,
   baud: AppSettings.get<number>('Last Baud', 115200),
   jog: { step: grbl.jogStep, speed: grbl.jogSpeed },
   log: [] as LogItem[],
   file: null as GcodeFileData | null,
   configRev: 0,
   settings: AppSettings.all() as AnyRecord,
-  theme: AppSettings.theme as 'dark' | 'light'
+  theme: AppSettings.theme as 'dark' | 'light',
+  /** 首次连接的新设备尚未完成参数设置 */
+  needsSetup: false,
+  /** 触发初始化向导的设备编号 */
+  setupDeviceId: -1
 })
 
 let logSeq = 0
@@ -169,9 +180,61 @@ export async function connect(deviceId: number) {
   pushLog(`正在连接设备 #${deviceId} @ ${state.baud}…`, MessageType.Command)
   try {
     await grbl.open(deviceId, state.baud)
+    state.deviceId = deviceId
+    // 已绑定档案的设备：自动套用其行程 / 功率等参数
+    const bound = findProfileByDevice(deviceId)
+    if (bound) {
+      applyProfileToSettings(bound)
+      state.settings = AppSettings.all()
+      pushLog(`已套用设备参数「${bound.name}」`, MessageType.Feedback)
+    }
+    // 首次连接的新设备：提示进入初始化向导设置参数
+    if (!isDeviceKnown(deviceId)) {
+      state.setupDeviceId = deviceId
+      state.needsSetup = true
+      pushLog(`首次连接设备 #${deviceId}，请先设置行程 / 功率等参数`, MessageType.Feedback)
+    }
   } catch (e) {
     state.connecting = false
     pushLog(`连接失败：${String(e)}`, MessageType.Warning)
+  }
+}
+
+/** 手动打开设备初始化向导（用于设置页入口） */
+export function openSetupWizard(deviceId = -1) {
+  state.setupDeviceId = deviceId
+  state.needsSetup = true
+}
+
+/** 刷新设置快照（外部直接改写 AppSettings 后调用） */
+export function reloadSettings() {
+  state.settings = AppSettings.all()
+  state.firmware = AppSettings.get<string>('Firmware Type', 'Grbl')
+  grbl.firmware = AppSettings.get<Firmware>('Firmware Type', Firmware.Grbl)
+}
+
+/** 完成初始化向导：清除待设置标记，并刷新设置快照使参数立即生效 */
+export function clearNeedsSetup() {
+  state.needsSetup = false
+  reloadSettings()
+}
+
+/**
+ * 从已连接的设备读取行程与功率上下限（GRBL 的 $130/$131/$30/$31）。
+ * 未连接或未读到时对应字段为 undefined，供初始化向导预填使用。
+ */
+export function readMachineLimits(): {
+  travelX?: number
+  travelY?: number
+  maxPower?: number
+  minPower?: number
+} {
+  const read = (id: number): number | undefined => (grbl.config.has(id) ? grbl.config.get(id, 0) : undefined)
+  return {
+    travelX: read(130),
+    travelY: read(131),
+    maxPower: read(30),
+    minPower: read(31)
   }
 }
 
@@ -179,6 +242,7 @@ export async function disconnect() {
   await grbl.close(true)
   state.connected = false
   state.connecting = false
+  state.deviceId = -1
   pushLog('已断开连接', MessageType.Command)
 }
 
@@ -240,6 +304,30 @@ export function setJogParams(step?: number, speed?: number) {
 
 export function moveTo(x: number, y: number) {
   grbl.moveTo(x, y)
+}
+
+/**
+ * 测试激光：以恒定功率（M3）短暂出光后自动关闭，用于对焦 / 功率检查。
+ * 说明：部分固件在激光模式下仅运动时出光，若无效请配合运动控制使用。
+ */
+export function laserTest(power: number, durationMs: number): boolean {
+  if (!state.connected) {
+    pushLog('未连接设备，无法测试激光', MessageType.Warning)
+    return false
+  }
+  if (state.running) {
+    pushLog('任务运行中，禁止测试激光', MessageType.Warning)
+    return false
+  }
+  const s = Math.max(0, Math.round(power))
+  const ms = Math.min(10000, Math.max(50, Math.round(durationMs)))
+  grbl.enqueueRaw(`M3 S${s}`, true)
+  pushLog(`> 测试激光 M3 S${s}（${ms}ms）`, MessageType.Command)
+  window.setTimeout(() => {
+    grbl.enqueueRaw(AppSettings.get<string>('Laser Off Command', 'M5'), true)
+    pushLog('测试激光结束', MessageType.Feedback)
+  }, ms)
+  return true
 }
 
 export function setTargetOverride(kind: 'feed' | 'rapids' | 'power', value: number) {

@@ -1,16 +1,65 @@
 <script setup lang="ts">
 /** 应用设置：外观、连接、雕刻默认参数与入口 */
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import AppIcon from '../components/AppIcon.vue'
-import { state, updateSetting, setTheme, setThreadingMode, STATUS_LABELS } from '../store'
+import {
+  state,
+  updateSetting,
+  setTheme,
+  setThreadingMode,
+  reloadSettings,
+  openSetupWizard,
+  STATUS_LABELS
+} from '../store'
 import { Firmware } from '../../core/grbl/types'
 import type { MacStatus } from '../../core/grbl/types'
+import {
+  applyProfileToSettings,
+  deleteProfile,
+  listSavedProfiles,
+  setActiveProfile,
+  type DeviceProfile
+} from '../../core/grbl/DeviceProfile'
 import { toast } from '../utils'
 
 const router = useRouter()
 
 const settings = computed(() => state.settings)
+
+/** 已保存的设备档案（本地读取，操作后手动刷新） */
+const profiles = ref<DeviceProfile[]>(listSavedProfiles())
+const activeProfile = computed(() => profiles.value.find((p) => p.active) ?? null)
+
+function refreshProfiles() {
+  profiles.value = listSavedProfiles()
+}
+
+// 初始化向导保存 / 取消后，向导会清除 needsSetup；此时刷新档案列表
+watch(
+  () => state.needsSetup,
+  (v) => {
+    if (!v) refreshProfiles()
+  }
+)
+
+function startWizard() {
+  openSetupWizard(state.connected ? state.deviceId : -1)
+}
+
+function onActivate(p: DeviceProfile) {
+  setActiveProfile(p.id)
+  applyProfileToSettings(p)
+  reloadSettings()
+  refreshProfiles()
+  toast(`已启用设备「${p.name}」`, 'success')
+}
+
+function onDelete(p: DeviceProfile) {
+  deleteProfile(p.id)
+  refreshProfiles()
+  toast(`已删除设备「${p.name}」`, 'info')
+}
 
 function bool(key: string, def = false): boolean {
   const v = settings.value[key]
@@ -134,6 +183,51 @@ const issueText = computed(() => {
         </var-cell>
       </section>
 
+      <!-- 设备初始化与行程 -->
+      <section class="lg-section">
+        <div class="lg-title"><span>设备与行程</span></div>
+        <var-button class="lg-mb" block type="primary" @click="startWizard">
+          <AppIcon name="settings" :size="17" />
+          <span class="btn-text">打开设备初始化向导</span>
+        </var-button>
+        <div class="num-grid">
+          <div class="num-item">
+            <span class="lg-dim">X 行程 (mm)</span>
+            <var-input :model-value="String(num('Travel X', 300))" type="number" variant="outlined" @blur="onNum('Travel X', $event)" />
+          </div>
+          <div class="num-item">
+            <span class="lg-dim">Y 行程 (mm)</span>
+            <var-input :model-value="String(num('Travel Y', 200))" type="number" variant="outlined" @blur="onNum('Travel Y', $event)" />
+          </div>
+        </div>
+        <div class="lg-dim lg-mt">生成 G 代码时会按此行程做尺寸自适应，避免雕刻超出机器范围。</div>
+      </section>
+
+      <!-- 设备档案 -->
+      <section v-if="profiles.length" class="lg-section">
+        <div class="lg-title">
+          <span>设备档案</span>
+          <span class="lg-dim">{{ profiles.length }} 台</span>
+        </div>
+        <div v-for="p in profiles" :key="p.id" class="dev-row">
+          <div class="dev-row__text">
+            <div class="dev-row__name">
+              {{ p.name }}
+              <span v-if="activeProfile && activeProfile.id === p.id" class="dev-tag">当前</span>
+            </div>
+            <div class="lg-dim dev-row__sub">
+              {{ p.travelX }}×{{ p.travelY }}mm · S{{ p.minPower }}~{{ p.maxPower }} · {{ p.travelSpeed }}mm/min
+            </div>
+          </div>
+          <var-button size="small" plain :disabled="!!activeProfile && activeProfile.id === p.id" @click="onActivate(p)">
+            启用
+          </var-button>
+          <var-button size="small" text type="danger" @click="onDelete(p)">
+            <AppIcon name="trash" :size="16" />
+          </var-button>
+        </div>
+      </section>
+
       <!-- 雕刻默认参数 -->
       <section class="lg-section">
         <div class="lg-title"><span>雕刻默认参数</span></div>
@@ -164,6 +258,17 @@ const issueText = computed(() => {
         <div class="num-item lg-mt">
           <span class="lg-dim">激光关闭指令</span>
           <var-input :model-value="str('Laser Off Command', 'M5')" variant="outlined" @blur="onStr('Laser Off Command', $event)" />
+        </div>
+
+        <div class="num-grid lg-mt">
+          <div class="num-item">
+            <span class="lg-dim">测试激光功率 S</span>
+            <var-input :model-value="String(num('Test Laser Power', 200))" type="number" variant="outlined" @blur="onNum('Test Laser Power', $event)" />
+          </div>
+          <div class="num-item">
+            <span class="lg-dim">测试激光时长 (ms)</span>
+            <var-input :model-value="String(num('Test Laser Duration', 300))" type="number" variant="outlined" @blur="onNum('Test Laser Duration', $event)" />
+          </div>
         </div>
 
         <var-cell title="单向雕刻" description="仅单向出光，反向空移（质量更高）">
@@ -254,5 +359,55 @@ const issueText = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+}
+
+.dev-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-top: 1px solid var(--lg-border);
+}
+
+.dev-row:first-of-type {
+  border-top: none;
+}
+
+.dev-row__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.dev-row__name {
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dev-row__sub {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dev-tag {
+  flex: 0 0 auto;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--lg-accent);
+  border: 1px solid rgba(255, 122, 24, 0.4);
+  background: rgba(255, 122, 24, 0.12);
+  border-radius: 999px;
+  padding: 1px 7px;
+}
+
+.btn-text {
+  margin-left: 5px;
 }
 </style>

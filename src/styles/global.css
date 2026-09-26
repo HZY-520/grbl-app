@@ -25,6 +25,92 @@ html[data-theme='light'] {
   box-sizing: border-box;
 }
 
+/* ---- 溢出安全：任何页面都不出现横向滚动与文字重叠 ---- */
+#app,
+.lg-app,
+.lg-page {
+  overflow-x: hidden;
+}
+
+.lg-body,
+.lg-section,
+.lg-title,
+.lg-row,
+.lg-kv,
+.lg-grid-2,
+.lg-grid-3,
+.lg-grid-4 {
+  min-width: 0;
+}
+
+.lg-grid-2 > *,
+.lg-grid-3 > *,
+.lg-grid-4 > * {
+  min-width: 0;
+}
+
+/* 标题行：左侧标题过长时省略，右侧内容不被挤压 */
+.lg-title > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lg-title > span:last-child {
+  flex: 0 0 auto;
+}
+
+.lg-kv__v {
+  min-width: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.lg-stat__v,
+.stat__v {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Varlet 输入类组件在栅格中允许收缩 */
+.num-item .var-input,
+.num-item .var-select,
+.lg-grid-2 .var-input,
+.lg-grid-2 .var-select,
+.lg-grid-3 .var-input,
+.lg-grid-4 .var-input {
+  min-width: 0;
+}
+
+/* 顶栏：改为三段式弹性布局，避免绝对定位的左右插槽与标题重叠 */
+.lg-appbar .var-app-bar__toolbar {
+  display: flex;
+  gap: 6px;
+  padding: 0 6px;
+}
+
+.lg-appbar .var-app-bar__left,
+.lg-appbar .var-app-bar__right {
+  position: static;
+  flex: 0 0 auto;
+}
+
+.lg-appbar .var-app-bar__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 2px;
+  text-align: center;
+}
+
+.lg-appbar .var-app-bar__title span,
+.lg-appbar .var-app-bar__title > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 html,
 body,
 #app {
