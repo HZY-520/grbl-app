@@ -10,6 +10,7 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         // 必须在 super.onCreate 之前注册自定义插件
         registerPlugin(UsbSerialPlugin.class);
+        registerPlugin(BluetoothSerialPlugin.class);
         super.onCreate(savedInstanceState);
     }
 }

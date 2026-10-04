@@ -41,7 +41,8 @@ export const ICON_PATHS: Record<string, string> = {
   link: 'M10 14 A4 4 0 0 1 10 8 L13 5 A4 4 0 0 1 19 11 L17 13 M14 10 A4 4 0 0 1 14 16 L11 19 A4 4 0 0 1 5 13 L7 11',
   zoomIn: 'M11 4 A7 7 0 1 0 11 18 A7 7 0 1 0 11 4 Z M16 16 L21 21 M11 8 V14 M8 11 H14',
   zoomOut: 'M11 4 A7 7 0 1 0 11 18 A7 7 0 1 0 11 4 Z M16 16 L21 21 M8 11 H14',
-  list: 'M8 6 H20 M8 12 H20 M8 18 H20 M4 6 H4.5 M4 12 H4.5 M4 18 H4.5'
+  list: 'M8 6 H20 M8 12 H20 M8 18 H20 M4 6 H4.5 M4 12 H4.5 M4 18 H4.5',
+  bluetooth: 'M6.5 6.5 L17.5 17.5 L12 23 V1 L17.5 6.5 L6.5 17.5'
 }
 
 export const ICON_NAMES = Object.keys(ICON_PATHS)

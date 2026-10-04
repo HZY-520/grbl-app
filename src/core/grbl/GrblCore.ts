@@ -6,7 +6,7 @@
  * 覆盖倍率、点动、配置读写、报警/错误处理。
  */
 import { Emitter } from '../Emitter'
-import type { SerialTransport, UsbDeviceInfo } from '../serial/types'
+import type { SerialDeviceInfo, SerialTransport } from '../serial/types'
 import { createTransport } from '../serial/SerialTransport'
 import { GrblCommand, GrblMessage, MessageType, CommandStatus, type Element } from './GrblCommand'
 import { AppSettings, usePWM } from './GrblConfig'
@@ -91,7 +91,9 @@ export class GrblConfiguration {
 
 export class GrblCore extends Emitter<CoreEvents> {
   // ---- 连接 ----
-  private transport: SerialTransport = createTransport()
+  private usbTransport: SerialTransport = createTransport('usb')
+  private bluetoothTransport: SerialTransport = createTransport('bluetooth')
+  private transport: SerialTransport = this.usbTransport
   machineStatus: MacStatus = MacStatus.Disconnected
   version: GrblVersionInfo | null = null
   readonly config = new GrblConfiguration()
@@ -186,13 +188,18 @@ export class GrblCore extends Emitter<CoreEvents> {
     return { feed: this.curOvFeed, rapids: this.curOvRapids, power: this.curOvPower }
   }
 
-  async listDevices(): Promise<UsbDeviceInfo[]> {
-    return this.transport.list()
+  async listDevices(): Promise<SerialDeviceInfo[]> {
+    return this.usbTransport.list()
+  }
+
+  async listBluetoothDevices(): Promise<SerialDeviceInfo[]> {
+    return this.bluetoothTransport.list()
   }
 
   /** 打开串口并开始握手 */
-  async open(deviceId: number, baudRate: number) {
+  async open(device: SerialDeviceInfo, baudRate: number) {
     if (this.isConnected) return
+    this.transport = device.kind === 'bluetooth' ? this.bluetoothTransport : this.usbTransport
     this.setStatus(MacStatus.Connecting)
     this.connectStart = Date.now()
     this.version = null
@@ -207,7 +214,7 @@ export class GrblCore extends Emitter<CoreEvents> {
     this.transport.onData((chunk) => this.onData(chunk))
     this.transport.onClose(() => this.onTransportClosed())
 
-    await this.transport.open(deviceId, baudRate)
+    await this.transport.open(device, baudRate)
 
     this.statusQueryTimer = 0
     this.lastStatusAt = Date.now()

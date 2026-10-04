@@ -2,11 +2,12 @@
 
 将 [LaserGRBL](https://github.com/arkypita/LaserGRBL) 的激光雕刻功能移植到 Android 平台。
 应用以中文为主语言，界面基于 [Varlet UI](https://github.com/varletjs/varlet)，
-通过 USB（USB Host / USB 串口）连接 GRBL 激光雕刻机。
+通过 USB（USB Host / USB 串口）或蓝牙（经典蓝牙 SPP）连接 GRBL 激光雕刻机。
 
 ## 功能
 
-- **设备连接**：枚举 USB 串口设备，选择波特率连接 / 断开，支持插拔自动检测。
+- **设备连接**：枚举 USB 串口设备或已配对的蓝牙串口设备（HC-05 / HC-06 等），
+  选择波特率连接 / 断开，支持插拔自动检测。
 - **机器控制**：实时状态与坐标（MPos / WPos / WCO）、进给与功率、倍率调节。
 - **运动控制**：九宫格点动、步长 / 速度设置、回零、解锁、设置原点。
 - **图案生成**：
@@ -26,7 +27,7 @@
 | 界面 | Vue 3 + TypeScript + Varlet UI |
 | 构建 | Vite |
 | 容器 | Capacitor 6 |
-| 原生 | Android（Java）+ usb-serial-for-android |
+| 原生 | Android（Java）+ usb-serial-for-android（USB）/ 经典蓝牙 SPP（蓝牙） |
 
 GRBL 协议解析、命令队列与流式发送、图像 / 矢量 / 文字转 G 代码等核心逻辑，
 由原项目的 C# 实现移植为 TypeScript（`src/core`）。
@@ -59,9 +60,9 @@ src/core/raster      光栅图像 / 抖动转 G 代码
 src/core/vector      SVG 矢量转 G 代码
 src/core/text        Hershey 字体转 G 代码
 src/core/gcode       G 代码加载、分析与预览
-src/core/serial      USB 串口传输抽象（Android 原生 / Web Serial）
+src/core/serial      串口传输抽象（USB：Android 原生 / Web Serial；蓝牙：Android SPP）
 src/ui               Vue 界面、状态管理与组件
-android               Capacitor Android 工程与 USB 串口插件
+android               Capacitor Android 工程与 USB / 蓝牙串口插件
 ```
 
 ## 许可证
