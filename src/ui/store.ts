@@ -4,6 +4,7 @@
  */
 import { reactive } from 'vue'
 import { grbl } from '../core/grbl/GrblCore'
+import { openBluetoothSettings as openBluetoothSettingsNative } from '../core/serial/SerialTransport'
 import { Firmware, JogDirection, MacStatus, StreamingMode, ThreadingMode } from '../core/grbl/types'
 import { GrblCommand, MessageType } from '../core/grbl/GrblCommand'
 import { parseGcode, type GcodeFileData } from '../core/gcode/GrblFile'
@@ -13,7 +14,7 @@ import {
   findProfileByDevice,
   isDeviceKnown
 } from '../core/grbl/DeviceProfile'
-import type { UsbDeviceInfo } from '../core/serial/types'
+import type { SerialDeviceInfo, TransportKind } from '../core/serial/types'
 
 export interface LogItem {
   id: number
@@ -66,8 +67,11 @@ export const state = reactive({
   progress: { sent: 0, total: 0, executed: 0 },
   running: false,
   issue: grbl.lastIssue as number,
-  devices: [] as UsbDeviceInfo[],
+  devices: [] as SerialDeviceInfo[],
+  bluetoothDevices: [] as SerialDeviceInfo[],
   scanning: false,
+  /** 当前连接方式（未连接为 usb） */
+  deviceKind: 'usb' as TransportKind,
   /** 当前连接的 USB 设备编号（未连接为 -1） */
   deviceId: -1,
   baud: AppSettings.get<number>('Last Baud', 115200),
@@ -172,31 +176,58 @@ export async function refreshDevices() {
   }
 }
 
-export async function connect(deviceId: number) {
+/** 刷新蓝牙（已配对）设备列表 */
+export async function refreshBluetoothDevices() {
+  state.scanning = true
+  try {
+    state.bluetoothDevices = await grbl.listBluetoothDevices()
+  } catch (e) {
+    pushLog(`枚举蓝牙设备失败：${String(e)}`, MessageType.Warning)
+    state.bluetoothDevices = []
+  } finally {
+    state.scanning = false
+  }
+}
+
+export async function connect(device: SerialDeviceInfo) {
   if (state.connected || state.connecting) return
   AppSettings.set('Last Baud', state.baud)
-  AppSettings.set('Last Port', String(deviceId))
+  const label = device.product || device.name || device.address || `设备 #${device.deviceId}`
   state.connecting = true
-  pushLog(`正在连接设备 #${deviceId} @ ${state.baud}…`, MessageType.Command)
+  pushLog(`正在连接 ${label} @ ${state.baud}…`, MessageType.Command)
   try {
-    await grbl.open(deviceId, state.baud)
-    state.deviceId = deviceId
-    // 已绑定档案的设备：自动套用其行程 / 功率等参数
-    const bound = findProfileByDevice(deviceId)
-    if (bound) {
-      applyProfileToSettings(bound)
-      state.settings = AppSettings.all()
-      pushLog(`已套用设备参数「${bound.name}」`, MessageType.Feedback)
-    }
-    // 首次连接的新设备：提示进入初始化向导设置参数
-    if (!isDeviceKnown(deviceId)) {
-      state.setupDeviceId = deviceId
-      state.needsSetup = true
-      pushLog(`首次连接设备 #${deviceId}，请先设置行程 / 功率等参数`, MessageType.Feedback)
+    await grbl.open(device, state.baud)
+    state.deviceKind = device.kind
+    state.deviceId = device.deviceId ?? -1
+    // 只有 USB 设备有稳定的数字编号，可绑定参数档案
+    if (device.deviceId !== undefined) {
+      AppSettings.set('Last Port', String(device.deviceId))
+      // 已绑定档案的设备：自动套用其行程 / 功率等参数
+      const bound = findProfileByDevice(device.deviceId)
+      if (bound) {
+        applyProfileToSettings(bound)
+        state.settings = AppSettings.all()
+        pushLog(`已套用设备参数「${bound.name}」`, MessageType.Feedback)
+      }
+      // 首次连接的新设备：提示进入初始化向导设置参数
+      if (!isDeviceKnown(device.deviceId)) {
+        state.setupDeviceId = device.deviceId
+        state.needsSetup = true
+        pushLog(`首次连接设备 #${device.deviceId}，请先设置行程 / 功率等参数`, MessageType.Feedback)
+      }
     }
   } catch (e) {
     state.connecting = false
     pushLog(`连接失败：${String(e)}`, MessageType.Warning)
+  }
+}
+
+/** 打开系统蓝牙设置，便于配对雕刻机蓝牙模块 */
+export async function openBluetoothSettings() {
+  try {
+    await openBluetoothSettingsNative()
+  } catch (e) {
+    pushLog(`打开蓝牙设置失败：${String(e)}`, MessageType.Warning)
   }
 }
 
