@@ -1,6 +1,7 @@
-# LaserGRBL for Android
+# iGRBL
 
-将 [LaserGRBL](https://github.com/arkypita/LaserGRBL) 的激光雕刻功能移植到 Android 平台。
+iGRBL 是一款面向 Android 平台的激光雕刻机控制应用，将
+[LaserGRBL](https://github.com/arkypita/LaserGRBL) 的激光雕刻功能移植到 Android 平台。
 应用以中文为主语言，界面基于 [Varlet UI](https://github.com/varletjs/varlet)，
 通过 USB（USB Host / USB 串口）连接 GRBL 激光雕刻机。
 
