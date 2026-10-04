@@ -30,7 +30,7 @@ function openLink(url: string) {
         <div class="about-logo">
           <AppIcon name="flame" :size="44" />
         </div>
-        <div class="about-name">LaserGRBL</div>
+        <div class="about-name">iGRBL</div>
         <div class="lg-dim">Android 激光雕刻控制 · v1.0.0</div>
       </section>
 

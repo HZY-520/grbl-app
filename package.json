@@ -1,8 +1,8 @@
 {
-  "name": "lasergrbl-android",
+  "name": "igrbl",
   "version": "1.0.0",
   "private": true,
-  "description": "LaserGRBL Android - 激光雕刻机控制应用（GRBL）",
+  "description": "iGRBL - 激光雕刻机控制应用（GRBL）",
   "type": "module",
   "scripts": {
     "dev": "vite",

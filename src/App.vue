@@ -17,7 +17,7 @@ const TABS = [
   { name: 'settings', label: '设置', icon: 'settings', path: '/settings' }
 ] as const
 
-const title = computed(() => (route.meta.title as string) ?? 'LaserGRBL')
+const title = computed(() => (route.meta.title as string) ?? 'iGRBL')
 const activeTab = computed(() => route.meta.tab as string | undefined)
 const showNav = computed(() => !!route.meta.tab)
 const canGoBack = computed(() => !showNav.value && route.path !== '/home')
@@ -71,7 +71,7 @@ watch(
         </var-button>
         <span v-else class="lg-brand">
           <AppIcon name="flame" :size="20" />
-          <span>LaserGRBL</span>
+          <span>iGRBL</span>
         </span>
       </template>
       <template #right>

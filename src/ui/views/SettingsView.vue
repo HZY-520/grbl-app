@@ -342,7 +342,7 @@ const issueText = computed(() => {
 
       <section class="lg-section lg-center">
         <div class="lg-dim">当前状态：{{ issueText }}</div>
-        <div class="lg-dim lg-mt">LaserGRBL Android · v1.0.0</div>
+        <div class="lg-dim lg-mt">iGRBL · v1.0.0</div>
       </section>
     </div>
   </div>
