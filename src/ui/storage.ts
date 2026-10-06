@@ -53,10 +53,6 @@ export function saveGcodeFile(name: string, lines: string[], meta?: SavedFileMet
   return file
 }
 
-export function getSavedFile(id: string): SavedFile | null {
-  return listSavedFiles().find((f) => f.id === id) ?? null
-}
-
 export function deleteSavedFile(id: string) {
   persist(listSavedFiles().filter((f) => f.id !== id))
 }

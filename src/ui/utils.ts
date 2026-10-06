@@ -1,6 +1,5 @@
 /** 界面通用工具：文件选择、格式化、错误提示 */
-import { Snackbar } from '@varlet/ui'
-import { DetectedIssue } from '../core/grbl/types'
+import { showToast } from './glass/toast'
 
 export interface PickedFile {
   name: string
@@ -47,7 +46,7 @@ export function pickFile(accept: string): Promise<PickedFile | null> {
         cleanup()
       }
       reader.onerror = () => {
-        Snackbar.error('读取文件失败')
+        showToast('读取文件失败', 'error')
         cleanup()
         resolve(null)
       }
@@ -94,31 +93,6 @@ export function formatDuration(seconds: number): string {
   return `${sec} 秒`
 }
 
-export function formatSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-  return `${(bytes / 1024 / 1024).toFixed(2)} MB`
-}
-
-/** 检测到的问题 → 中文提示 */
-export const ISSUE_LABELS: Record<number, string> = {
-  [DetectedIssue.Unknown]: '',
-  [DetectedIssue.ManualReset]: '手动复位',
-  [DetectedIssue.ManualDisconnect]: '手动断开',
-  [DetectedIssue.ManualAbort]: '手动中止',
-  [DetectedIssue.StopResponding]: '设备无响应',
-  [DetectedIssue.UnexpectedReset]: '意外复位',
-  [DetectedIssue.UnexpectedDisconnect]: '意外断开',
-  [DetectedIssue.MachineAlarm]: '机器报警'
-}
-
-export function issueLabel(issue: number): string {
-  return ISSUE_LABELS[issue] ?? '未知异常'
-}
-
 export function toast(message: string, type: 'success' | 'error' | 'warning' | 'info' = 'info') {
-  if (type === 'success') Snackbar.success(message)
-  else if (type === 'error') Snackbar.error(message)
-  else if (type === 'warning') Snackbar.warning(message)
-  else Snackbar(message)
+  showToast(message, type)
 }

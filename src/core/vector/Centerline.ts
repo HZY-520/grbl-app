@@ -76,8 +76,13 @@ function pad(src: Uint8Array, w: number, h: number): { data: Uint8Array; w: numb
   return { data: out, w: pw, h: ph }
 }
 
-/** Zhang-Suen 细化，原地修改，得到 1 像素宽骨架 */
-function thin(skel: Uint8Array, w: number, h: number, maxIter: number): void {
+/**
+ * Zhang-Suen 细化，原地修改，得到 1 像素宽骨架。
+ * 返回是否「收敛」（最后一轮迭代没有再删除任何像素）。
+ * 注意：粗图形（笔画宽 w）需要约 w/2 次迭代才能收敛，迭代上限因此会直接影响
+ * 骨架是否真的只有 1 像素宽——centerlineTrace 保持原有的 60 次上限不变。
+ */
+function thin(skel: Uint8Array, w: number, h: number, maxIter: number): boolean {
   let changed = true
   let iter = 0
   const del: number[] = []
@@ -128,6 +133,7 @@ function thin(skel: Uint8Array, w: number, h: number, maxIter: number): void {
       }
     }
   }
+  return !changed
 }
 
 /** 计算每个骨架像素的 8 邻域度数 */
@@ -345,6 +351,58 @@ function pruneSpurs(skel: Uint8Array, w: number, h: number, minBranchPx: number)
     for (const i of remove) skel[i] = 0
   }
   return anyChange
+}
+
+// ---------------------------------------------------------------------------
+// 骨架化中间结果导出（新增，供「智能识别」统计笔画宽度使用）
+//
+// 说明：以下两个导出只是把原有内部实现暴露出来，centerlineTrace 的行为、
+// 数值与调用方式完全不变；智能识别必须与真正走线时使用同一份二值化 / 细化实现，
+// 否则「判定用的骨架」与「实际输出的骨架」会不一致。
+// ---------------------------------------------------------------------------
+
+/** 骨架化结果 */
+export interface SkeletonResult {
+  /** 骨架位图（1=骨架），尺寸为原图四周各补 1 像素（补边避免贴边图形被误删） */
+  data: Uint8Array
+  /** 补边后的宽度（= 原图宽度 + 2） */
+  width: number
+  /** 补边后的高度（= 原图高度 + 2） */
+  height: number
+  /** 前景（墨水）像素数，按原图尺寸统计 */
+  inkArea: number
+  /**
+   * 细化是否在给定迭代上限内收敛。
+   * false 表示笔画比「上限 × 2」还粗（骨架仍不是 1 像素宽），
+   * 此时面积 / 骨架长度不能当作笔画宽度使用。
+   */
+  converged: boolean
+}
+
+/**
+ * 只做「二值化 + Zhang-Suen 细化」，返回骨架（不做剪毛刺与折线提取）。
+ * 与 centerlineTrace 的前两步是同一份实现，迭代上限可由调用方指定。
+ */
+export function skeletonize(image: PotraceImage, options: CenterlineOptions = {}): SkeletonResult {
+  if (!image || image.width <= 0 || image.height <= 0) {
+    return { data: new Uint8Array(0), width: 0, height: 0, inkArea: 0, converged: true }
+  }
+  const threshold = options.threshold ?? 128
+  const invert = options.invert ?? false
+  const maxIterations = Math.max(1, Math.round(options.maxIterations ?? 60))
+
+  const bin = binarize(image, threshold, invert)
+  let inkArea = 0
+  for (let i = 0, n = bin.length; i < n; i++) if (bin[i]) inkArea++
+
+  const p = pad(bin, image.width, image.height)
+  const converged = thin(p.data, p.w, p.h, maxIterations)
+  return { data: p.data, width: p.w, height: p.h, inkArea, converged }
+}
+
+/** 8 邻域度数（供智能识别统计端点 / 分支点） */
+export function skeletonDegree(skel: Uint8Array, w: number, h: number): Uint8Array {
+  return computeDegree(skel, w, h)
 }
 
 /**

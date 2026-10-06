@@ -47,6 +47,11 @@ const progressText = computed(() => {
   return total ? `${executed} / ${total} 行` : '—'
 })
 
+/** 预览动画进度：仅任务执行中传入；空闲 / 已结束 / 刚载入新文件时保持整条路径绘制 */
+const previewProgress = computed<number | undefined>(() =>
+  state.running ? percent.value : undefined
+)
+
 const remainText = computed(() => {
   if (!state.file) return '--'
   const base = state.file.stats.estimatedSeconds
@@ -93,7 +98,7 @@ function goto(path: string) {
   <div class="lg-page">
     <div class="lg-body lg-body--nav">
       <!-- 设备状态 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-row lg-row--between">
           <div class="lg-row">
             <span class="lg-badge" :class="`lg-badge--${statusKind}`">
@@ -102,7 +107,7 @@ function goto(path: string) {
             </span>
             <span v-if="state.connected" class="lg-dim">{{ firmwareText }} {{ state.version }}</span>
           </div>
-          <var-button
+          <GlassButton
             v-if="state.connected"
             size="small"
             type="danger"
@@ -111,16 +116,16 @@ function goto(path: string) {
           >
             <AppIcon name="usb" :size="16" />
             <span class="btn-text">设备</span>
-          </var-button>
-          <var-button v-else size="small" type="primary" @click="goto('/connect')">
+          </GlassButton>
+          <GlassButton v-else size="small" type="primary" @click="goto('/connect')">
             <AppIcon name="usb" :size="16" />
             <span class="btn-text">连接设备</span>
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
 
       <!-- 坐标 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title">
           <span>当前坐标</span>
           <span class="lg-dim">进给 {{ fmt(state.feed, 0) }} / 功率 {{ fmt(state.spindle, 0) }}</span>
@@ -151,10 +156,10 @@ function goto(path: string) {
             X {{ fmt(state.wco.x) }} · Y {{ fmt(state.wco.y) }}
           </span>
         </div>
-      </section>
+      </GlassSurface>
 
       <!-- 当前任务 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title">
           <span>当前任务</span>
           <span v-if="state.file" class="lg-dim">{{ state.file.name }}</span>
@@ -163,14 +168,14 @@ function goto(path: string) {
         <div v-if="!state.file" class="lg-empty">
           尚未载入雕刻文件
           <div class="lg-mt">
-            <var-button size="small" text type="primary" @click="goto('/convert')">
+            <GlassButton size="small" text type="primary" @click="goto('/convert')">
               <AppIcon name="layers" :size="16" />
               <span class="btn-text">生成图案</span>
-            </var-button>
-            <var-button size="small" text type="primary" @click="goto('/file')">
+            </GlassButton>
+            <GlassButton size="small" text type="primary" @click="goto('/file')">
               <AppIcon name="folder" :size="16" />
               <span class="btn-text">打开文件</span>
-            </var-button>
+            </GlassButton>
           </div>
         </div>
 
@@ -179,13 +184,7 @@ function goto(path: string) {
             <span class="lg-dim">进度 {{ progressText }}</span>
             <span class="lg-dim">{{ percent }}%</span>
           </div>
-          <var-progress
-            class="lg-mt"
-            :value="percent"
-            :show-label="false"
-            color="#ff7a18"
-            track-color="var(--lg-panel-2)"
-          />
+          <GlassProgress class="lg-mt" :value="percent" :show-label="false" />
           <div class="lg-grid-3 lg-mt">
             <div class="lg-stat">
               <div class="lg-stat__k">行数</div>
@@ -202,26 +201,26 @@ function goto(path: string) {
           </div>
 
           <div class="lg-grid-4 lg-mt">
-            <var-button type="primary" :disabled="!canRun" @click="onRun">
+            <GlassButton type="primary" :disabled="!canRun" @click="onRun">
               <AppIcon name="play" :size="18" />
-            </var-button>
-            <var-button
+            </GlassButton>
+            <GlassButton
               v-if="state.status !== MacStatus.Hold"
               type="warning"
               :disabled="!state.running"
               @click="onHold"
             >
               <AppIcon name="pause" :size="18" />
-            </var-button>
-            <var-button v-else type="success" @click="onResume">
+            </GlassButton>
+            <GlassButton v-else type="success" @click="onResume">
               <AppIcon name="play" :size="18" />
-            </var-button>
-            <var-button type="danger" :disabled="!state.running" @click="onAbort">
+            </GlassButton>
+            <GlassButton type="danger" :disabled="!state.running" @click="onAbort">
               <AppIcon name="stop" :size="18" />
-            </var-button>
-            <var-button plain @click="goto('/preview')">
+            </GlassButton>
+            <GlassButton plain @click="goto('/preview')">
               <AppIcon name="eye" :size="18" />
-            </var-button>
+            </GlassButton>
           </div>
 
           <GcodePreview
@@ -229,76 +228,53 @@ function goto(path: string) {
             :preview="state.file.preview"
             :bbox="state.file.stats.bbox"
             :height="200"
+            :progress="previewProgress"
           />
         </template>
-      </section>
+      </GlassSurface>
 
       <!-- 快捷操作 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>快捷操作</span></div>
         <div class="lg-grid-2">
-          <var-button block plain :disabled="!state.connected" @click="onHoming">
+          <GlassButton block plain :disabled="!state.connected" @click="onHoming">
             <AppIcon name="homeZero" :size="17" />
             <span class="btn-text">回原点 $H</span>
-          </var-button>
-          <var-button block plain :disabled="!state.connected" @click="onUnlock">
+          </GlassButton>
+          <GlassButton block plain :disabled="!state.connected" @click="onUnlock">
             <AppIcon name="power" :size="17" />
             <span class="btn-text">解锁 $X</span>
-          </var-button>
-          <var-button block plain :disabled="!state.connected" @click="setNewZero(); toast('已设置工作零点', 'success')">
+          </GlassButton>
+          <GlassButton block plain :disabled="!state.connected" @click="setNewZero(); toast('已设置工作零点', 'success')">
             <AppIcon name="crosshair" :size="17" />
             <span class="btn-text">设为零点</span>
-          </var-button>
-          <var-button block plain :disabled="!state.connected" @click="resetWCO(); toast('已清除坐标偏移', 'info')">
+          </GlassButton>
+          <GlassButton block plain :disabled="!state.connected" @click="resetWCO(); toast('已清除坐标偏移', 'info')">
             <AppIcon name="refresh" :size="17" />
             <span class="btn-text">清除偏移</span>
-          </var-button>
-          <var-button block plain type="warning" :disabled="!state.connected" @click="onSoftReset">
+          </GlassButton>
+          <GlassButton block plain type="warning" :disabled="!state.connected" @click="onSoftReset">
             <AppIcon name="power" :size="17" />
             <span class="btn-text">软复位</span>
-          </var-button>
-          <var-button block plain @click="goto('/jog')">
+          </GlassButton>
+          <GlassButton block plain @click="goto('/jog')">
             <AppIcon name="move" :size="17" />
             <span class="btn-text">运动控制</span>
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
 
       <!-- 日志 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title">
           <span>运行日志</span>
-          <var-button size="small" text @click="goto('/terminal')">
+          <GlassButton size="small" text @click="goto('/terminal')">
             <AppIcon name="terminal" :size="16" />
             <span class="btn-text">终端</span>
-          </var-button>
+          </GlassButton>
         </div>
         <LogList :height="'220px'" />
-      </section>
+      </GlassSurface>
     </div>
   </div>
 </template>
-
-<style scoped>
-.lg-stat {
-  padding: 8px 10px;
-  background: var(--lg-panel-2);
-  border-radius: 9px;
-  text-align: center;
-}
-
-.lg-stat__k {
-  font-size: 11px;
-  color: var(--lg-text-dim);
-  margin-bottom: 4px;
-}
-
-.lg-stat__v {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.btn-text {
-  margin-left: 5px;
-}
-</style>

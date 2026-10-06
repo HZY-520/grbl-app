@@ -5,6 +5,11 @@
 import { reactive } from 'vue'
 import { grbl } from '../core/grbl/GrblCore'
 import { openBluetoothSettings as openBluetoothSettingsNative } from '../core/serial/SerialTransport'
+import {
+  startKeepAlive,
+  stopKeepAlive,
+  updateKeepAliveProgress
+} from '../core/native/KeepAlive'
 import { Firmware, JogDirection, MacStatus, StreamingMode, ThreadingMode } from '../core/grbl/types'
 import { GrblCommand, MessageType } from '../core/grbl/GrblCommand'
 import { parseGcode, type GcodeFileData } from '../core/gcode/GrblFile'
@@ -94,6 +99,30 @@ export function pushLog(text: string, kind: MessageType = MessageType.Others) {
   if (state.log.length > 600) state.log.splice(0, state.log.length - 600)
 }
 
+// ---- 后台保活（前台服务 + 常驻进度通知，仅 Android 生效） ----
+// 说明：以下三个包装函数对保活的失败一律静默处理，保证不影响既有雕刻流程。
+
+/** 任务开始：启动前台服务并显示常驻进度通知 */
+function beginKeepAlive(name: string, percent: number) {
+  startKeepAlive(name, percent).catch(() => {
+    /* Android 之外或前台服务被系统拒绝：忽略 */
+  })
+}
+
+/** 任务进行中：按阈值节流刷新通知进度 */
+function refreshKeepAlive(executed: number, total: number) {
+  updateKeepAliveProgress(executed, total).catch(() => {
+    /* 忽略 */
+  })
+}
+
+/** 任务结束 / 中止 / 断开 / 出错：停止服务并移除通知（幂等） */
+function endKeepAlive() {
+  stopKeepAlive().catch(() => {
+    /* 忽略 */
+  })
+}
+
 function syncPosition() {
   const p = grbl.position
   state.pos = { x: p.X, y: p.Y, z: p.Z }
@@ -129,6 +158,8 @@ grbl.on('disconnected', () => {
   state.connecting = false
   state.running = false
   syncOverrides()
+  // 断开（含连接失败 / 异常掉线）时必须移除通知，避免残留
+  endKeepAlive()
 })
 
 grbl.on('position', () => syncPosition())
@@ -141,11 +172,15 @@ grbl.on('override', () => syncOverrides())
 grbl.on('progress', (p) => {
   state.progress = { ...p }
   state.running = true
+  // 通知进度：百分比 = executed / total * 100（total 为 0 时按 0% 处理，不除零）
+  refreshKeepAlive(p.executed, p.total)
 })
 
 grbl.on('programEnd', () => {
   state.running = false
   pushLog('任务执行完成', MessageType.Feedback)
+  // 任务正常结束：停止服务并移除通知
+  endKeepAlive()
 })
 
 grbl.on('message', (m) => {
@@ -219,6 +254,8 @@ export async function connect(device: SerialDeviceInfo) {
   } catch (e) {
     state.connecting = false
     pushLog(`连接失败：${String(e)}`, MessageType.Warning)
+    // 连接失败路径同样要清理保活状态，避免遗留通知
+    endKeepAlive()
   }
 }
 
@@ -292,6 +329,8 @@ export function softReset() {
   grbl.softReset()
   state.running = false
   pushLog('软复位', MessageType.Command)
+  // 软复位会清空排队任务且不会触发 programEnd：这里主动结束保活，避免僵尸通知
+  endKeepAlive()
 }
 export function feedHold() {
   grbl.feedHold()
@@ -401,16 +440,8 @@ export function runFile(resetBuffer = true) {
   grbl.runProgram(state.file.commands as GrblCommand[], resetBuffer)
   state.running = true
   pushLog(`开始执行：${state.file.name}`, MessageType.Command)
-  return true
-}
-
-/** 从指定行开始执行 */
-export function runFileFromLine(index: number) {
-  if (!state.file || !state.connected) return false
-  const cmds = state.file.commands.slice(Math.max(0, index)) as GrblCommand[]
-  grbl.runProgram(cmds, true)
-  state.running = true
-  pushLog(`从第 ${index + 1} 行开始执行`, MessageType.Command)
+  // 开始雕刻：启动前台服务保活并显示 0% 常驻通知
+  beginKeepAlive(state.file.name, 0)
   return true
 }
 
@@ -419,6 +450,8 @@ export function abortFile() {
   grbl.softReset()
   state.running = false
   pushLog('已中止任务', MessageType.Warning)
+  // 中止任务：停止服务并移除通知
+  endKeepAlive()
 }
 
 /** 读取机器设置（$$） */
@@ -466,11 +499,6 @@ export function setTheme(theme: 'dark' | 'light') {
 
 export function clearLog() {
   state.log.splice(0, state.log.length)
-}
-
-/** 供预览使用：让命令列表可复用 */
-export function commandsOf(lines: string[]): GrblCommand[] {
-  return lines.map((l) => new GrblCommand(l))
 }
 
 export { grbl, MacStatus, JogDirection, StreamingMode, MessageType }

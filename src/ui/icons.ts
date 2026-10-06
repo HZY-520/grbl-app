@@ -45,4 +45,3 @@ export const ICON_PATHS: Record<string, string> = {
   bluetooth: 'M6.5 6.5 L17.5 17.5 L12 23 V1 L17.5 6.5 L6.5 17.5'
 }
 
-export const ICON_NAMES = Object.keys(ICON_PATHS)

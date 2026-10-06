@@ -174,13 +174,13 @@ function applyPreset() {
 <template>
   <div class="lg-page">
     <div class="lg-body">
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title">
           <span>参数预设 (.nc)</span>
-          <var-button size="small" type="primary" :loading="importing" @click="onImportPreset">
+          <GlassButton size="small" type="primary" :loading="importing" @click="onImportPreset">
             <AppIcon name="folder" :size="16" />
             <span class="btn-text">导入</span>
-          </var-button>
+          </GlassButton>
         </div>
 
         <div v-if="presetRows.length === 0" class="lg-dim">
@@ -198,25 +198,25 @@ function applyPreset() {
                 <span class="cfg-item__name">{{ row.name }}</span>
                 <span class="lg-dim lg-mono">${{ row.id }}<template v-if="row.unit"> · {{ row.unit }}</template></span>
               </div>
-              <var-input v-model="row.draft" type="number" variant="outlined" />
+              <GlassInput v-model="row.draft" type="number" variant="outlined" />
             </div>
           </div>
           <div class="preset-actions">
-            <var-button size="small" type="primary" :disabled="!state.connected" @click="applyPreset">
+            <GlassButton size="small" type="primary" :disabled="!state.connected" @click="applyPreset">
               下发到设备
-            </var-button>
-            <var-button size="small" @click="clearPreset">清除</var-button>
+            </GlassButton>
+            <GlassButton size="small" @click="clearPreset">清除</GlassButton>
           </div>
         </template>
-      </section>
+      </GlassSurface>
 
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title">
           <span>机器参数</span>
-          <var-button size="small" type="primary" :disabled="!state.connected" @click="onRead">
+          <GlassButton size="small" type="primary" :disabled="!state.connected" @click="onRead">
             <AppIcon name="refresh" :size="16" />
             <span class="btn-text">读取 $$</span>
-          </var-button>
+          </GlassButton>
         </div>
 
         <div v-if="!state.connected" class="lg-empty">
@@ -232,24 +232,24 @@ function applyPreset() {
               <span class="lg-dim lg-mono">${{ e.id }}<template v-if="e.unit"> · {{ e.unit }}</template></span>
             </div>
             <div class="cfg-item__body">
-              <var-input
+              <GlassInput
                 v-model="drafts[e.id]"
                 type="number"
                 variant="outlined"
                 @blur="resetDraft(e)"
               />
-              <var-button size="small" type="primary" @click="write(e)">写入</var-button>
+              <GlassButton size="small" type="primary" @click="write(e)">写入</GlassButton>
             </div>
           </div>
         </div>
-      </section>
+      </GlassSurface>
 
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>说明</span></div>
         <div class="lg-dim">
           修改参数会立即写入设备 EEPROM。错误的步进分辨率或行程可能导致设备运动异常，请谨慎操作。
         </div>
-      </section>
+      </GlassSurface>
     </div>
   </div>
 </template>
@@ -285,10 +285,6 @@ function applyPreset() {
   grid-template-columns: 1fr auto;
   gap: 8px;
   align-items: center;
-}
-
-.btn-text {
-  margin-left: 5px;
 }
 
 .preset-head {

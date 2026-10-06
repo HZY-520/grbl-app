@@ -9,7 +9,7 @@ import { Emitter } from '../Emitter'
 import type { SerialDeviceInfo, SerialTransport } from '../serial/types'
 import { createTransport } from '../serial/SerialTransport'
 import { GrblCommand, GrblMessage, MessageType, CommandStatus, type Element } from './GrblCommand'
-import { AppSettings, usePWM } from './GrblConfig'
+import { AppSettings } from './GrblConfig'
 import {
   Firmware,
   GPoint,

@@ -140,19 +140,19 @@ function rapidOverride(v: number | number[]) {
 <template>
   <div class="lg-page">
     <div class="lg-body lg-body--nav">
-      <div v-if="!state.connected" class="lg-section lg-center">
+      <GlassSurface v-if="!state.connected" class="lg-section lg-center">
         <span class="lg-badge lg-badge--idle"><span class="lg-dot" />未连接设备</span>
         <div class="lg-dim lg-mt">请先连接雕刻机后再进行运动控制。</div>
-      </div>
+      </GlassSurface>
 
       <!-- 点动 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title">
           <span>点动控制</span>
           <span class="lg-dim">步长 {{ step }} mm · 速度 {{ speed }}</span>
         </div>
         <div class="lg-pad">
-          <var-button
+          <GlassButton
             v-for="(item, i) in PAD"
             :key="i"
             :type="item.center ? 'primary' : 'default'"
@@ -160,15 +160,15 @@ function rapidOverride(v: number | number[]) {
             @click="onPad(item)"
           >
             {{ item.label }}
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
 
       <!-- 步长与速度 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>步长 (mm)</span></div>
         <div class="steps">
-          <var-button
+          <GlassButton
             v-for="s in STEPS"
             :key="s"
             size="small"
@@ -177,12 +177,12 @@ function rapidOverride(v: number | number[]) {
             @click="onStep(s)"
           >
             {{ s }}
-          </var-button>
+          </GlassButton>
         </div>
 
         <div class="lg-title lg-mt"><span>点动速度 (mm/min)</span></div>
         <div class="lg-slider-row">
-          <var-slider
+          <GlassSlider
             :model-value="speed"
             :min="100"
             :max="5000"
@@ -191,29 +191,29 @@ function rapidOverride(v: number | number[]) {
           />
           <span class="lg-slider-row__val lg-mono">{{ speed }}</span>
         </div>
-      </section>
+      </GlassSurface>
 
       <!-- 绝对移动 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>移动到坐标</span></div>
         <div class="coord-row">
-          <var-input v-model="targetX" type="number" placeholder="X" variant="outlined" />
-          <var-input v-model="targetY" type="number" placeholder="Y" variant="outlined" />
-          <var-button type="primary" :disabled="disabled" @click="onGoto">
+          <GlassInput v-model="targetX" type="number" placeholder="X" variant="outlined" />
+          <GlassInput v-model="targetY" type="number" placeholder="Y" variant="outlined" />
+          <GlassButton type="primary" :disabled="disabled" @click="onGoto">
             <AppIcon name="move" :size="17" />
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
 
       <!-- 倍率 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>实时倍率</span></div>
 
         <div class="ov-label">
           <span>进给倍率</span>
           <span class="lg-mono">{{ state.targetOverrides.feed }}%</span>
         </div>
-        <var-slider
+        <GlassSlider
           :model-value="state.targetOverrides.feed"
           :min="10"
           :max="200"
@@ -225,7 +225,7 @@ function rapidOverride(v: number | number[]) {
           <span>功率倍率</span>
           <span class="lg-mono">{{ state.targetOverrides.power }}%</span>
         </div>
-        <var-slider
+        <GlassSlider
           :model-value="state.targetOverrides.power"
           :min="10"
           :max="200"
@@ -238,7 +238,7 @@ function rapidOverride(v: number | number[]) {
           <span class="lg-mono">{{ state.targetOverrides.rapids }}%</span>
         </div>
         <div class="steps lg-mt">
-          <var-button
+          <GlassButton
             v-for="r in [100, 50, 25]"
             :key="r"
             size="small"
@@ -247,48 +247,48 @@ function rapidOverride(v: number | number[]) {
             @click="rapidOverride(r)"
           >
             {{ r }}%
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
 
       <!-- 测试激光 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>测试激光</span></div>
         <div class="num-grid">
           <div class="num-item">
             <span class="lg-dim">功率 S</span>
-            <var-input :model-value="String(testPower)" type="number" variant="outlined" @blur="onTestNum('power', $event)" />
+            <GlassInput :model-value="String(testPower)" type="number" variant="outlined" @blur="onTestNum('power', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">持续时间 (ms)</span>
-            <var-input :model-value="String(testDuration)" type="number" variant="outlined" @blur="onTestNum('duration', $event)" />
+            <GlassInput :model-value="String(testDuration)" type="number" variant="outlined" @blur="onTestNum('duration', $event)" />
           </div>
         </div>
         <div class="lg-grid-2 lg-mt">
-          <var-button block type="warning" :disabled="disabled" @click="onTestLaser">
+          <GlassButton block type="warning" :disabled="disabled" @click="onTestLaser">
             <AppIcon name="flame" :size="17" />
             <span class="btn-text">点亮测试</span>
-          </var-button>
-          <var-button block plain :disabled="disabled" @click="onLaserOff">
+          </GlassButton>
+          <GlassButton block plain :disabled="disabled" @click="onLaserOff">
             <AppIcon name="power" :size="17" />
             <span class="btn-text">关闭激光</span>
-          </var-button>
+          </GlassButton>
         </div>
         <div class="lg-dim lg-mt">测试激光会短暂出光，请佩戴护目镜并确认光路安全。</div>
-      </section>
+      </GlassSurface>
 
       <!-- 坐标操作 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>坐标操作</span></div>
         <div class="lg-grid-2">
-          <var-button block plain :disabled="disabled" @click="onZero">
+          <GlassButton block plain :disabled="disabled" @click="onZero">
             <AppIcon name="crosshair" :size="17" />
             <span class="btn-text">设为零点</span>
-          </var-button>
-          <var-button block plain :disabled="disabled" @click="onUnlock">
+          </GlassButton>
+          <GlassButton block plain :disabled="disabled" @click="onUnlock">
             <AppIcon name="power" :size="17" />
             <span class="btn-text">解锁 $X</span>
-          </var-button>
+          </GlassButton>
         </div>
         <div class="lg-kv lg-mt">
           <span class="lg-kv__k">工作坐标</span>
@@ -300,7 +300,7 @@ function rapidOverride(v: number | number[]) {
           <span class="lg-kv__k">机器状态</span>
           <span class="lg-kv__v">{{ state.status === MacStatus.Jog ? '点动中' : state.status }}</span>
         </div>
-      </section>
+      </GlassSurface>
     </div>
   </div>
 </template>
@@ -338,9 +338,5 @@ function rapidOverride(v: number | number[]) {
   font-size: 12.5px;
   color: var(--lg-text-dim);
   margin-bottom: 2px;
-}
-
-.btn-text {
-  margin-left: 5px;
 }
 </style>

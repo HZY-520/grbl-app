@@ -221,7 +221,7 @@ function finish() {
       <div class="wiz__head-row">
         <AppIcon name="settings" :size="20" />
         <span class="wiz__title">设备初始化向导</span>
-        <var-button size="small" text @click="skip">跳过</var-button>
+        <GlassButton size="small" text @click="skip">跳过</GlassButton>
       </div>
       <div class="wiz__steps">
         <span v-for="(s, i) in STEPS" :key="s" class="wiz__step" :class="{ 'is-active': i === step, 'is-done': i < step }">
@@ -237,49 +237,49 @@ function finish() {
     <!-- 内容 -->
     <div class="wiz__body">
       <!-- 1. 基本信息 -->
-      <section v-if="step === 0" class="lg-section">
+      <GlassSurface v-if="step === 0" class="lg-section">
         <div class="lg-title"><span>设备名称</span></div>
-        <var-input v-model="form.name" variant="outlined" placeholder="给设备起个名字" />
+        <GlassInput v-model="form.name" variant="outlined" placeholder="给设备起个名字" />
 
         <div class="lg-deco lg-mt">
           <div class="lg-dim">固件类型</div>
-          <var-select class="lg-mt" v-model="form.firmware" variant="outlined">
-            <var-option v-for="f in FIRMWARES" :key="f.value" :label="f.label" :value="f.value" />
-          </var-select>
+          <GlassSelect class="lg-mt" v-model="form.firmware" variant="outlined">
+            <GlassOption v-for="f in FIRMWARES" :key="f.value" :label="f.label" :value="f.value" />
+          </GlassSelect>
         </div>
 
         <div class="lg-deco lg-mt">
           <div class="lg-dim">波特率</div>
-          <var-select class="lg-mt" v-model="form.baud" variant="outlined">
-            <var-option v-for="b in BAUD_RATES" :key="b" :label="`${b} bps`" :value="b" />
-          </var-select>
+          <GlassSelect class="lg-mt" v-model="form.baud" variant="outlined">
+            <GlassOption v-for="b in BAUD_RATES" :key="b" :label="`${b} bps`" :value="b" />
+          </GlassSelect>
         </div>
-      </section>
+      </GlassSurface>
 
       <!-- 2. 行程 -->
-      <section v-else-if="step === 1" class="lg-section">
+      <GlassSurface v-else-if="step === 1" class="lg-section">
         <div class="lg-title"><span>行程范围（工作区域）</span></div>
         <div class="num-grid">
           <div class="num-item">
             <span class="lg-dim">X 行程 (mm)</span>
-            <var-input :model-value="String(form.travelX)" type="number" variant="outlined" @blur="onNum('travelX', $event)" />
+            <GlassInput :model-value="String(form.travelX)" type="number" variant="outlined" @blur="onNum('travelX', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">Y 行程 (mm)</span>
-            <var-input :model-value="String(form.travelY)" type="number" variant="outlined" @blur="onNum('travelY', $event)" />
+            <GlassInput :model-value="String(form.travelY)" type="number" variant="outlined" @blur="onNum('travelY', $event)" />
           </div>
         </div>
-        <var-button class="lg-mt" block plain :disabled="!state.connected" @click="pullFromMachine">
+        <GlassButton class="lg-mt" block plain :disabled="!state.connected" @click="pullFromMachine">
           <AppIcon name="download" :size="16" />
           <span class="btn-text">从设备读取 ($130/$131)</span>
-        </var-button>
+        </GlassButton>
         <div class="lg-dim lg-mt">
           生成 G 代码时会以此行程做尺寸自适应：超出时等比缩放，避免雕刻跑出机器范围。
         </div>
 
         <div class="lg-title lg-mt"><span>常用机型预设</span></div>
         <div class="preset-list">
-          <var-button
+          <GlassButton
             v-for="p in presets"
             :key="p.id"
             class="preset"
@@ -289,61 +289,61 @@ function finish() {
             @click="applyPreset(p)"
           >
             {{ p.name }}
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
 
       <!-- 3. 激光与测试 -->
-      <section v-else-if="step === 2" class="lg-section">
+      <GlassSurface v-else-if="step === 2" class="lg-section">
         <div class="lg-title"><span>激光功率范围（S 值）</span></div>
         <div class="num-grid">
           <div class="num-item">
             <span class="lg-dim">最小功率 S-MIN</span>
-            <var-input :model-value="String(form.minPower)" type="number" variant="outlined" @blur="onNum('minPower', $event)" />
+            <GlassInput :model-value="String(form.minPower)" type="number" variant="outlined" @blur="onNum('minPower', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">最大功率 S-MAX</span>
-            <var-input :model-value="String(form.maxPower)" type="number" variant="outlined" @blur="onNum('maxPower', $event)" />
+            <GlassInput :model-value="String(form.maxPower)" type="number" variant="outlined" @blur="onNum('maxPower', $event)" />
           </div>
         </div>
-        <var-button class="lg-mt" block plain :disabled="!state.connected" @click="pullFromMachine">
+        <GlassButton class="lg-mt" block plain :disabled="!state.connected" @click="pullFromMachine">
           <AppIcon name="download" :size="16" />
           <span class="btn-text">从设备读取 ($30/$31)</span>
-        </var-button>
+        </GlassButton>
 
         <div class="lg-title lg-mt"><span>测试激光</span></div>
         <div class="num-grid">
           <div class="num-item">
             <span class="lg-dim">测试功率 S</span>
-            <var-input :model-value="String(testPower)" type="number" variant="outlined" @blur="onTestNum('power', $event)" />
+            <GlassInput :model-value="String(testPower)" type="number" variant="outlined" @blur="onTestNum('power', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">持续时间 (ms)</span>
-            <var-input :model-value="String(testDuration)" type="number" variant="outlined" @blur="onTestNum('duration', $event)" />
+            <GlassInput :model-value="String(testDuration)" type="number" variant="outlined" @blur="onTestNum('duration', $event)" />
           </div>
         </div>
-        <var-button class="lg-mt" block type="warning" :disabled="!state.connected" @click="onTestLaser">
+        <GlassButton class="lg-mt" block type="warning" :disabled="!state.connected" @click="onTestLaser">
           <AppIcon name="flame" :size="17" />
           <span class="btn-text">点亮激光测试</span>
-        </var-button>
-        <var-alert class="lg-mt" type="warning" title="测试激光会短暂出光，请佩戴护目镜并确认光路安全。" />
-      </section>
+        </GlassButton>
+        <GlassAlert class="lg-mt" type="warning" title="测试激光会短暂出光，请佩戴护目镜并确认光路安全。" />
+      </GlassSurface>
 
       <!-- 4. 雕刻参数 -->
-      <section v-else class="lg-section">
+      <GlassSurface v-else class="lg-section">
         <div class="lg-title"><span>默认雕刻参数</span></div>
         <div class="num-grid">
           <div class="num-item">
             <span class="lg-dim">雕刻速度 (mm/min)</span>
-            <var-input :model-value="String(form.markSpeed)" type="number" variant="outlined" @blur="onNum('markSpeed', $event)" />
+            <GlassInput :model-value="String(form.markSpeed)" type="number" variant="outlined" @blur="onNum('markSpeed', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">空移速度 (mm/min)</span>
-            <var-input :model-value="String(form.travelSpeed)" type="number" variant="outlined" @blur="onNum('travelSpeed', $event)" />
+            <GlassInput :model-value="String(form.travelSpeed)" type="number" variant="outlined" @blur="onNum('travelSpeed', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">默认线数 (线/mm)</span>
-            <var-input :model-value="String(form.quality)" type="number" variant="outlined" @blur="onNum('quality', $event)" />
+            <GlassInput :model-value="String(form.quality)" type="number" variant="outlined" @blur="onNum('quality', $event)" />
           </div>
         </div>
 
@@ -352,25 +352,25 @@ function finish() {
           <span class="lg-kv__k">{{ row.k }}</span>
           <span class="lg-kv__v">{{ row.v }}</span>
         </div>
-      </section>
+      </GlassSurface>
     </div>
 
     <!-- 底部操作 -->
     <footer class="wiz__foot">
-      <var-button v-if="step > 0" class="wiz__foot-btn" plain @click="prev">
+      <GlassButton v-if="step > 0" class="wiz__foot-btn" plain @click="prev">
         <AppIcon name="back" :size="16" />
         <span class="btn-text">上一步</span>
-      </var-button>
-      <var-button v-else class="wiz__foot-btn" plain @click="skip">稍后设置</var-button>
+      </GlassButton>
+      <GlassButton v-else class="wiz__foot-btn" plain @click="skip">稍后设置</GlassButton>
 
-      <var-button v-if="!isLast" class="wiz__foot-btn" type="primary" @click="next">
+      <GlassButton v-if="!isLast" class="wiz__foot-btn" type="primary" @click="next">
         <span class="btn-text">下一步</span>
         <AppIcon name="forward" :size="16" />
-      </var-button>
-      <var-button v-else class="wiz__foot-btn" type="primary" :loading="busy" @click="finish">
+      </GlassButton>
+      <GlassButton v-else class="wiz__foot-btn" type="primary" :loading="busy" @click="finish">
         <AppIcon name="check" :size="16" />
         <span class="btn-text">完成并保存</span>
-      </var-button>
+      </GlassButton>
     </footer>
   </div>
 </template>
@@ -382,7 +382,11 @@ function finish() {
   z-index: 400;
   display: flex;
   flex-direction: column;
-  background: var(--lg-bg);
+  /* 半透明遮罩 + 背景模糊：让底层极光透出来，
+     向导内部的玻璃卡片才有内容可折射（否则玻璃会退化成纯色块）。 */
+  background: var(--g-scrim);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
   padding-top: env(safe-area-inset-top);
 }
 
@@ -465,7 +469,9 @@ function finish() {
   display: flex;
   gap: 10px;
   padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-  background: var(--lg-panel);
+  background: var(--g-chrome);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
   border-top: 1px solid var(--lg-border);
 }
 

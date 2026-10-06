@@ -84,7 +84,7 @@ onMounted(() => {
   <div class="lg-page">
     <div class="lg-body">
       <!-- 已连接 -->
-      <section v-if="state.connected" class="lg-section">
+      <GlassSurface v-if="state.connected" class="lg-section">
         <div class="lg-title"><span>已连接设备</span></div>
         <div class="lg-kv">
           <span class="lg-kv__k">连接方式</span>
@@ -102,15 +102,15 @@ onMounted(() => {
           <span class="lg-kv__k">波特率</span>
           <span class="lg-kv__v lg-mono">{{ state.baud }}</span>
         </div>
-        <var-button class="lg-mt" block type="danger" @click="onDisconnect">
+        <GlassButton class="lg-mt" block type="danger" @click="onDisconnect">
           <AppIcon name="close" :size="17" />
           <span class="btn-text">断开连接</span>
-        </var-button>
-      </section>
+        </GlassButton>
+      </GlassSurface>
 
       <template v-else>
         <!-- 连接方式 -->
-        <section class="lg-section">
+        <GlassSurface class="lg-section">
           <div class="lg-title"><span>连接方式</span></div>
           <div class="seg">
             <button
@@ -130,31 +130,31 @@ onMounted(() => {
               <span>蓝牙</span>
             </button>
           </div>
-        </section>
+        </GlassSurface>
 
         <!-- 波特率 -->
-        <section class="lg-section">
+        <GlassSurface class="lg-section">
           <div class="lg-title"><span>串口参数</span></div>
-          <var-select v-model="baudModel" placeholder="选择波特率" variant="outlined">
-            <var-option v-for="b in BAUD_RATES" :key="b" :label="`${b} bps`" :value="b" />
-          </var-select>
+          <GlassSelect v-model="baudModel" placeholder="选择波特率" variant="outlined">
+            <GlassOption v-for="b in BAUD_RATES" :key="b" :label="`${b} bps`" :value="b" />
+          </GlassSelect>
           <div class="lg-dim lg-mt">
             大多数 GRBL 设备使用 115200；部分老设备使用 9600 或 57600。
           </div>
-        </section>
+        </GlassSurface>
 
         <!-- 设备列表 -->
-        <section class="lg-section">
+        <GlassSurface class="lg-section">
           <div class="lg-title">
             <span>{{ listTitle }}</span>
-            <var-button size="small" text type="primary" :loading="state.scanning" @click="refresh">
+            <GlassButton size="small" text type="primary" :loading="state.scanning" @click="refresh">
               <AppIcon name="refresh" :size="16" />
               <span class="btn-text">刷新</span>
-            </var-button>
+            </GlassButton>
           </div>
 
           <div v-if="state.scanning && devices.length === 0" class="lg-empty">
-            <var-loading type="circle" />
+            <GlassLoading type="circle" />
             <div class="lg-mt">正在扫描{{ kind === 'bluetooth' ? '蓝牙' : ' USB ' }}设备…</div>
           </div>
 
@@ -177,7 +177,7 @@ onMounted(() => {
                 <div class="dev-item__title">{{ deviceTitle(d) }}</div>
                 <div class="dev-item__sub lg-dim">{{ deviceSub(d) }}</div>
               </div>
-              <var-button
+              <GlassButton
                 size="small"
                 type="primary"
                 :loading="state.connecting"
@@ -185,11 +185,11 @@ onMounted(() => {
                 @click="onConnect(d)"
               >
                 连接
-              </var-button>
+              </GlassButton>
             </div>
           </div>
 
-          <var-button
+          <GlassButton
             v-if="kind === 'bluetooth'"
             class="lg-mt"
             block
@@ -199,10 +199,10 @@ onMounted(() => {
           >
             <AppIcon name="settings" :size="16" />
             <span class="btn-text">打开系统蓝牙设置</span>
-          </var-button>
-        </section>
+          </GlassButton>
+        </GlassSurface>
 
-        <section class="lg-section">
+        <GlassSurface class="lg-section">
           <div class="lg-title"><span>连接提示</span></div>
           <ul class="tips">
             <li>连接后应用会自动发送软复位并读取机器版本与设置。</li>
@@ -210,13 +210,13 @@ onMounted(() => {
             <li>Android 首次连接会弹出 USB 权限请求，请选择“允许”。</li>
             <li>蓝牙连接使用经典蓝牙 SPP，需先在系统设置中完成配对。</li>
           </ul>
-        </section>
+        </GlassSurface>
       </template>
 
-      <var-button class="lg-mt" block text @click="back">
+      <GlassButton class="lg-mt" block text @click="back">
         <AppIcon name="back" :size="17" />
         <span class="btn-text">返回</span>
-      </var-button>
+      </GlassButton>
     </div>
   </div>
 </template>
@@ -298,9 +298,5 @@ onMounted(() => {
   font-size: 12.5px;
   color: var(--lg-text-dim);
   line-height: 1.9;
-}
-
-.btn-text {
-  margin-left: 5px;
 }
 </style>

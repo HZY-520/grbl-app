@@ -3,6 +3,7 @@
  * 图片转雕刻
  *  - 光栅模式：Line2Line（线条）/ 抖动（黑白点阵），逐行扫描出光
  *  - 线性模式：轮廓描线（Potrace）/ 中心线走线（骨架），沿图形走线，非水平轮询
+ *  - 智能：按「平均笔画宽度 ≈ 墨水面积 / 骨架长度」自动选择描线或描边
  */
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -21,8 +22,10 @@ import {
   convertImageVector,
   DEFAULT_IMAGE_VECTOR_OPTIONS,
   VECTOR_TOOL_LABELS,
+  type ImageVectorResult,
   type VectorTool
 } from '../../core/vector/ImageVector'
+import { convertImageVectorSmart } from '../../core/vector/SmartVector'
 import { fitSizeToTravel, checkGcodeWithinTravel } from '../../core/grbl/DeviceProfile'
 import type { GcodeFileData } from '../../core/gcode/GrblFile'
 import { AppSettings } from '../../core/grbl/GrblConfig'
@@ -32,13 +35,14 @@ import { pickFile, loadImage, toast } from '../utils'
 
 const router = useRouter()
 
-/** 扩展后的转换方式：光栅两种 + 线性两种 */
-type ImageTool = RasterTool | VectorTool
+/** 扩展后的转换方式：光栅两种 + 线性两种 + 智能 */
+type ImageTool = RasterTool | VectorTool | 'Auto'
 const TOOL_LABELS: Record<ImageTool, string> = {
   Line2Line: '线条扫描',
   Dithering: '抖动点阵',
   Outline: VECTOR_TOOL_LABELS.Outline,
-  Centerline: VECTOR_TOOL_LABELS.Centerline
+  Centerline: VECTOR_TOOL_LABELS.Centerline,
+  Auto: '智能'
 }
 
 const imgUrl = ref('')
@@ -84,15 +88,20 @@ const vec = reactive({
   minBranchPx: DEFAULT_IMAGE_VECTOR_OPTIONS.minBranchPx,
   /** 中心线：简化容差（像素） */
   simplifyTolerance: DEFAULT_IMAGE_VECTOR_OPTIONS.simplifyTolerance,
+  /** 智能：笔画宽度阈值（占图像短边百分比） */
+  strokeWidthPct: 2.5,
   /** 最近邻排序，缩短空移 */
   optimize: true
 })
+
+/** 智能判定结果（界面展示用） */
+const decisionText = ref('')
 
 const widthMm = ref(50)
 const heightMm = ref(50)
 const autoHeight = ref(true)
 
-const isVector = computed(() => tool.value === 'Outline' || tool.value === 'Centerline')
+const isVector = computed(() => tool.value === 'Outline' || tool.value === 'Centerline' || tool.value === 'Auto')
 
 const aspect = computed(() => (imgW.value > 0 ? imgH.value / imgW.value : 1))
 
@@ -115,7 +124,7 @@ const DIRECTION_OPTIONS = (Object.keys(DIRECTION_LABELS) as RasterDirection[]).m
 
 const DITHER_OPTIONS = DITHERING_MODES.map((value) => ({ value, label: DITHERING_LABELS[value] }))
 
-const TOOL_OPTIONS: ImageTool[] = ['Line2Line', 'Dithering', 'Outline', 'Centerline']
+const TOOL_OPTIONS: ImageTool[] = ['Line2Line', 'Dithering', 'Outline', 'Centerline', 'Auto']
 
 /** 依据设备行程对尺寸做自适应（Fit：等比缩放到行程内） */
 function adaptSize(): { w: number; h: number; message?: string } {
@@ -148,7 +157,7 @@ async function pick() {
   }
 }
 
-/** 线性模式：位图 → 沿图形走线（轮廓 / 中心线） */
+/** 线性模式：位图 → 沿图形走线（轮廓 / 中心线 / 智能） */
 function generateVector(wMm: number, hMm: number) {
   const el = imgEl.value as HTMLImageElement
   const srcW = imgW.value
@@ -159,42 +168,52 @@ function generateVector(wMm: number, hMm: number) {
   const pw = Math.max(1, Math.round(srcW * s))
   const ph = Math.max(1, Math.round(srcH * s))
   const id = resizeImage(el, srcW, srcH, pw, ph, true, 'high')
+  const image = { data: id.data, width: pw, height: ph }
 
-  const res = convertImageVector(
-    { data: id.data, width: pw, height: ph },
-    {
-      ...DEFAULT_IMAGE_VECTOR_OPTIONS,
-      tool: tool.value as VectorTool,
-      threshold: Math.round((vec.threshold / 100) * 255),
-      invert: vec.invert,
-      widthMm: wMm,
-      heightMm: hMm,
-      offsetX: opts.offsetX,
-      offsetY: opts.offsetY,
-      markSpeed: opts.markSpeed,
-      travelSpeed: 3000,
-      minPower: opts.minPower,
-      maxPower: opts.maxPower,
-      laserPower: opts.maxPower,
-      laserOn: opts.laserOn,
-      laserOff: opts.laserOff,
-      pwm: opts.pwm,
-      header: opts.header,
-      footer: opts.footer,
-      optimize: vec.optimize,
-      turdSize: vec.turdSize,
-      alphaMax: vec.alphaMax,
-      curveOptimizing: vec.curveOptimizing,
-      minBranchPx: vec.minBranchPx,
-      simplifyTolerance: vec.simplifyTolerance
-    }
-  )
+  // 三种线性方式共用同一份参数，只有选择方式的分支不同
+  const base = {
+    ...DEFAULT_IMAGE_VECTOR_OPTIONS,
+    threshold: Math.round((vec.threshold / 100) * 255),
+    invert: vec.invert,
+    widthMm: wMm,
+    heightMm: hMm,
+    offsetX: opts.offsetX,
+    offsetY: opts.offsetY,
+    markSpeed: opts.markSpeed,
+    travelSpeed: 3000,
+    minPower: opts.minPower,
+    maxPower: opts.maxPower,
+    laserPower: opts.maxPower,
+    laserOn: opts.laserOn,
+    laserOff: opts.laserOff,
+    pwm: opts.pwm,
+    header: opts.header,
+    footer: opts.footer,
+    optimize: vec.optimize,
+    turdSize: vec.turdSize,
+    alphaMax: vec.alphaMax,
+    curveOptimizing: vec.curveOptimizing,
+    minBranchPx: vec.minBranchPx,
+    simplifyTolerance: vec.simplifyTolerance
+  }
+
+  let res: ImageVectorResult
+  if (tool.value === 'Auto') {
+    // 智能：判定用位图与出图用位图是同一张，保证面积 / 骨架长度之比有效
+    const { tool: _explicit, ...rest } = base
+    const smart = convertImageVectorSmart(image, { ...rest, strokeWidthThresholdPct: vec.strokeWidthPct })
+    res = smart
+    decisionText.value = smart.decision.summary
+  } else {
+    res = convertImageVector(image, { ...base, tool: tool.value as VectorTool })
+    decisionText.value = ''
+  }
 
   previewUrl.value = toDataURL(res.preview)
   pixelInfo.value = `${pw} × ${ph} px · 二值化 ${vec.threshold}%`
   extraInfo.value = `走线 ${res.pathCount} 段 · 路径长度 ${res.lengthMm.toFixed(1)} mm`
-  const base = imgName.value.replace(/\.[^.]+$/, '') || 'image'
-  generated.value = loadGcodeLines(`${base}-${tool.value}.gcode`, res.lines)
+  const base2 = imgName.value.replace(/\.[^.]+$/, '') || 'image'
+  generated.value = loadGcodeLines(`${base2}-${tool.value}.gcode`, res.lines)
   return res.lines
 }
 
@@ -276,7 +295,7 @@ function setTool(t: ImageTool) {
   <div class="lg-page">
     <div class="lg-body">
       <!-- 导入 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>图片</span></div>
         <div v-if="!imgUrl" class="upload-box" @click="pick">
           <AppIcon name="image" :size="30" />
@@ -289,21 +308,21 @@ function setTool(t: ImageTool) {
             <div class="img-row__name">{{ imgName }}</div>
             <div class="lg-dim">{{ imgW }} × {{ imgH }} px</div>
           </div>
-          <var-button size="small" text type="primary" @click="pick">更换</var-button>
+          <GlassButton size="small" text type="primary" @click="pick">更换</GlassButton>
         </div>
-      </section>
+      </GlassSurface>
 
       <!-- 尺寸 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>尺寸</span></div>
         <div class="num-grid">
           <div class="num-item">
             <span class="lg-dim">宽度 (mm)</span>
-            <var-input :model-value="String(widthMm)" type="number" variant="outlined" @blur="onNum('widthMm', $event)" />
+            <GlassInput :model-value="String(widthMm)" type="number" variant="outlined" @blur="onNum('widthMm', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">高度 (mm)</span>
-            <var-input
+            <GlassInput
               :model-value="autoHeight ? String(effectiveHeight) : String(heightMm)"
               type="number"
               variant="outlined"
@@ -312,19 +331,19 @@ function setTool(t: ImageTool) {
             />
           </div>
         </div>
-        <var-cell title="高度按比例自动" description="保持图片宽高比">
+        <GlassCell title="高度按比例自动" description="保持图片宽高比">
           <template #extra>
-            <var-switch v-model="autoHeight" />
+            <GlassSwitch v-model="autoHeight" />
           </template>
-        </var-cell>
+        </GlassCell>
         <div class="lg-dim lg-mt">生成时会自动按设备行程（可在设置 / 初始化向导中修改）等比适配。</div>
-      </section>
+      </GlassSurface>
 
       <!-- 转换方式 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>转换方式</span></div>
         <div class="steps">
-          <var-button
+          <GlassButton
             v-for="t in TOOL_OPTIONS"
             :key="t"
             size="small"
@@ -333,184 +352,226 @@ function setTool(t: ImageTool) {
             @click="setTool(t)"
           >
             {{ TOOL_LABELS[t] }}
-          </var-button>
+          </GlassButton>
         </div>
         <div class="lg-dim lg-mt">
           {{ isVector ? '沿图形轮廓 / 笔画走线，不是水平轮询。' : '逐行扫描出光，适合照片 / 渐变色块。' }}
+        </div>
+        <div v-if="tool === 'Auto'" class="lg-dim lg-mt">
+          自动判断：平均笔画宽度 ≈ 墨水面积 / 骨架长度，占图像短边不超过阈值（默认 2.5%）判为线稿 →
+          中心线描线；否则判为实心图案 → 轮廓提取。
         </div>
 
         <!-- 光栅：扫描方向 -->
         <template v-if="!isVector">
           <div class="lg-deco lg-mt">
             <div class="lg-dim">扫描方向</div>
-            <var-select class="lg-mt" :model-value="opts.direction" variant="outlined" @change="opts.direction = $event as RasterDirection">
-              <var-option v-for="d in DIRECTION_OPTIONS" :key="d.value" :label="d.label" :value="d.value" />
-            </var-select>
+            <GlassSelect class="lg-mt" :model-value="opts.direction" variant="outlined" @change="opts.direction = $event as RasterDirection">
+              <GlassOption v-for="d in DIRECTION_OPTIONS" :key="d.value" :label="d.label" :value="d.value" />
+            </GlassSelect>
           </div>
         </template>
 
         <div class="num-grid lg-mt">
           <div v-if="!isVector" class="num-item">
             <span class="lg-dim">分辨率 (线/mm)</span>
-            <var-input :model-value="String(opts.quality)" type="number" variant="outlined" @blur="onNum('quality', $event)" />
+            <GlassInput :model-value="String(opts.quality)" type="number" variant="outlined" @blur="onNum('quality', $event)" />
           </div>
           <div v-else class="num-item">
             <span class="lg-dim">二值化阈值 (%)</span>
-            <var-input :model-value="String(vec.threshold)" type="number" variant="outlined" @blur="onVecNum('threshold', $event)" />
+            <GlassInput :model-value="String(vec.threshold)" type="number" variant="outlined" @blur="onVecNum('threshold', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">起始偏移 X / Y (mm)</span>
             <div class="lg-grid-2">
-              <var-input :model-value="String(opts.offsetX)" type="number" variant="outlined" @blur="onNum('offsetX', $event)" />
-              <var-input :model-value="String(opts.offsetY)" type="number" variant="outlined" @blur="onNum('offsetY', $event)" />
+              <GlassInput :model-value="String(opts.offsetX)" type="number" variant="outlined" @blur="onNum('offsetX', $event)" />
+              <GlassInput :model-value="String(opts.offsetY)" type="number" variant="outlined" @blur="onNum('offsetY', $event)" />
             </div>
           </div>
         </div>
 
-        <var-cell v-if="isVector" title="反相" description="深底浅图时启用">
+        <GlassCell v-if="isVector" title="反相" description="深底浅图时启用">
           <template #extra>
-            <var-switch v-model="vec.invert" />
+            <GlassSwitch v-model="vec.invert" />
           </template>
-        </var-cell>
-      </section>
+        </GlassCell>
+      </GlassSurface>
 
       <!-- 抖动模式 -->
-      <section v-if="tool === 'Dithering'" class="lg-section">
+      <GlassSurface v-if="tool === 'Dithering'" class="lg-section">
         <div class="lg-title"><span>抖动算法</span></div>
-        <var-select :model-value="opts.dithering" variant="outlined" @change="opts.dithering = $event as DitheringMode">
-          <var-option v-for="d in DITHER_OPTIONS" :key="d.value" :label="d.label" :value="d.value" />
-        </var-select>
-      </section>
+        <GlassSelect :model-value="opts.dithering" variant="outlined" @change="opts.dithering = $event as DitheringMode">
+          <GlassOption v-for="d in DITHER_OPTIONS" :key="d.value" :label="d.label" :value="d.value" />
+        </GlassSelect>
+      </GlassSurface>
 
       <!-- 线性参数 -->
-      <section v-if="isVector" class="lg-section">
-        <div class="lg-title"><span>{{ tool === 'Centerline' ? '中心线参数' : '轮廓描线参数' }}</span></div>
+      <GlassSurface v-if="isVector" class="lg-section">
+        <div class="lg-title">
+          <span>{{ tool === 'Outline' ? '轮廓描线参数' : tool === 'Auto' ? '智能识别参数' : '中心线参数' }}</span>
+        </div>
         <div v-if="tool === 'Outline'" class="num-grid">
           <div class="num-item">
             <span class="lg-dim">去斑面积 (像素)</span>
-            <var-input :model-value="String(vec.turdSize)" type="number" variant="outlined" @blur="onVecNum('turdSize', $event)" />
+            <GlassInput :model-value="String(vec.turdSize)" type="number" variant="outlined" @blur="onVecNum('turdSize', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">圆角阈值</span>
-            <var-input :model-value="String(vec.alphaMax)" type="number" variant="outlined" @blur="onVecNum('alphaMax', $event)" />
+            <GlassInput :model-value="String(vec.alphaMax)" type="number" variant="outlined" @blur="onVecNum('alphaMax', $event)" />
           </div>
         </div>
-        <div v-else class="num-grid">
+        <div v-else-if="tool === 'Centerline'" class="num-grid">
           <div class="num-item">
             <span class="lg-dim">去毛刺长度 (像素)</span>
-            <var-input :model-value="String(vec.minBranchPx)" type="number" variant="outlined" @blur="onVecNum('minBranchPx', $event)" />
+            <GlassInput :model-value="String(vec.minBranchPx)" type="number" variant="outlined" @blur="onVecNum('minBranchPx', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">简化容差 (像素)</span>
-            <var-input :model-value="String(vec.simplifyTolerance)" type="number" variant="outlined" @blur="onVecNum('simplifyTolerance', $event)" />
+            <GlassInput :model-value="String(vec.simplifyTolerance)" type="number" variant="outlined" @blur="onVecNum('simplifyTolerance', $event)" />
           </div>
         </div>
-        <var-cell title="轮廓曲线优化" description="把相邻曲线合并，减少节点数（仅轮廓描线）">
+        <template v-else>
+          <div class="slider-row">
+            <span class="lg-dim">笔画宽度阈值（占图像短边 %）</span>
+            <span class="lg-mono">{{ vec.strokeWidthPct.toFixed(1) }}%</span>
+          </div>
+          <GlassSlider v-model="vec.strokeWidthPct" :min="0.5" :max="10" :step="0.1" />
+          <div class="lg-dim lg-mt">
+            平均笔画宽度 ≈ 墨水面积 / 骨架长度，再除以图像短边：小于等于该阈值 → 中心线走线；大于 → 轮廓描线。
+          </div>
+          <div class="lg-dim">兜底：骨架为空或退化、墨水覆盖率超过 50% 时，一律回退轮廓描线。</div>
+          <div class="lg-dim lg-mt">判定为线稿时使用下面的中心线参数：</div>
+          <div class="num-grid lg-mt">
+            <div class="num-item">
+              <span class="lg-dim">去毛刺长度 (像素)</span>
+              <GlassInput :model-value="String(vec.minBranchPx)" type="number" variant="outlined" @blur="onVecNum('minBranchPx', $event)" />
+            </div>
+            <div class="num-item">
+              <span class="lg-dim">简化容差 (像素)</span>
+              <GlassInput :model-value="String(vec.simplifyTolerance)" type="number" variant="outlined" @blur="onVecNum('simplifyTolerance', $event)" />
+            </div>
+          </div>
+          <div class="lg-dim lg-mt">判定为实心图案时使用下面的轮廓参数：</div>
+          <div class="num-grid lg-mt">
+            <div class="num-item">
+              <span class="lg-dim">去斑面积 (像素)</span>
+              <GlassInput :model-value="String(vec.turdSize)" type="number" variant="outlined" @blur="onVecNum('turdSize', $event)" />
+            </div>
+            <div class="num-item">
+              <span class="lg-dim">圆角阈值</span>
+              <GlassInput :model-value="String(vec.alphaMax)" type="number" variant="outlined" @blur="onVecNum('alphaMax', $event)" />
+            </div>
+          </div>
+        </template>
+        <GlassCell title="轮廓曲线优化" description="把相邻曲线合并，减少节点数（仅轮廓描线）">
           <template #extra>
-            <var-switch v-model="vec.curveOptimizing" :disabled="tool !== 'Outline'" />
+            <GlassSwitch v-model="vec.curveOptimizing" :disabled="tool === 'Centerline'" />
           </template>
-        </var-cell>
-        <var-cell title="路径排序优化" description="最近邻排序，缩短空移距离">
+        </GlassCell>
+        <GlassCell title="路径排序优化" description="最近邻排序，缩短空移距离">
           <template #extra>
-            <var-switch v-model="vec.optimize" />
+            <GlassSwitch v-model="vec.optimize" />
           </template>
-        </var-cell>
-      </section>
+        </GlassCell>
+      </GlassSurface>
 
       <!-- 雕刻参数 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>雕刻参数</span></div>
         <div class="num-grid">
           <div class="num-item">
             <span class="lg-dim">雕刻速度 (mm/min)</span>
-            <var-input :model-value="String(opts.markSpeed)" type="number" variant="outlined" @blur="onNum('markSpeed', $event)" />
+            <GlassInput :model-value="String(opts.markSpeed)" type="number" variant="outlined" @blur="onNum('markSpeed', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">最大功率 S</span>
-            <var-input :model-value="String(opts.maxPower)" type="number" variant="outlined" @blur="onNum('maxPower', $event)" />
+            <GlassInput :model-value="String(opts.maxPower)" type="number" variant="outlined" @blur="onNum('maxPower', $event)" />
           </div>
           <div class="num-item">
             <span class="lg-dim">最小功率 S</span>
-            <var-input :model-value="String(opts.minPower)" type="number" variant="outlined" @blur="onNum('minPower', $event)" />
+            <GlassInput :model-value="String(opts.minPower)" type="number" variant="outlined" @blur="onNum('minPower', $event)" />
           </div>
         </div>
-        <var-cell title="硬件 PWM" description="使用 S 值渐变控制激光功率">
+        <GlassCell title="硬件 PWM" description="使用 S 值渐变控制激光功率">
           <template #extra>
-            <var-switch v-model="opts.pwm" />
+            <GlassSwitch v-model="opts.pwm" />
           </template>
-        </var-cell>
-        <var-cell v-if="!isVector" title="单向雕刻" description="仅单向出光，质量更高">
+        </GlassCell>
+        <GlassCell v-if="!isVector" title="单向雕刻" description="仅单向出光，质量更高">
           <template #extra>
-            <var-switch v-model="opts.unidirectional" />
+            <GlassSwitch v-model="opts.unidirectional" />
           </template>
-        </var-cell>
-        <var-cell v-if="!isVector" title="禁用 G0 快速空移" description="空移使用 G1 进给">
+        </GlassCell>
+        <GlassCell v-if="!isVector" title="禁用 G0 快速空移" description="空移使用 G1 进给">
           <template #extra>
-            <var-switch v-model="opts.disableFastSkip" />
+            <GlassSwitch v-model="opts.disableFastSkip" />
           </template>
-        </var-cell>
-      </section>
+        </GlassCell>
+      </GlassSurface>
 
       <!-- 进阶预处理（仅光栅） -->
-      <section v-if="!isVector" class="lg-section">
-        <var-collapse>
-          <var-collapse-item title="进阶：图像预处理" name="adv">
+      <GlassSurface v-if="!isVector" class="lg-section">
+        <GlassCollapse>
+          <GlassCollapseItem title="进阶：图像预处理" name="adv">
             <div class="lg-deco">
               <div class="lg-dim">灰度公式</div>
-              <var-select class="lg-mt" :model-value="opts.formula" variant="outlined" @change="opts.formula = $event as Formula">
-                <var-option v-for="f in FORMULA_OPTIONS" :key="f.value" :label="f.label" :value="f.value" />
-              </var-select>
+              <GlassSelect class="lg-mt" :model-value="opts.formula" variant="outlined" @change="opts.formula = $event as Formula">
+                <GlassOption v-for="f in FORMULA_OPTIONS" :key="f.value" :label="f.label" :value="f.value" />
+              </GlassSelect>
             </div>
 
             <div class="slider-row lg-mt">
               <span class="lg-dim">亮度</span>
               <span class="lg-mono">{{ opts.brightness }}</span>
             </div>
-            <var-slider v-model="opts.brightness" :min="0" :max="200" :step="5" />
+            <GlassSlider v-model="opts.brightness" :min="0" :max="200" :step="5" />
 
             <div class="slider-row lg-mt">
               <span class="lg-dim">对比度</span>
               <span class="lg-mono">{{ opts.contrast }}</span>
             </div>
-            <var-slider v-model="opts.contrast" :min="0" :max="200" :step="5" />
+            <GlassSlider v-model="opts.contrast" :min="0" :max="200" :step="5" />
 
             <div class="slider-row lg-mt">
               <span class="lg-dim">白色裁剪</span>
               <span class="lg-mono">{{ opts.whiteClip }}</span>
             </div>
-            <var-slider v-model="opts.whiteClip" :min="0" :max="100" :step="1" />
+            <GlassSlider v-model="opts.whiteClip" :min="0" :max="100" :step="1" />
 
             <template v-if="tool === 'Line2Line'">
-              <var-cell title="启用阈值化" description="按阈值二值化，适合线稿">
+              <GlassCell title="启用阈值化" description="按阈值二值化，适合线稿">
                 <template #extra>
-                  <var-switch v-model="opts.useThreshold" />
+                  <GlassSwitch v-model="opts.useThreshold" />
                 </template>
-              </var-cell>
+              </GlassCell>
               <div class="slider-row">
                 <span class="lg-dim">阈值</span>
                 <span class="lg-mono">{{ opts.threshold }}</span>
               </div>
-              <var-slider v-model="opts.threshold" :min="1" :max="99" :step="1" />
+              <GlassSlider v-model="opts.threshold" :min="1" :max="99" :step="1" />
             </template>
 
-            <var-cell title="高质量插值" description="缩放时使用平滑插值">
+            <GlassCell title="高质量插值" description="缩放时使用平滑插值">
               <template #extra>
-                <var-switch :model-value="opts.interpolation === 'high'" @update:model-value="opts.interpolation = $event ? 'high' : 'low'" />
+                <GlassSwitch :model-value="opts.interpolation === 'high'" @update:model-value="opts.interpolation = $event ? 'high' : 'low'" />
               </template>
-            </var-cell>
-          </var-collapse-item>
-        </var-collapse>
-      </section>
+            </GlassCell>
+          </GlassCollapseItem>
+        </GlassCollapse>
+      </GlassSurface>
 
-      <var-alert v-if="warn" type="warning" :title="warn" class="lg-mb" />
+      <GlassAlert v-if="warn" type="warning" :title="warn" class="lg-mb" />
 
-      <var-button block type="primary" :loading="busy" :disabled="!canGenerate" @click="generate">
+      <GlassButton block type="primary" :loading="busy" :disabled="!canGenerate" @click="generate">
         <AppIcon name="layers" :size="17" />
         <span class="btn-text">生成雕刻路径</span>
-      </var-button>
+      </GlassButton>
 
       <!-- 结果 -->
-      <section v-if="generated" class="lg-section lg-mt">
+      <GlassSurface v-if="generated" class="lg-section lg-mt">
+        <!-- 智能识别结果：让用户看到自动选了什么、为什么 -->
+        <GlassAlert v-if="decisionText" class="lg-mb" type="info" :title="decisionText" />
+
         <div class="lg-title">
           <span>二值化预览</span>
           <span class="lg-dim">{{ pixelInfo }}</span>
@@ -524,16 +585,16 @@ function setTool(t: ImageTool) {
         <GcodePreview :preview="generated.preview" :bbox="generated.stats.bbox" :height="220" />
 
         <div class="lg-grid-2 lg-mt">
-          <var-button block plain @click="save">
+          <GlassButton block plain @click="save">
             <AppIcon name="save" :size="17" />
             <span class="btn-text">保存文件</span>
-          </var-button>
-          <var-button block type="primary" @click="goHome">
+          </GlassButton>
+          <GlassButton block type="primary" @click="goHome">
             <AppIcon name="play" :size="17" />
             <span class="btn-text">去雕刻</span>
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
     </div>
   </div>
 </template>
@@ -620,9 +681,5 @@ function setTool(t: ImageTool) {
   max-height: 260px;
   image-rendering: pixelated;
   border-radius: 6px;
-}
-
-.btn-text {
-  margin-left: 5px;
 }
 </style>

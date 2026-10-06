@@ -1,6 +1,6 @@
 {
   "name": "igrbl",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "description": "iGRBL - 激光雕刻机控制应用（GRBL）",
   "type": "module",
@@ -15,7 +15,7 @@
   "dependencies": {
     "@capacitor/android": "^6.2.0",
     "@capacitor/core": "^6.2.0",
-    "@varlet/ui": "^3.10.1",
+    "simple-liquid-glass": "^5.3.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },

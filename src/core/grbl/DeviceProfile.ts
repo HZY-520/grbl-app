@@ -193,16 +193,6 @@ export function builtinProfiles(): DeviceProfile[] {
   ]
 }
 
-/** 是否已经完成首次初始化向导 */
-export function isSetupDone(): boolean {
-  if (!hasStorage()) return false
-  try {
-    return localStorage.getItem(SETUP_KEY) === '1'
-  } catch {
-    return false
-  }
-}
-
 export function setSetupDone(done: boolean): void {
   if (!hasStorage()) return
   try {
@@ -210,12 +200,6 @@ export function setSetupDone(done: boolean): void {
   } catch {
     /* ignore */
   }
-}
-
-/** 读取全部档案：若尚未保存过任何档案，则回退为内置预设（只读，供预览/初始化向导使用） */
-export function listProfiles(): DeviceProfile[] {
-  const stored = readStored()
-  return stored.length > 0 ? stored : builtinProfiles()
 }
 
 /** 仅返回用户真实保存过的档案（不含内置只读预设） */
@@ -268,11 +252,6 @@ export function markDeviceKnown(deviceId: number): void {
 /** 按 USB 设备编号查找已绑定的档案 */
 export function findProfileByDevice(deviceId: number): DeviceProfile | null {
   return readStored().find((p) => p.deviceId === deviceId) ?? null
-}
-
-/** 当前激活档案，未选中任何设备时返回 null */
-export function getActiveProfile(): DeviceProfile | null {
-  return listProfiles().find((p) => p.active) ?? null
 }
 
 /**

@@ -58,7 +58,7 @@ function onClear() {
 <template>
   <div class="lg-page">
     <div class="lg-body">
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title">
           <span>串口终端</span>
           <span class="lg-badge" :class="state.connected ? 'lg-badge--ok' : 'lg-badge--idle'">
@@ -67,36 +67,36 @@ function onClear() {
         </div>
         <LogList :height="'52vh'" />
         <div class="term-actions">
-          <var-button size="small" text @click="onClear">
+          <GlassButton size="small" text @click="onClear">
             <AppIcon name="trash" :size="16" />
             <span class="btn-text">清空</span>
-          </var-button>
-          <var-button size="small" text type="warning" :disabled="!state.connected" @click="onSoftReset">
+          </GlassButton>
+          <GlassButton size="small" text type="warning" :disabled="!state.connected" @click="onSoftReset">
             <AppIcon name="power" :size="16" />
             <span class="btn-text">软复位</span>
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
 
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>发送命令</span></div>
         <div class="send-row">
-          <var-input
+          <GlassInput
             v-model="input"
             placeholder="输入 G 代码或 $ 命令"
             variant="outlined"
             @keyup.enter="send()"
           />
-          <var-button type="primary" :disabled="!state.connected" @click="send()">
+          <GlassButton type="primary" :disabled="!state.connected" @click="send()">
             发送
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
 
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>快捷命令</span></div>
         <div class="quick">
-          <var-button
+          <GlassButton
             v-for="q in QUICK"
             :key="q.cmd"
             size="small"
@@ -105,9 +105,9 @@ function onClear() {
             @click="quick(q.cmd)"
           >
             {{ q.label }}
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
     </div>
   </div>
 </template>
@@ -131,9 +131,5 @@ function onClear() {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.btn-text {
-  margin-left: 5px;
 }
 </style>

@@ -117,8 +117,11 @@ function parseNumbers(str: string | null): number[] {
   return out
 }
 
-/** 解析 SVG 长度（px/mm/cm/in/pt/pc/em），返回像素值 */
-function parseLength(str: string | null): number {
+/**
+ * 解析 SVG 长度（px/mm/cm/in/pt/pc/em），返回像素值。
+ * （新增导出：供 SVG 光栅化走线复用，行为不变）
+ */
+export function parseLength(str: string | null): number {
   if (!str) return 0
   const m = /^\s*([-+]?(?:\d*\.\d+|\d+\.?)(?:[eE][-+]?\d+)?)\s*([a-zA-Z%]*)\s*$/.exec(str)
   if (!m) return 0
@@ -145,8 +148,11 @@ function parseLength(str: string | null): number {
   }
 }
 
-/** 解析 viewBox，返回 [minX, minY, width, height]；无效时返回 null */
-function parseViewBox(str: string | null): [number, number, number, number] | null {
+/**
+ * 解析 viewBox，返回 [minX, minY, width, height]；无效时返回 null。
+ * （新增导出：供 SVG 光栅化走线复用，行为不变）
+ */
+export function parseViewBox(str: string | null): [number, number, number, number] | null {
   const n = parseNumbers(str)
   if (n.length < 4) return null
   if (!(n[2] > 0) || !(n[3] > 0)) return null

@@ -34,16 +34,16 @@ function goto(path: string) {
 <template>
   <div class="lg-page">
     <div class="lg-body lg-body--nav">
-      <section v-for="item in ITEMS" :key="item.path" class="lg-section hub-card" @click="goto(item.path)">
+      <GlassSurface v-for="item in ITEMS" :key="item.path" class="lg-section hub-card" @click="goto(item.path)">
         <div class="hub-card__icon"><AppIcon :name="item.icon" :size="26" /></div>
         <div class="hub-card__text">
           <div class="hub-card__title">{{ item.title }}</div>
           <div class="hub-card__desc lg-dim">{{ item.desc }}</div>
         </div>
         <AppIcon name="forward" :size="18" />
-      </section>
+      </GlassSurface>
 
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>使用流程</span></div>
         <ol class="flow">
           <li>选择图案类型并导入素材</li>
@@ -51,17 +51,17 @@ function goto(path: string) {
           <li>生成 G 代码并预览路径</li>
           <li>回到首页开始雕刻</li>
         </ol>
-      </section>
+      </GlassSurface>
 
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-row lg-row--between">
           <span class="lg-dim">已有 G 代码文件？</span>
-          <var-button size="small" plain @click="goto('/file')">
+          <GlassButton size="small" plain @click="goto('/file')">
             <AppIcon name="folder" :size="16" />
             <span class="btn-text">打开文件</span>
-          </var-button>
+          </GlassButton>
         </div>
-      </section>
+      </GlassSurface>
     </div>
   </div>
 </template>
@@ -112,9 +112,5 @@ function goto(path: string) {
   font-size: 13px;
   color: var(--lg-text-dim);
   line-height: 2;
-}
-
-.btn-text {
-  margin-left: 5px;
 }
 </style>

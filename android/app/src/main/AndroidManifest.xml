@@ -47,6 +47,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
+
+        <!-- 雕刻任务前台服务：运行期间保活并在通知栏显示进度（dataSync 类型，API 34 必需声明） -->
+        <service
+            android:name=".EngraveService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false" />
     </application>
 
     <!-- Permissions -->
@@ -59,4 +65,12 @@
     <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- 雕刻期间前台服务保活 + 常驻进度通知：
+         FOREGROUND_SERVICE 为前台服务基础权限；
+         FOREGROUND_SERVICE_DATA_SYNC 为 Android 14（API 34）起 dataSync 类型前台服务必需；
+         POST_NOTIFICATIONS 为 Android 13（API 33）起显示通知的运行时权限。 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 </manifest>

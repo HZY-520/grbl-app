@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
-import Varlet from '@varlet/ui'
-import '@varlet/ui/es/style'
-import './styles/global.css'
+import './styles/glass.css'
 import App from './App.vue'
 import { router } from './router'
+import { installGlass } from './ui/glass'
 import { applyTheme } from './ui/theme'
 import { state } from './ui/store'
 
@@ -11,6 +10,6 @@ import { state } from './ui/store'
 applyTheme(state.theme)
 
 const app = createApp(App)
-app.use(Varlet)
+installGlass(app)
 app.use(router)
 app.mount('#app')

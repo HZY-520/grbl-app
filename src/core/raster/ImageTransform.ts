@@ -42,16 +42,6 @@ export function resizeImage(
   return ctx.getImageData(0, 0, canvas.width, canvas.height)
 }
 
-/** 读取图片原始像素 */
-export function readImageData(source: CanvasImageSource, w: number, h: number): ImageData {
-  const canvas = document.createElement('canvas')
-  canvas.width = w
-  canvas.height = h
-  const ctx = canvas.getContext('2d', { willReadFrequently: true })!
-  ctx.drawImage(source, 0, 0)
-  return ctx.getImageData(0, 0, w, h)
-}
-
 /** 灰度化（对应 ImageTransform.GrayScale 的 ColorMatrix 效果） */
 export function grayScale(
   data: ImageData,

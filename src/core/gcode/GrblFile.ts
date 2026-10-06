@@ -172,7 +172,3 @@ export function analyze(commands: GrblCommand[]): { stats: GcodeStats; preview: 
   }
 }
 
-/** 生成用于发送的命令列表（保持原顺序，含注释去除） */
-export function toGcodeText(commands: GrblCommand[]): string {
-  return commands.map((c) => c.command).join('\n')
-}

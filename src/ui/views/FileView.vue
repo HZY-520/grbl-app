@@ -7,7 +7,7 @@ import GcodePreview from '../components/GcodePreview.vue'
 import { state, loadGcodeText, loadGcodeLines, clearFile, runFile } from '../store'
 import { listSavedFiles, saveGcodeFile, deleteSavedFile, type SavedFile } from '../storage'
 import { GCODE_EXTENSIONS } from '../../core/grbl/types'
-import { pickFile, formatSize, formatDuration, toast } from '../utils'
+import { pickFile, formatDuration, toast } from '../utils'
 
 const router = useRouter()
 
@@ -78,13 +78,13 @@ onMounted(reload)
   <div class="lg-page">
     <div class="lg-body lg-body--nav">
       <!-- 当前文件 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title">
           <span>当前文件</span>
-          <var-button v-if="state.file" size="small" text @click="onClear">
+          <GlassButton v-if="state.file" size="small" text @click="onClear">
             <AppIcon name="close" :size="16" />
             <span class="btn-text">清除</span>
-          </var-button>
+          </GlassButton>
         </div>
 
         <div v-if="!state.file" class="lg-empty">
@@ -117,42 +117,42 @@ onMounted(reload)
             :height="200"
           />
           <div class="lg-grid-3 lg-mt">
-            <var-button type="primary" :disabled="!canRun" @click="onRun">
+            <GlassButton type="primary" :disabled="!canRun" @click="onRun">
               <AppIcon name="play" :size="17" />
-            </var-button>
-            <var-button plain @click="router.push('/preview')">
+            </GlassButton>
+            <GlassButton plain @click="router.push('/preview')">
               <AppIcon name="eye" :size="17" />
-            </var-button>
-            <var-button plain @click="saveCurrent">
+            </GlassButton>
+            <GlassButton plain @click="saveCurrent">
               <AppIcon name="save" :size="17" />
-            </var-button>
+            </GlassButton>
           </div>
         </template>
-      </section>
+      </GlassSurface>
 
       <!-- 载入 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title"><span>载入文件</span></div>
         <div class="lg-grid-2">
-          <var-button block type="primary" :loading="busy" @click="openLocal">
+          <GlassButton block type="primary" :loading="busy" @click="openLocal">
             <AppIcon name="folder" :size="17" />
             <span class="btn-text">打开本地文件</span>
-          </var-button>
-          <var-button block plain @click="router.push('/convert')">
+          </GlassButton>
+          <GlassButton block plain @click="router.push('/convert')">
             <AppIcon name="layers" :size="17" />
             <span class="btn-text">生成图案</span>
-          </var-button>
+          </GlassButton>
         </div>
         <div class="lg-dim lg-mt">支持 {{ GCODE_EXTENSIONS.join(' / ') }} 格式</div>
-      </section>
+      </GlassSurface>
 
       <!-- 已保存 -->
-      <section class="lg-section">
+      <GlassSurface class="lg-section">
         <div class="lg-title">
           <span>已保存文件</span>
-          <var-button size="small" text type="primary" @click="reload">
+          <GlassButton size="small" text type="primary" @click="reload">
             <AppIcon name="refresh" :size="16" />
-          </var-button>
+          </GlassButton>
         </div>
 
         <div v-if="files.length === 0" class="lg-empty">暂无已保存文件</div>
@@ -167,12 +167,12 @@ onMounted(reload)
                 <template v-if="f.meta?.note"> · {{ f.meta.note }}</template>
               </div>
             </div>
-            <var-button size="small" text type="danger" @click="remove(f)">
+            <GlassButton size="small" text type="danger" @click="remove(f)">
               <AppIcon name="trash" :size="16" />
-            </var-button>
+            </GlassButton>
           </div>
         </div>
-      </section>
+      </GlassSurface>
     </div>
   </div>
 </template>
@@ -245,9 +245,5 @@ onMounted(reload)
 .saved-item__sub {
   font-size: 11.5px;
   margin-top: 2px;
-}
-
-.btn-text {
-  margin-left: 5px;
 }
 </style>

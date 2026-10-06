@@ -31,6 +31,11 @@ const percent = computed(() => {
   return Math.min(100, Math.max(0, Math.round((executed / total) * 100)))
 })
 
+/** 预览动画进度：仅任务执行中传入；空闲 / 已结束 / 刚载入新文件时保持整条路径绘制 */
+const previewProgress = computed<number | undefined>(() =>
+  state.running ? percent.value : undefined
+)
+
 function zoom(delta: number) {
   height.value = Math.min(MAX_H, Math.max(MIN_H, height.value + delta))
 }
@@ -64,25 +69,25 @@ function onAbort() {
       <div v-if="!state.file" class="lg-empty lg-mt">
         尚未载入 G 代码文件
         <div class="lg-mt">
-          <var-button type="primary" @click="router.push('/file')">
+          <GlassButton type="primary" @click="router.push('/file')">
             <AppIcon name="folder" :size="17" />
             <span class="btn-text">前往文件页载入</span>
-          </var-button>
+          </GlassButton>
         </div>
       </div>
 
       <template v-else>
         <!-- 预览 -->
-        <section class="lg-section">
+        <GlassSurface class="lg-section">
           <div class="lg-title">
             <span>路径预览</span>
             <span class="zoom">
-              <var-button size="small" text @click="zoom(-80)">
+              <GlassButton size="small" text @click="zoom(-80)">
                 <AppIcon name="zoomOut" :size="16" />
-              </var-button>
-              <var-button size="small" text @click="zoom(80)">
+              </GlassButton>
+              <GlassButton size="small" text @click="zoom(80)">
                 <AppIcon name="zoomIn" :size="16" />
-              </var-button>
+              </GlassButton>
             </span>
           </div>
           <div class="file-name">
@@ -94,14 +99,15 @@ function onAbort() {
             :preview="state.file.preview"
             :bbox="state.file.stats.bbox"
             :height="height"
+            :progress="previewProgress"
           />
           <div class="lg-dim lg-mt">
             橙色为雕刻路径，灰色为快速空移路径，十字为坐标原点
           </div>
-        </section>
+        </GlassSurface>
 
         <!-- 统计 -->
-        <section class="lg-section">
+        <GlassSurface class="lg-section">
           <div class="lg-title"><span>文件统计</span></div>
           <div class="lg-grid-2">
             <div class="stat">
@@ -131,38 +137,38 @@ function onAbort() {
               </div>
             </div>
           </div>
-        </section>
+        </GlassSurface>
 
         <!-- 任务控制 -->
-        <section class="lg-section">
+        <GlassSurface class="lg-section">
           <div class="lg-title"><span>任务控制</span></div>
 
           <div v-if="!state.connected" class="lg-empty">未连接设备，请先在首页连接</div>
 
           <div class="lg-grid-2">
-            <var-button v-if="!state.running" block type="primary" :disabled="!canRun" @click="onRun">
+            <GlassButton v-if="!state.running" block type="primary" :disabled="!canRun" @click="onRun">
               <AppIcon name="play" :size="17" />
               <span class="btn-text">开始雕刻</span>
-            </var-button>
-            <var-button v-if="canPause" block type="warning" @click="onPause">
+            </GlassButton>
+            <GlassButton v-if="canPause" block type="warning" @click="onPause">
               <AppIcon name="pause" :size="17" />
               <span class="btn-text">暂停</span>
-            </var-button>
-            <var-button v-if="canResume" block type="success" @click="onResume">
+            </GlassButton>
+            <GlassButton v-if="canResume" block type="success" @click="onResume">
               <AppIcon name="play" :size="17" />
               <span class="btn-text">继续</span>
-            </var-button>
-            <var-button v-if="state.running" block type="danger" @click="onAbort">
+            </GlassButton>
+            <GlassButton v-if="state.running" block type="danger" @click="onAbort">
               <AppIcon name="stop" :size="17" />
               <span class="btn-text">中止</span>
-            </var-button>
+            </GlassButton>
           </div>
 
           <div v-if="state.running" class="lg-mt">
-            <var-progress :value="percent" />
+            <GlassProgress :value="percent" />
             <div class="lg-dim lg-mt">{{ percent }}% · 已执行 {{ state.progress.executed }} / {{ state.progress.total }} 行</div>
           </div>
-        </section>
+        </GlassSurface>
       </template>
     </div>
   </div>
@@ -207,9 +213,5 @@ function onAbort() {
 .stat__v {
   font-size: 13.5px;
   font-weight: 600;
-}
-
-.btn-text {
-  margin-left: 5px;
 }
 </style>

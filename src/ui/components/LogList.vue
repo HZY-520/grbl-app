@@ -4,10 +4,14 @@ import { state, clearLog, type LogItem } from '../store'
 import { MessageType } from '../../core/grbl/GrblCommand'
 import AppIcon from './AppIcon.vue'
 
-const props = withDefaults(defineProps<{ height?: string; autoscroll?: boolean }>(), {
-  height: '260px',
-  autoscroll: true
-})
+const props = withDefaults(
+  defineProps<{ height?: string; autoscroll?: boolean; showClear?: boolean }>(),
+  {
+    height: '260px',
+    autoscroll: true,
+    showClear: true
+  }
+)
 
 const boxRef = ref<HTMLElement | null>(null)
 
@@ -48,11 +52,11 @@ watch(
         {{ item.text }}
       </div>
     </div>
-    <div class="log-actions">
-      <var-button size="small" text @click="clearLog">
-        <AppIcon name="trash" :size="16" />
+    <div v-if="showClear" class="log-actions">
+      <GlassButton size="small" text @click="clearLog">
+        <AppIcon name="trash" :size="15" />
         <span class="log-actions__text">清空</span>
-      </var-button>
+      </GlassButton>
     </div>
   </div>
 </template>
@@ -62,10 +66,17 @@ watch(
   position: relative;
 }
 
+/* 清空按钮浮在日志框右上角内部：既不与区块标题行里的按钮打架，
+ * 也不会因为 title 行内容变化而错位。 */
 .log-actions {
   position: absolute;
-  top: -34px;
-  right: 0;
+  top: 5px;
+  right: 5px;
+  z-index: 1;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--g-bg) 62%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .log-actions__text {

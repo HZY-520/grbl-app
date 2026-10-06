@@ -82,16 +82,6 @@ class SettingsStore {
 
 export const AppSettings = new SettingsStore()
 
-/** 固件类型 */
-export function firmwareType(): Firmware {
-  return AppSettings.get<Firmware>('Firmware Type', Firmware.Grbl)
-}
-
-/** 是否使用硬件 PWM（S 值） */
-export function usePWM(): boolean {
-  return AppSettings.get<boolean>('Support Hardware PWM', true)
-}
-
 /** 激光开/关指令 */
 export function laserOn(): string {
   return AppSettings.get<string>('Laser On Command', 'M4')

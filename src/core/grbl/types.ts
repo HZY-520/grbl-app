@@ -209,19 +209,5 @@ export class GrblVersionInfo {
   }
 }
 
-/** 实时覆盖倍率 (进给/快速/功率) */
-export interface OverrideState {
-  linear: number
-  rapids: number
-  power: number
-}
-
-/** 兼容旧版 API: 大写常量 */
-export const GRBL_STD_HEADER = 'G90 (使用绝对坐标)'
-export const GRBL_STD_PASSES =
-  ';(如需下沉 Z 轴请取消注释)\r\n;G91 (相对坐标)\r\n;G0 Z-1 (Z 轴下沉 1mm)\r\n;G90 (绝对坐标)'
-export const GRBL_STD_FOOTER = 'G0 X0 Y0 Z0 (回到原点)'
-
 export const GCODE_EXTENSIONS = ['.nc', '.cnc', '.tap', '.gcode', '.ngc', '.txt']
-export const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.bmp', '.png', '.gif', '.webp']
-export const SVG_EXTENSIONS = ['.svg']
+
