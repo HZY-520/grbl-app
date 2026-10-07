@@ -93,6 +93,38 @@ $env:JAVA_HOME='C:\Program Files\Java\jdk-17.0.18'
 
 ---
 
+## ⚠️ 灾备：源码物理备份在哪
+
+做 git 历史整理（换基点、`read-tree`、`clean`）之前必须知道这一条 —— 我为此差点丢掉 300 多个源文件：
+
+```
+D:\工作台\_igrbl-stash-backup\
+├── stash-tracked.zip        54 个文件（当时被 git 跟踪的）9.8 MB
+├── stash-untracked.zip     246 个文件（当时未跟踪的：app/ core/ glasskit/ 全部源码）33 MB
+└── keep\
+    ├── dist\                两个交付 APK
+    ├── keystore\            lasergrbl-release.jks（release 签名密钥，已 gitignore 不入库）
+    └── local.properties     SDK 路径
+```
+
+两个 zip 由 `git archive` 从 stash 提交导出，**是当时工作区的权威快照**。
+从零恢复：把两个 zip 解压到仓库根（先 `stash-tracked`，后 `stash-untracked`），
+再跑 `:app:assembleDebug` + `:core:jvmTest` 确认 287 用例全绿。
+
+**为什么需要它**：那次我把 3.0 工作区 `git stash push -u` 后想基于 `origin/main` 建分支，
+用了两个错误做法 ——
+
+1. `git read-tree 'stash@{0}'` 只读取**第一个父提交**（被跟踪的部分，仅 54 个文件）；
+   未跟踪文件在**第三个父提交**（`stash@{0}^3`）里；
+2. 随后 `git clean -fd` 把索引之外的一切删掉 —— 包括那 246 个未跟踪的源文件。
+
+**避免这个过程的正确做法**：不要 stash，先把工作区**物理复制**出去，再操作 git。
+已落到 stash 里时，用 `git archive 'stash@{0}^3'` 取未跟踪部分、`'stash@{0}'` 取跟踪部分。
+另外 `git checkout 'stash@{0}' -- .` **会连同 v2 的删除记录一起写进索引**，
+用它建分支会得到「v2 文件被标记为新增」的错误 diff。
+
+---
+
 ## 验证
 
 ### 黄金样本（移植正确性的判据）

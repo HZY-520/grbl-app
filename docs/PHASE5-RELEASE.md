@@ -163,7 +163,7 @@ const RasterConverter = await import('../../src/core/raster/RasterConverter')
 
 | 项目 | 状态 | 说明 |
 | --- | --- | --- |
-| 13 屏逐屏模拟器截图 | 🔄 进行中 | 已派独立验收子代理（只读、不改代码）在跑；目前只有 `/home` 与壳层有截图 |
+| 13 屏逐屏模拟器截图 | ⚠️ 部分完成 | 独立验收子代理**已交回报告**（见 §4）。`/home` `/convert` `/file` `/jog` `/settings` `/connect` 有截图并逐张审过；**`/config` `/terminal` `/about` `/preview` 与三个转换屏（图片/文字/SVG）尚未逐屏截图** —— P0 修好后这些路由已可达，但未逐一取证 |
 | `DebugKeepAliveActivity` | ⏸ 保留 | 它是 **debug 源集**（`app/src/debug/`），不进 release APK，也不被 `:app:assembleRelease` 编译。是 Phase 3 保活验收的取证入口（`adb` 无法启动 `exported=false` 的 `EngraveService`，只能靠它）。删掉会失去复验手段，故暂留并在此登记 |
 | SVG 中心线 / 智能模式 | ⛔ 能力缺口 | `:core` 无 `SvgVector.kt`、`:app` 无 SVG 位图化；补齐需新依赖。界面保留 + 明确中文拒绝，不静默降级 |
 | 文字转雕刻 / 重采样像素一致性 | ⛔ 不可能一致 | Android 系统字体 vs WebView 字体栈；自写 `TriangleResampler` vs canvas `drawImage` |
