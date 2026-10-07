@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  仅 debug 变体：把保活/通知的验证入口暴露给 adb（release 的 EngraveService 是 exported=false，
+  `adb shell am start-foreground-service` 会被系统拒绝）。详见 DebugKeepAliveActivity 的 KDoc。
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name=".debug.DebugKeepAliveActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay" />
+    </application>
+
+</manifest>

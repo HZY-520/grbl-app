@@ -1,0 +1,411 @@
+{
+  "case": "svg-to-gcode",
+  "generator": "tools/golden/generate.ts",
+  "generatorCommand": "npx --yes tsx tools/golden/generate.ts",
+  "modules": [
+    "src/core/vector/SvgToGcode.ts"
+  ],
+  "input": "hand-written SVG (rect, transformed rect, circle, cubic + quadratic/T bezier paths, line with mm/pt lengths, polyline, polygon, nested <g>, <defs>) converted with 2 option sets, plus parseLength/parseViewBox sweeps and 3 error paths",
+  "entryCount": 2,
+  "entryCounts": {
+    "variants": 2,
+    "emittedLines": 214,
+    "pathsFirstVariant": 10,
+    "parseLengthCases": 16,
+    "parseViewBoxCases": 7,
+    "errorPaths": 3
+  },
+  "result": {
+    "svg": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!-- mixed shapes: rect, circle, quadratic+cubic bezier, transform, viewBox, mm/px/pt lengths -->\n<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"40mm\" height=\"30mm\" viewBox=\"0 0 80 60\">\n  <rect x=\"5\" y=\"5\" width=\"30\" height=\"20\"/>\n  <rect x=\"5\" y=\"5\" width=\"30\" height=\"20\" transform=\"translate(2,3) scale(1.5)\"/>\n  <circle cx=\"60\" cy=\"15\" r=\"8\"/>\n  <path d=\"M10 40 Q 20 25 30 40 C 35 45 45 55 50 40\"/>\n  <path d=\"M0 0 q 5 5 10 0 t 10 0\"/>\n  <line x1=\"0\" y1=\"0\" x2=\"10mm\" y2=\"5pt\"/>\n  <polyline points=\"1,2 3,4 5,6\"/>\n  <polygon points=\"70,50 75,55 65,58\"/>\n  <g transform=\"translate(1,2) scale(0.5)\">\n    <rect x=\"1\" y=\"1\" width=\"8\" height=\"6\" rx=\"1.5\"/>\n    <path d=\"M2 2 L 6 2\" stroke=\"black\"/>\n  </g>\n  <g>\n    <defs><rect x=\"0\" y=\"0\" width=\"1\" height=\"1\"/></defs>\n  </g>\n</svg>",
+    "variants": [
+      {
+        "name": "default-pwm",
+        "options": {
+          "targetWidthMm": 50,
+          "tolerance": 0.1,
+          "markSpeed": 1000,
+          "laserOn": "M4",
+          "laserOff": "M5",
+          "pwm": true,
+          "maxPower": 1000,
+          "offsetX": 0,
+          "offsetY": 0
+        },
+        "lines": [
+          "G90",
+          "G0 X0 Y0 F1000",
+          "M4 S0",
+          "G0 X3.125 Y34.375",
+          "M4 S1000",
+          "G1 X21.875 Y34.375",
+          "G1 X21.875 Y21.875",
+          "G1 X3.125 Y21.875",
+          "G1 X3.125 Y34.375",
+          "M5",
+          "G0 X5.938 Y30.938",
+          "M4 S1000",
+          "G1 X34.063 Y30.938",
+          "G1 X34.063 Y12.188",
+          "G1 X5.938 Y12.188",
+          "G1 X5.938 Y30.938",
+          "M5",
+          "G0 X32.5 Y28.125",
+          "M4 S1000",
+          "G1 X32.602 Y29.133",
+          "G1 X32.893 Y30.071",
+          "G1 X33.354 Y30.921",
+          "G1 X33.964 Y31.661",
+          "G1 X34.704 Y32.271",
+          "G1 X35.554 Y32.732",
+          "G1 X36.492 Y33.023",
+          "G1 X37.5 Y33.125",
+          "G1 X38.508 Y33.023",
+          "G1 X39.446 Y32.732",
+          "G1 X40.296 Y32.271",
+          "G1 X41.036 Y31.661",
+          "G1 X41.646 Y30.921",
+          "G1 X42.107 Y30.071",
+          "G1 X42.398 Y29.133",
+          "G1 X42.5 Y28.125",
+          "G1 X42.398 Y27.117",
+          "G1 X42.107 Y26.179",
+          "G1 X41.646 Y25.329",
+          "G1 X41.036 Y24.589",
+          "G1 X40.296 Y23.979",
+          "G1 X39.446 Y23.518",
+          "G1 X38.508 Y23.227",
+          "G1 X37.5 Y23.125",
+          "G1 X36.492 Y23.227",
+          "G1 X35.554 Y23.518",
+          "G1 X34.704 Y23.979",
+          "G1 X33.964 Y24.589",
+          "G1 X33.354 Y25.329",
+          "G1 X32.893 Y26.179",
+          "G1 X32.602 Y27.117",
+          "G1 X32.5 Y28.125",
+          "M5",
+          "G0 X6.25 Y12.5",
+          "M4 S1000",
+          "G1 X7.031 Y13.599",
+          "G1 X7.812 Y14.551",
+          "G1 X8.594 Y15.356",
+          "G1 X9.375 Y16.016",
+          "G1 X10.156 Y16.528",
+          "G1 X10.938 Y16.895",
+          "G1 X11.719 Y17.114",
+          "G1 X12.5 Y17.188",
+          "G1 X13.281 Y17.114",
+          "G1 X14.063 Y16.895",
+          "G1 X14.844 Y16.528",
+          "G1 X15.625 Y16.016",
+          "G1 X16.406 Y15.356",
+          "G1 X17.188 Y14.551",
+          "G1 X17.969 Y13.599",
+          "G1 X18.75 Y12.5",
+          "G1 X20.056 Y11.218",
+          "G1 X20.796 Y10.536",
+          "G1 X21.582 Y9.863",
+          "G1 X22.404 Y9.227",
+          "G1 X23.254 Y8.655",
+          "G1 X24.123 Y8.174",
+          "G1 X25 Y7.813",
+          "G1 X25.877 Y7.597",
+          "G1 X26.746 Y7.556",
+          "G1 X27.596 Y7.716",
+          "G1 X28.418 Y8.105",
+          "G1 X29.204 Y8.751",
+          "G1 X29.944 Y9.68",
+          "G1 X30.629 Y10.921",
+          "G1 X31.25 Y12.5",
+          "M5",
+          "G0 X0 Y37.5",
+          "M4 S1000",
+          "G1 X0.781 Y36.816",
+          "G1 X1.562 Y36.328",
+          "G1 X2.344 Y36.035",
+          "G1 X3.125 Y35.938",
+          "G1 X3.906 Y36.035",
+          "G1 X4.688 Y36.328",
+          "G1 X5.469 Y36.816",
+          "G1 X7.031 Y38.184",
+          "G1 X7.812 Y38.672",
+          "G1 X8.594 Y38.965",
+          "G1 X9.375 Y39.063",
+          "G1 X10.156 Y38.965",
+          "G1 X10.938 Y38.672",
+          "G1 X11.719 Y38.184",
+          "G1 X12.5 Y37.5",
+          "M5",
+          "G0 X0 Y37.5",
+          "M4 S1000",
+          "G1 X23.622 Y33.333",
+          "M5",
+          "G0 X0.625 Y36.25",
+          "M4 S1000",
+          "G1 X3.125 Y33.75",
+          "M5",
+          "G0 X43.75 Y6.25",
+          "M4 S1000",
+          "G1 X46.875 Y3.125",
+          "G1 X40.625 Y1.25",
+          "G1 X43.75 Y6.25",
+          "M5",
+          "G0 X1.406 Y35.938",
+          "M4 S1000",
+          "G1 X2.969 Y35.938",
+          "G1 X3.3 Y35.8",
+          "G1 X3.438 Y35.469",
+          "G1 X3.438 Y34.531",
+          "G1 X3.3 Y34.2",
+          "G1 X2.969 Y34.063",
+          "G1 X1.406 Y34.063",
+          "G1 X1.075 Y34.2",
+          "G1 X0.938 Y34.531",
+          "G1 X0.938 Y35.469",
+          "G1 X1.075 Y35.8",
+          "G1 X1.406 Y35.938",
+          "M5",
+          "G0 X1.25 Y35.625",
+          "M4 S1000",
+          "G1 X2.5 Y35.625",
+          "M5"
+        ],
+        "lineCount": 137,
+        "widthMm": 50,
+        "heightMm": 37.5,
+        "pathCount": 10,
+        "pathLengthMm": 288.4058854596056
+      },
+      {
+        "name": "stretch-travel-nopwm-header-footer",
+        "options": {
+          "targetWidthMm": 30,
+          "targetHeightMm": 20,
+          "tolerance": 0.5,
+          "markSpeed": 600,
+          "travelSpeed": 2000,
+          "laserOn": "M3",
+          "laserOff": "M5",
+          "pwm": false,
+          "maxPower": 255,
+          "offsetX": 3,
+          "offsetY": 4,
+          "header": "G90\n; custom header",
+          "footer": "M5\nG0 X0 Y0"
+        },
+        "lines": [
+          "G90",
+          "; custom header",
+          "G1 X3 Y4 F600",
+          "M5",
+          "G1 X4.875 Y22.333 F2000",
+          "M3",
+          "G1 X16.125 Y22.333 F600",
+          "G1 X16.125 Y15.667",
+          "G1 X4.875 Y15.667",
+          "G1 X4.875 Y22.333",
+          "M5",
+          "G1 X6.563 Y20.5 F2000",
+          "M3",
+          "G1 X23.438 Y20.5 F600",
+          "G1 X23.438 Y10.5",
+          "G1 X6.563 Y10.5",
+          "G1 X6.563 Y20.5",
+          "M5",
+          "G1 X22.5 Y19 F2000",
+          "M3",
+          "G1 X23.379 Y20.886 F600",
+          "G1 X25.5 Y21.667",
+          "G1 X27.621 Y20.886",
+          "G1 X28.5 Y19",
+          "G1 X27.621 Y17.114",
+          "G1 X25.5 Y16.333",
+          "G1 X23.379 Y17.114",
+          "G1 X22.5 Y19",
+          "M5",
+          "G1 X6.75 Y10.667 F2000",
+          "M3",
+          "G1 X8.625 Y12.542 F600",
+          "G1 X10.5 Y13.167",
+          "G1 X12.375 Y12.542",
+          "G1 X14.25 Y10.667",
+          "G1 X15.949 Y9.26",
+          "G1 X18 Y8.167",
+          "G1 X20.051 Y8.323",
+          "G1 X21.75 Y10.667",
+          "M5",
+          "G1 X3 Y24 F2000",
+          "M3",
+          "G1 X4.875 Y23.167 F600",
+          "G1 X8.625 Y24.833",
+          "G1 X10.5 Y24",
+          "M5",
+          "G1 X3 Y24 F2000",
+          "M3",
+          "G1 X17.173 Y21.778 F600",
+          "M5",
+          "G1 X3.375 Y23.333 F2000",
+          "M3",
+          "G1 X4.875 Y22 F600",
+          "M5",
+          "G1 X29.25 Y7.333 F2000",
+          "M3",
+          "G1 X31.125 Y5.667 F600",
+          "G1 X27.375 Y4.667",
+          "G1 X29.25 Y7.333",
+          "M5",
+          "G1 X3.844 Y23.167 F2000",
+          "M3",
+          "G1 X4.781 Y23.167 F600",
+          "G1 X5.063 Y22.917",
+          "G1 X5.063 Y22.417",
+          "G1 X4.781 Y22.167",
+          "G1 X3.844 Y22.167",
+          "G1 X3.563 Y22.417",
+          "G1 X3.563 Y22.917",
+          "G1 X3.844 Y23.167",
+          "M5",
+          "G1 X3.75 Y23 F2000",
+          "M3",
+          "G1 X4.5 Y23 F600",
+          "M5",
+          "M5",
+          "G0 X0 Y0"
+        ],
+        "lineCount": 77,
+        "widthMm": 30,
+        "heightMm": 20,
+        "pathCount": 10,
+        "pathLengthMm": 165.02479799312977
+      }
+    ],
+    "parseLength": [
+      {
+        "input": "10",
+        "output": 10
+      },
+      {
+        "input": "10px",
+        "output": 10
+      },
+      {
+        "input": "10mm",
+        "output": 37.795275590551185
+      },
+      {
+        "input": "2.54cm",
+        "output": 96
+      },
+      {
+        "input": "1in",
+        "output": 96
+      },
+      {
+        "input": "72pt",
+        "output": 96
+      },
+      {
+        "input": "1pc",
+        "output": 16
+      },
+      {
+        "input": "1em",
+        "output": 16
+      },
+      {
+        "input": "10%",
+        "output": 10
+      },
+      {
+        "input": "",
+        "output": 0
+      },
+      {
+        "input": null,
+        "output": 0
+      },
+      {
+        "input": "  12.5 mm ",
+        "output": 47.24409448818898
+      },
+      {
+        "input": "abc",
+        "output": 0
+      },
+      {
+        "input": "-3mm",
+        "output": -11.338582677165356
+      },
+      {
+        "input": "1e2px",
+        "output": 100
+      },
+      {
+        "input": "+2.5",
+        "output": 2.5
+      }
+    ],
+    "parseViewBox": [
+      {
+        "input": "0 0 100 50",
+        "output": [
+          0,
+          0,
+          100,
+          50
+        ]
+      },
+      {
+        "input": "0,0,100,50",
+        "output": [
+          0,
+          0,
+          100,
+          50
+        ]
+      },
+      {
+        "input": "10 20 0 50",
+        "output": null
+      },
+      {
+        "input": "1 2 3",
+        "output": null
+      },
+      {
+        "input": null,
+        "output": null
+      },
+      {
+        "input": "",
+        "output": null
+      },
+      {
+        "input": "1 2 3 4 5",
+        "output": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    ],
+    "errorPaths": [
+      {
+        "name": "malformed-unterminated-tag",
+        "threw": true,
+        "errorMessage": "SVG 解析失败：文件格式无效"
+      },
+      {
+        "name": "non-svg-root",
+        "threw": true,
+        "errorMessage": "SVG 解析失败：缺少 <svg> 根元素"
+      },
+      {
+        "name": "empty-string",
+        "threw": true,
+        "errorMessage": "SVG 解析失败：文件格式无效"
+      }
+    ]
+  }
+}

@@ -1,0 +1,857 @@
+{
+  "case": "grbl-version",
+  "generator": "tools/golden/generate.ts",
+  "generatorCommand": "npx --yes tsx tools/golden/generate.ts",
+  "modules": [
+    "src/core/grbl/types.ts",
+    "src/core/grbl/GrblCore.ts (parseVersionBanner/parseVerMessage, transcribed)"
+  ],
+  "input": "16 real-world banner strings (Grbl x.y<letter> and [VER:...] incl. Ortur/Longer/Aufero vendor variants) + compareTo matrix + status-report fallbacks",
+  "entryCount": 19,
+  "entryCounts": {
+    "banners": 19,
+    "vendorVariants": 10,
+    "comparisonMatrixCells": 36,
+    "statusFallbacks": 3
+  },
+  "result": {
+    "banners": [
+      {
+        "line": "Grbl 1.1h ['$' for help]",
+        "parsedFrom": "parseVersionBanner",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "h"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "h",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "1.1h"
+        },
+        "lookupGroup": "v1.1"
+      },
+      {
+        "line": "Grbl 1.1f ['$' for help]",
+        "parsedFrom": "parseVersionBanner",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "f"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "f",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "1.1f"
+        },
+        "lookupGroup": "v1.1"
+      },
+      {
+        "line": "Grbl 0.9j ['$' for help]",
+        "parsedFrom": "parseVersionBanner",
+        "constructorArgs": {
+          "major": 0,
+          "minor": 9,
+          "build": "j"
+        },
+        "version": {
+          "major": 0,
+          "minor": 9,
+          "build": "j",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "0.9j"
+        },
+        "lookupGroup": "v0.9"
+      },
+      {
+        "line": "GRBL 1.1H ['$' FOR HELP]",
+        "parsedFrom": "parseVersionBanner",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "H"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "H",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "1.1H"
+        },
+        "lookupGroup": "v1.1"
+      },
+      {
+        "line": "Grbl 1.1 ['$' for help]",
+        "parsedFrom": "parseVersionBanner",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": ""
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "1.1"
+        },
+        "lookupGroup": "v1.1"
+      },
+      {
+        "line": "[VER:1.1h.20190825:]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": null,
+          "vendorVersion": null
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "v1.1"
+      },
+      {
+        "line": "[VER:1.1f.20170801:]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20170801",
+          "vendorInfo": null,
+          "vendorVersion": null
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20170801",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "1.120170801"
+        },
+        "lookupGroup": "v1.1"
+      },
+      {
+        "line": "[VER:1.3a.20210210:]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 3,
+          "build": "20210210",
+          "vendorInfo": null,
+          "vendorVersion": null
+        },
+        "version": {
+          "major": 1,
+          "minor": 3,
+          "build": "20210210",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "1.320210210"
+        },
+        "lookupGroup": "v1.3"
+      },
+      {
+        "line": "[VER:0.9j:]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 0,
+          "minor": 9,
+          "build": "j",
+          "vendorInfo": null,
+          "vendorVersion": null
+        },
+        "version": {
+          "major": 0,
+          "minor": 9,
+          "build": "j",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "0.9j"
+        },
+        "lookupGroup": "v0.9"
+      },
+      {
+        "line": "[VER:1.1h.20190825:Ortur Laser Master 2:1.4]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 2",
+          "vendorVersion": "1.4"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 2",
+          "vendorVersion": "1.4",
+          "isHAL": false,
+          "isOrtur": true,
+          "isLonger": false,
+          "machineName": "Ortur Laser Master 2",
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 140,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "ortur.v1.4.x"
+      },
+      {
+        "line": "[VER:1.1h.20190825:Ortur Laser Master 3:1.5]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 3",
+          "vendorVersion": "1.5"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 3",
+          "vendorVersion": "1.5",
+          "isHAL": false,
+          "isOrtur": true,
+          "isLonger": false,
+          "machineName": "Ortur Laser Master 3",
+          "isLuckyWiFi": true,
+          "orturFWVersionNumber": 150,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "ortur.v1.5.x"
+      },
+      {
+        "line": "[VER:1.1h.20190825:Ortur Laser Master 3:1.7]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 3",
+          "vendorVersion": "1.7"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 3",
+          "vendorVersion": "1.7",
+          "isHAL": false,
+          "isOrtur": true,
+          "isLonger": false,
+          "machineName": "Ortur Laser Master 3",
+          "isLuckyWiFi": true,
+          "orturFWVersionNumber": 170,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "ortur.v1.7.x"
+      },
+      {
+        "line": "[VER:1.1h.20190825:Aufero Aufero Laser 1:1.4]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Aufero Aufero Laser 1",
+          "vendorVersion": "1.4"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Aufero Aufero Laser 1",
+          "vendorVersion": "1.4",
+          "isHAL": false,
+          "isOrtur": true,
+          "isLonger": false,
+          "machineName": "Aufero Aufero Laser 1",
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 140,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "ortur.v1.4.x"
+      },
+      {
+        "line": "[VER:1.1h.20190825:Longer Nano:1.1]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Longer Nano",
+          "vendorVersion": "1.1"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Longer Nano",
+          "vendorVersion": "1.1",
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": true,
+          "machineName": "Longer Nano",
+          "isLuckyWiFi": true,
+          "orturFWVersionNumber": 110,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "v1.1"
+      },
+      {
+        "line": "[VER:1.1h.20190825:NanoDuo:1.1]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "NanoDuo",
+          "vendorVersion": "1.1"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "NanoDuo",
+          "vendorVersion": "1.1",
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": true,
+          "machineName": "NanoDuo",
+          "isLuckyWiFi": true,
+          "orturFWVersionNumber": 110,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "longer.nanoduo"
+      },
+      {
+        "line": "[VER:1.1h.20190825:Longer Ray5:1.0]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Longer Ray5",
+          "vendorVersion": "1.0"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Longer Ray5",
+          "vendorVersion": "1.0",
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": true,
+          "machineName": "Longer Ray5",
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 100,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "v1.1"
+      },
+      {
+        "line": "[VER:1.1h.20190825:Ortur Laser Master 3:1.7.3]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 3",
+          "vendorVersion": "1.7.3"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 3",
+          "vendorVersion": "1.7.3",
+          "isHAL": false,
+          "isOrtur": true,
+          "isLonger": false,
+          "machineName": "Ortur Laser Master 3",
+          "isLuckyWiFi": true,
+          "orturFWVersionNumber": 170,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "ortur.v1.7.x"
+      },
+      {
+        "line": "[VER:1.1h.20190825:Ortur Laser Master 2:unknown]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 2",
+          "vendorVersion": "unknown"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 2",
+          "vendorVersion": "unknown",
+          "isHAL": false,
+          "isOrtur": true,
+          "isLonger": false,
+          "machineName": "Ortur Laser Master 2",
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "ortur.v1.4.x"
+      },
+      {
+        "line": "[VER:1.1h.20190825:Ortur Laser Master 2:v1.4]",
+        "parsedFrom": "parseVerMessage",
+        "constructorArgs": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 2",
+          "vendorVersion": "v1.4"
+        },
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "build": "20190825",
+          "vendorInfo": "Ortur Laser Master 2",
+          "vendorVersion": "v1.4",
+          "isHAL": false,
+          "isOrtur": true,
+          "isLonger": false,
+          "machineName": "Ortur Laser Master 2",
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 140,
+          "toString": "1.120190825"
+        },
+        "lookupGroup": "ortur.v1.4.x"
+      }
+    ],
+    "comparisons": [
+      {
+        "left": "1.1",
+        "vs": [
+          {
+            "right": "1.1",
+            "compareTo": 0,
+            "gte": true,
+            "lt": false,
+            "equals": true
+          },
+          {
+            "right": "1.1h",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          },
+          {
+            "right": "1.120190825",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          },
+          {
+            "right": "1.0c",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "0.9",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "2.0",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          }
+        ],
+        "compareToNull": 1,
+        "equalsNull": false
+      },
+      {
+        "left": "1.1h",
+        "vs": [
+          {
+            "right": "1.1",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "1.1h",
+            "compareTo": 0,
+            "gte": true,
+            "lt": false,
+            "equals": true
+          },
+          {
+            "right": "1.120190825",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "1.0c",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "0.9",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "2.0",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          }
+        ],
+        "compareToNull": 1,
+        "equalsNull": false
+      },
+      {
+        "left": "1.120190825",
+        "vs": [
+          {
+            "right": "1.1",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "1.1h",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          },
+          {
+            "right": "1.120190825",
+            "compareTo": 0,
+            "gte": true,
+            "lt": false,
+            "equals": true
+          },
+          {
+            "right": "1.0c",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "0.9",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "2.0",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          }
+        ],
+        "compareToNull": 1,
+        "equalsNull": false
+      },
+      {
+        "left": "1.0c",
+        "vs": [
+          {
+            "right": "1.1",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          },
+          {
+            "right": "1.1h",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          },
+          {
+            "right": "1.120190825",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          },
+          {
+            "right": "1.0c",
+            "compareTo": 0,
+            "gte": true,
+            "lt": false,
+            "equals": true
+          },
+          {
+            "right": "0.9",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "2.0",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          }
+        ],
+        "compareToNull": 1,
+        "equalsNull": false
+      },
+      {
+        "left": "0.9",
+        "vs": [
+          {
+            "right": "1.1",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          },
+          {
+            "right": "1.1h",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          },
+          {
+            "right": "1.120190825",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          },
+          {
+            "right": "1.0c",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          },
+          {
+            "right": "0.9",
+            "compareTo": 0,
+            "gte": true,
+            "lt": false,
+            "equals": true
+          },
+          {
+            "right": "2.0",
+            "compareTo": -1,
+            "gte": false,
+            "lt": true,
+            "equals": false
+          }
+        ],
+        "compareToNull": 1,
+        "equalsNull": false
+      },
+      {
+        "left": "2.0",
+        "vs": [
+          {
+            "right": "1.1",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "1.1h",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "1.120190825",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "1.0c",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "0.9",
+            "compareTo": 1,
+            "gte": true,
+            "lt": false,
+            "equals": false
+          },
+          {
+            "right": "2.0",
+            "compareTo": 0,
+            "gte": true,
+            "lt": false,
+            "equals": true
+          }
+        ],
+        "compareToNull": 1,
+        "equalsNull": false
+      }
+    ],
+    "statusReportFallbacks": [
+      {
+        "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+        "note": "| without Pin:",
+        "fallbackVersion": {
+          "major": 1,
+          "minor": 1,
+          "build": "",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "1.1"
+        }
+      },
+      {
+        "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0|Pin:XYZ>",
+        "note": "| with Pin:",
+        "fallbackVersion": {
+          "major": 1,
+          "minor": 0,
+          "build": "c",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "1.0c"
+        }
+      },
+      {
+        "line": "no-pipe-here",
+        "note": "no |",
+        "fallbackVersion": {
+          "major": 0,
+          "minor": 9,
+          "build": "",
+          "vendorInfo": null,
+          "vendorVersion": null,
+          "isHAL": false,
+          "isOrtur": false,
+          "isLonger": false,
+          "machineName": null,
+          "isLuckyWiFi": false,
+          "orturFWVersionNumber": 0,
+          "toString": "0.9"
+        }
+      }
+    ]
+  }
+}

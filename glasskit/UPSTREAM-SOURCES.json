@@ -1,0 +1,85 @@
+﻿{
+    "vendored":  [
+                     {
+                         "localPath":  "glasskit/src/androidMain/kotlin/com/kyant/backdrop/catalog/utils/Coroutines.kt",
+                         "upstreamPath":  "app/src/androidMain/kotlin/com/kyant/backdrop/catalog/utils/Coroutines.kt",
+                         "upstreamRef":  "kmp@65ab177e90e5c1d8c62e70cf7755841982da65f6",
+                         "license":  "Apache-2.0",
+                         "sha256":  "2AC3E455C3AC82AA06EFC3A71697DB541278002089703E95091F35597A2B43BA",
+                         "bytes":  141
+                     },
+                     {
+                         "localPath":  "glasskit/src/commonMain/kotlin/com/kyant/backdrop/catalog/components/LiquidBottomTab.kt",
+                         "upstreamPath":  "app/src/commonMain/kotlin/com/kyant/backdrop/catalog/components/LiquidBottomTab.kt",
+                         "upstreamRef":  "kmp@65ab177e90e5c1d8c62e70cf7755841982da65f6",
+                         "license":  "Apache-2.0",
+                         "sha256":  "40178A5AB429022E4E5523A39B9FEB40C8C04370671361B24AD4EE992EAAEEB0",
+                         "bytes":  1628
+                     },
+                     {
+                         "localPath":  "glasskit/src/commonMain/kotlin/com/kyant/backdrop/catalog/components/LiquidBottomTabs.kt",
+                         "upstreamPath":  "app/src/commonMain/kotlin/com/kyant/backdrop/catalog/components/LiquidBottomTabs.kt",
+                         "upstreamRef":  "kmp@65ab177e90e5c1d8c62e70cf7755841982da65f6",
+                         "license":  "Apache-2.0",
+                         "sha256":  "4DFBAFAF008B058BF71CEEBBC568C900F7A74ACAF94F2FE774C6155367FF0155",
+                         "bytes":  11729
+                     },
+                     {
+                         "localPath":  "glasskit/src/commonMain/kotlin/com/kyant/backdrop/catalog/components/LiquidButton.kt",
+                         "upstreamPath":  "app/src/commonMain/kotlin/com/kyant/backdrop/catalog/components/LiquidButton.kt",
+                         "upstreamRef":  "kmp@65ab177e90e5c1d8c62e70cf7755841982da65f6",
+                         "license":  "Apache-2.0",
+                         "sha256":  "7B95A0C1B33FF984F59B1E7C7A910B7038A0A8AD4377A2FDBE77400711A8244B",
+                         "bytes":  4688
+                     },
+                     {
+                         "localPath":  "glasskit/src/commonMain/kotlin/com/kyant/backdrop/catalog/components/LiquidSlider.kt",
+                         "upstreamPath":  "app/src/commonMain/kotlin/com/kyant/backdrop/catalog/components/LiquidSlider.kt",
+                         "upstreamRef":  "kmp@65ab177e90e5c1d8c62e70cf7755841982da65f6",
+                         "license":  "Apache-2.0",
+                         "sha256":  "A32F0EDB2BE42148E804A1E136F1737849518ACFB7F420866FB5F99C35EF58F5",
+                         "bytes":  8859
+                     },
+                     {
+                         "localPath":  "glasskit/src/commonMain/kotlin/com/kyant/backdrop/catalog/components/LiquidToggle.kt",
+                         "upstreamPath":  "app/src/commonMain/kotlin/com/kyant/backdrop/catalog/components/LiquidToggle.kt",
+                         "upstreamRef":  "kmp@65ab177e90e5c1d8c62e70cf7755841982da65f6",
+                         "license":  "Apache-2.0",
+                         "sha256":  "69CB82D74297F1B390EA3C820691656AC892F9F3593F4B47B8BF5736E69D0F05",
+                         "bytes":  8041
+                     },
+                     {
+                         "localPath":  "glasskit/src/commonMain/kotlin/com/kyant/backdrop/catalog/utils/Coroutines.kt",
+                         "upstreamPath":  "app/src/commonMain/kotlin/com/kyant/backdrop/catalog/utils/Coroutines.kt",
+                         "upstreamRef":  "kmp@65ab177e90e5c1d8c62e70cf7755841982da65f6",
+                         "license":  "Apache-2.0",
+                         "sha256":  "94E09DFD8209E1BD730C04A02A9966DB4471D6F91A0DBAE632420FF1F5E84E11",
+                         "bytes":  75
+                     },
+                     {
+                         "localPath":  "glasskit/src/commonMain/kotlin/com/kyant/backdrop/catalog/utils/DampedDragAnimation.kt",
+                         "upstreamPath":  "app/src/commonMain/kotlin/com/kyant/backdrop/catalog/utils/DampedDragAnimation.kt",
+                         "upstreamRef":  "kmp@65ab177e90e5c1d8c62e70cf7755841982da65f6",
+                         "license":  "Apache-2.0",
+                         "sha256":  "8310075EE00A9B5021935F6DA1F016CB38EAC61A527D27F5318C34250402C44E",
+                         "bytes":  5052
+                     },
+                     {
+                         "localPath":  "glasskit/src/commonMain/kotlin/com/kyant/backdrop/catalog/utils/DragGestureInspector.kt",
+                         "upstreamPath":  "app/src/commonMain/kotlin/com/kyant/backdrop/catalog/utils/DragGestureInspector.kt",
+                         "upstreamRef":  "kmp@65ab177e90e5c1d8c62e70cf7755841982da65f6",
+                         "license":  "Apache-2.0",
+                         "sha256":  "01548AB5604D89BD9A8EE66A69D716036E94559C842461FBEE4AFC97915770C1",
+                         "bytes":  2819
+                     },
+                     {
+                         "localPath":  "glasskit/src/commonMain/kotlin/com/kyant/backdrop/catalog/utils/InteractiveHighlight.kt",
+                         "upstreamPath":  "app/src/commonMain/kotlin/com/kyant/backdrop/catalog/utils/InteractiveHighlight.kt",
+                         "upstreamRef":  "kmp@65ab177e90e5c1d8c62e70cf7755841982da65f6",
+                         "license":  "Apache-2.0",
+                         "sha256":  "D0AF46B531EBA19BD0FED886892F02193F05D5A61DB0925DA016FF6059984F83",
+                         "bytes":  4648
+                     }
+                 ],
+    "note":  "Kyant0/AndroidLiquidGlass 的示例组件与内部工具，逐字节原样内联（含 androidMain 的 actual）。如上游更新，按 upstreamPath 重新下载并核对 sha256。"
+}

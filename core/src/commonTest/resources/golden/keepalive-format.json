@@ -1,0 +1,340 @@
+{
+  "case": "keepalive-format",
+  "generator": "tools/golden/generate.ts",
+  "generatorCommand": "npx --yes tsx tools/golden/generate.ts",
+  "modules": [
+    "src/core/native/KeepAlive.ts"
+  ],
+  "input": "truncateName over 20 names (length 0/1/23/24/25/40, CJK, emoji surrogate pairs, whitespace/control chars), percentOf over 20 pairs (0/33.3/100/negative/over-total/NaN/Infinity), formatText over 13 name+percent combos",
+  "entryCount": 58,
+  "entryCounts": {
+    "names": 25,
+    "percents": 20,
+    "formats": 13,
+    "notificationTitle": 1
+  },
+  "result": {
+    "notificationTitle": "iGRBL 正在雕刻",
+    "names": [
+      {
+        "input": "",
+        "codeUnits": 0,
+        "trimmedCodeUnits": 0,
+        "output": ""
+      },
+      {
+        "input": "   ",
+        "codeUnits": 3,
+        "trimmedCodeUnits": 0,
+        "output": ""
+      },
+      {
+        "input": "a",
+        "codeUnits": 1,
+        "trimmedCodeUnits": 1,
+        "output": "a"
+      },
+      {
+        "input": "xxxxxxxxxxxxxxxxxxxxxxx",
+        "codeUnits": 23,
+        "trimmedCodeUnits": 23,
+        "output": "xxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      {
+        "input": "yyyyyyyyyyyyyyyyyyyyyyyy",
+        "codeUnits": 24,
+        "trimmedCodeUnits": 24,
+        "output": "yyyyyyyyyyyyyyyyyyyyyyyy"
+      },
+      {
+        "input": "zzzzzzzzzzzzzzzzzzzzzzzzz",
+        "codeUnits": 25,
+        "trimmedCodeUnits": 25,
+        "output": "zzzzzzzzzzzzzzzzzzzzzzzz…"
+      },
+      {
+        "input": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+        "codeUnits": 40,
+        "trimmedCodeUnits": 40,
+        "output": "wwwwwwwwwwwwwwwwwwwwwwww…"
+      },
+      {
+        "input": "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉",
+        "codeUnits": 23,
+        "trimmedCodeUnits": 23,
+        "output": "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉"
+      },
+      {
+        "input": "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉",
+        "codeUnits": 24,
+        "trimmedCodeUnits": 24,
+        "output": "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉"
+      },
+      {
+        "input": "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉",
+        "codeUnits": 25,
+        "trimmedCodeUnits": 25,
+        "output": "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉…"
+      },
+      {
+        "input": "iGRBL 雕刻作业-2024.nc",
+        "codeUnits": 18,
+        "trimmedCodeUnits": 18,
+        "output": "iGRBL 雕刻作业-2024.nc"
+      },
+      {
+        "input": "汉字😀",
+        "codeUnits": 4,
+        "trimmedCodeUnits": 4,
+        "output": "汉字😀"
+      },
+      {
+        "input": "  qqqqqqqqqqqqqqqqqqqqqqqqq  ",
+        "codeUnits": 29,
+        "trimmedCodeUnits": 25,
+        "output": "qqqqqqqqqqqqqqqqqqqqqqqq…"
+      },
+      {
+        "input": "  trimmed.nc  ",
+        "codeUnits": 14,
+        "trimmedCodeUnits": 10,
+        "output": "trimmed.nc"
+      },
+      {
+        "input": "tab\tname.nc",
+        "codeUnits": 11,
+        "trimmedCodeUnits": 11,
+        "output": "tab\tname.nc"
+      },
+      {
+        "input": "multi\nline.nc",
+        "codeUnits": 13,
+        "trimmedCodeUnits": 13,
+        "output": "multi\nline.nc"
+      },
+      {
+        "input": "😀😀😀😀😀😀😀😀😀😀😀😀",
+        "codeUnits": 24,
+        "trimmedCodeUnits": 24,
+        "output": "😀😀😀😀😀😀😀😀😀😀😀😀"
+      },
+      {
+        "input": "éééééééééééééééééééééééé",
+        "codeUnits": 24,
+        "trimmedCodeUnits": 24,
+        "output": "éééééééééééééééééééééééé"
+      },
+      {
+        "input": "aaaaaaaaaaaaaaaaaaaaaaa😀",
+        "codeUnits": 25,
+        "trimmedCodeUnits": 25,
+        "output": "aaaaaaaaaaaaaaaaaaaaaaa\ud83d…"
+      },
+      {
+        "input": "aaaaaaaaaaaaaaaaaaaaaa😀",
+        "codeUnits": 24,
+        "trimmedCodeUnits": 24,
+        "output": "aaaaaaaaaaaaaaaaaaaaaa😀"
+      },
+      {
+        "input": " nbsp.nc",
+        "codeUnits": 8,
+        "trimmedCodeUnits": 7,
+        "output": "nbsp.nc"
+      },
+      {
+        "input": "﻿bom.nc",
+        "codeUnits": 7,
+        "trimmedCodeUnits": 6,
+        "output": "bom.nc"
+      },
+      {
+        "input": "　ideo-space.nc",
+        "codeUnits": 14,
+        "trimmedCodeUnits": 13,
+        "output": "ideo-space.nc"
+      },
+      {
+        "input": " nnnnnnnnnnnnnnnnnnnnnnnnn ",
+        "codeUnits": 27,
+        "trimmedCodeUnits": 25,
+        "output": "nnnnnnnnnnnnnnnnnnnnnnnn…"
+      },
+      {
+        "input": "xxxxxxxxxxxxxxxxxxxxxxxx ",
+        "codeUnits": 25,
+        "trimmedCodeUnits": 24,
+        "output": "xxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    ],
+    "percents": [
+      {
+        "executed": "0",
+        "total": "0",
+        "output": 0
+      },
+      {
+        "executed": "0",
+        "total": "100",
+        "output": 0
+      },
+      {
+        "executed": "1",
+        "total": "3",
+        "output": 33
+      },
+      {
+        "executed": "33",
+        "total": "100",
+        "output": 33
+      },
+      {
+        "executed": "100",
+        "total": "100",
+        "output": 100
+      },
+      {
+        "executed": "150",
+        "total": "100",
+        "output": 100
+      },
+      {
+        "executed": "-10",
+        "total": "100",
+        "output": 0
+      },
+      {
+        "executed": "50",
+        "total": "NaN",
+        "output": 0
+      },
+      {
+        "executed": "0",
+        "total": "NaN",
+        "output": 0
+      },
+      {
+        "executed": "NaN",
+        "total": "NaN",
+        "output": 0
+      },
+      {
+        "executed": "NaN",
+        "total": "100",
+        "output": 0
+      },
+      {
+        "executed": "50",
+        "total": "Infinity",
+        "output": 0
+      },
+      {
+        "executed": "Infinity",
+        "total": "100",
+        "output": 0
+      },
+      {
+        "executed": "-Infinity",
+        "total": "100",
+        "output": 0
+      },
+      {
+        "executed": "0.5",
+        "total": "1",
+        "output": 50
+      },
+      {
+        "executed": "99.5",
+        "total": "100",
+        "output": 100
+      },
+      {
+        "executed": "2",
+        "total": "3",
+        "output": 67
+      },
+      {
+        "executed": "1000000000",
+        "total": "3",
+        "output": 100
+      },
+      {
+        "executed": "-1",
+        "total": "0",
+        "output": 0
+      },
+      {
+        "executed": "100",
+        "total": "-5",
+        "output": 0
+      }
+    ],
+    "formats": [
+      {
+        "name": "job.nc",
+        "percent": "0",
+        "output": "job.nc · 0%"
+      },
+      {
+        "name": "job.nc",
+        "percent": "33.3",
+        "output": "job.nc · 33%"
+      },
+      {
+        "name": "job.nc",
+        "percent": "100",
+        "output": "job.nc · 100%"
+      },
+      {
+        "name": "job.nc",
+        "percent": "-5",
+        "output": "job.nc · 0%"
+      },
+      {
+        "name": "job.nc",
+        "percent": "150",
+        "output": "job.nc · 100%"
+      },
+      {
+        "name": "job.nc",
+        "percent": "NaN",
+        "output": "job.nc · 0%"
+      },
+      {
+        "name": "job.nc",
+        "percent": "99.5",
+        "output": "job.nc · 100%"
+      },
+      {
+        "name": "job.nc",
+        "percent": "-0.4",
+        "output": "job.nc · 0%"
+      },
+      {
+        "name": "",
+        "percent": "42",
+        "output": "42%"
+      },
+      {
+        "name": "   ",
+        "percent": "42",
+        "output": "42%"
+      },
+      {
+        "name": "xxxxxxxxxxxxxxxxxxxxxxxxx",
+        "percent": "7",
+        "output": "xxxxxxxxxxxxxxxxxxxxxxxx… · 7%"
+      },
+      {
+        "name": "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉",
+        "percent": "7",
+        "output": "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉… · 7%"
+      },
+      {
+        "name": "iGRBL 雕刻作业-2024.nc",
+        "percent": "50",
+        "output": "iGRBL 雕刻作业-2024.nc · 50%"
+      }
+    ]
+  }
+}

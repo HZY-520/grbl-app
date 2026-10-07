@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 1,
+  "oracle": "src/core/** (v2 TypeScript core — read-only, must not be modified)",
+  "generator": "tools/golden/generate.ts",
+  "command": "npx --yes tsx tools/golden/generate.ts",
+  "runtime": {
+    "node": "v24.14.0",
+    "platform": "win32"
+  },
+  "shims": [
+    "ImageData: { data: Uint8ClampedArray, width, height }",
+    "localStorage: in-memory Map (empty at start of every run)",
+    "DOMParser: minimal well-formed-XML DOM (documentElement/children/tagName/getAttribute/querySelector) used only by svg-to-gcode"
+  ],
+  "nondeterminismHandling": [
+    "dithering Random mode: Date.now() pinned to 1700000000000 for that single call (recorded per mode as dateNowOverride)",
+    "no Math.random is reachable from the captured cases",
+    "localStorage/AppSettings start from DEFAULT_SETTINGS; AppSettings mutations are restored inside the fit-to-travel case"
+  ],
+  "floatFidelity": "JSON.stringify default (shortest round-trip double) — no rounding, no fixed formatting",
+  "cases": [
+    {
+      "case": "potrace",
+      "outputFile": "potrace.json",
+      "bytes": 43512,
+      "sha256": "d1e85754d7e1b88b940999786ddc1ddab6c3eb3e5f7037ef76c677c93c50166b",
+      "entryCount": 17,
+      "entryCounts": {
+        "variants": 4,
+        "polylines": 17,
+        "points": 334
+      },
+      "modules": [
+        "src/core/vector/Potrace.ts",
+        "src/core/vector/Paths.ts"
+      ],
+      "input": "synthetic 64x64 RGBA bitmap (white bg + filled black circle r=11 at (18,18) + black rect x36..60/y6..22 + hollow black ring rOuter=12/rInner=7 at (40,44)); traced with 4 option sets"
+    },
+    {
+      "case": "centerline",
+      "outputFile": "centerline.json",
+      "bytes": 15645,
+      "sha256": "ee139d4caecaeefbf9913af6ad4bdfc2327bb38490d1cb3c9b18131bc072fe7c",
+      "entryCount": 13,
+      "entryCounts": {
+        "defaultPolylines": 6,
+        "closedPolylines": 7,
+        "defaultPoints": 12,
+        "closedPoints": 14
+      },
+      "modules": [
+        "src/core/vector/Centerline.ts",
+        "src/core/vector/Paths.ts"
+      ],
+      "input": "synthetic 40x40 RGBA bitmap (white bg + 3-px plus sign + 3-px diagonal stroke + 1-px stub) for centerlineTrace and skeletonize"
+    },
+    {
+      "case": "stroke-analysis",
+      "outputFile": "stroke-analysis.json",
+      "bytes": 89001,
+      "sha256": "83da1b6a52b3f8667c6c5f42da92ad91e3826bb341bef9765528556e953397e0",
+      "entryCount": 5,
+      "entryCounts": {
+        "samples": 5,
+        "analyses": 10,
+        "decisions": 10,
+        "centerlineDecisions": 1,
+        "outlineDecisions": 4,
+        "defaultFallbacks": 3
+      },
+      "modules": [
+        "src/core/vector/StrokeAnalysis.ts",
+        "src/core/vector/Centerline.ts"
+      ],
+      "input": "5 synthetic 64x64 bitmaps (1-px grid, 4-px bars, r=22 solid disc, 60.9% dense ink, single pixel); each run through analyzeStrokes + decideVectorMode with default and strict options"
+    },
+    {
+      "case": "dithering",
+      "outputFile": "dithering.json",
+      "bytes": 73955,
+      "sha256": "84b64813fb3e8deb9749159904f22e42b22bcb570fdc9c94f6c6d32504dc603a",
+      "entryCount": 9,
+      "entryCounts": {
+        "modes": 9,
+        "pixelsPerMode": 1024,
+        "totalDitheredPixels": 9216
+      },
+      "modules": [
+        "src/core/raster/dithering.ts"
+      ],
+      "input": "fixed 32x32 grayscale image (diagonal ramp 0..255 modulated by an 8-px block checker, alpha 255) dithered once per mode in DITHERING_MODES order; Random uses a pinned Date.now seed"
+    },
+    {
+      "case": "image-transform",
+      "outputFile": "image-transform.json",
+      "bytes": 423931,
+      "sha256": "49285237b27a12dc33a75b06341f9d6c6b8744f1af6696f79669a4523640fb11",
+      "entryCount": 22,
+      "entryCounts": {
+        "grayScaleVariants": 6,
+        "whitenizeThresholds": 6,
+        "thresholdVariants": 4,
+        "ditherModes": 3,
+        "formulas": 4,
+        "formulaLabels": 4
+      },
+      "modules": [
+        "src/core/raster/ImageTransform.ts",
+        "src/core/raster/dithering.ts"
+      ],
+      "input": "synthetic 24x16 RGBA bitmap cycling through 10 pixel forms (black / white / saturated RGB / near-white 250,251,249 / fully transparent with non-zero RGB / half transparent / mid gray / near-black); grayScale 6 option sets, whitenize 6 thresholds, threshold 4 sets, dither 3 modes, flipVertical, and testGrayScale on both this image and a synthetic gray-only image"
+    },
+    {
+      "case": "image-vector",
+      "outputFile": "image-vector.json",
+      "bytes": 389860,
+      "sha256": "8607888bcbf0c488296ec48f5727b86d34939692e6035b99e515d1992b4a8195",
+      "entryCount": 33,
+      "entryCounts": {
+        "imageVectorVariants": 8,
+        "smartVariants": 3,
+        "emittedLines": 909,
+        "smartEmittedLines": 515,
+        "hasNonAsciiCases": 10,
+        "decideTextEngineCases": 12,
+        "toolLabels": 2
+      },
+      "modules": [
+        "src/core/vector/ImageVector.ts",
+        "src/core/vector/SmartVector.ts",
+        "src/core/vector/Potrace.ts",
+        "src/core/vector/Centerline.ts",
+        "src/core/vector/Paths.ts"
+      ],
+      "input": "synthetic 128x128 RGBA bitmap (black disc r=24 at (34,34) + half-transparent black rect + hollow black ring at (92,92) + fully transparent strip with non-zero RGB) plus the 40x40 centerline sample; 8 convertImageVector option sets (6 outline / 2 centerline, incl. tuned thresholds and a degenerate 0x0 image), 3 convertImageVectorSmart sets, hasNonAscii sweep and decideTextEngine sweep"
+    },
+    {
+      "case": "hershey",
+      "outputFile": "hershey.json",
+      "bytes": 23352,
+      "sha256": "e5d4691cde245983eba3abb273296eae91f3d15e3a562c0f9d420c64cbe3b14e",
+      "entryCount": 5,
+      "entryCounts": {
+        "variants": 5,
+        "gcodeLines": 846,
+        "horizontalGlyphs": 95,
+        "verticalGlyphs": 95
+      },
+      "modules": [
+        "src/core/text/Hershey.ts",
+        "src/core/text/hersheyData.ts"
+      ],
+      "input": "5 fixed option sets: single-line, bold+offset+no-PWM, multi-line, vertical, and non-ASCII/empty laserOn"
+    },
+    {
+      "case": "polylines-to-gcode",
+      "outputFile": "polylines-to-gcode.json",
+      "bytes": 19495,
+      "sha256": "925233c9e1ad9a12fec60deaf9fc0981c5d8dd2298e0462054b020c9d64a17d5",
+      "entryCount": 2,
+      "entryCounts": {
+        "variants": 2,
+        "potracePathsIn": 4,
+        "handPathsIn": 5,
+        "emittedLines": 268
+      },
+      "modules": [
+        "src/core/vector/Paths.ts",
+        "src/core/vector/Potrace.ts"
+      ],
+      "input": "2 option sets over (a) the potrace case-1 default polylines and (b) a fixed hand-authored 5-path list (closed square with duplicate endpoint, sub-epsilon duplicate pair, single point, open 3-point segment, empty path)"
+    },
+    {
+      "case": "svg-to-gcode",
+      "outputFile": "svg-to-gcode.json",
+      "bytes": 11009,
+      "sha256": "9678d3ba8933be696efd0d760b212e5e4e07cdaaeeffb7cf42b4058ecd164d25",
+      "entryCount": 2,
+      "entryCounts": {
+        "variants": 2,
+        "emittedLines": 214,
+        "pathsFirstVariant": 10,
+        "parseLengthCases": 16,
+        "parseViewBoxCases": 7,
+        "errorPaths": 3
+      },
+      "modules": [
+        "src/core/vector/SvgToGcode.ts"
+      ],
+      "input": "hand-written SVG (rect, transformed rect, circle, cubic + quadratic/T bezier paths, line with mm/pt lengths, polyline, polygon, nested <g>, <defs>) converted with 2 option sets, plus parseLength/parseViewBox sweeps and 3 error paths"
+    },
+    {
+      "case": "gcode-analysis",
+      "outputFile": "gcode-analysis.json",
+      "bytes": 58639,
+      "sha256": "5439497e081b198acf7e4611dba3154d49c811e9ac7d0c67bc75df7c82d93b53",
+      "entryCount": 23,
+      "entryCounts": {
+        "commands": 23,
+        "previewMoves": 10,
+        "motionCommands": 10,
+        "lifecycleCases": 5,
+        "elementSweepCases": 8,
+        "confSweepCases": 8,
+        "rawCommandSweepCases": 12
+      },
+      "modules": [
+        "src/core/gcode/GrblFile.ts",
+        "src/core/grbl/GrblCommand.ts"
+      ],
+      "input": "fixed 24-line G-code program (comments ; and (), G0/G1/G2, S values, $H, G92/G91, F-only line, T/M, blank line) parsed with parseGcode + analyze, plus command-lifecycle, Element, GrblConfSTIsSetConf and raw-line (un-stripped, with comments/spacing/lower case) sweeps"
+    },
+    {
+      "case": "grbl-messages",
+      "outputFile": "grbl-messages.json",
+      "bytes": 189688,
+      "sha256": "e263d7d685f75a74a2052df0d36ce464a89e1cad0e6ec337d35ee2c9f45e449e",
+      "entryCount": 11,
+      "entryCounts": {
+        "contexts": 11,
+        "messagesPerContext": 25,
+        "totalMessageDecodings": 275,
+        "settingLookups": 143,
+        "alarmLookups": 33
+      },
+      "modules": [
+        "src/core/grbl/GrblCommand.ts",
+        "src/core/grbl/csvData.ts",
+        "src/core/grbl/types.ts (GrblVersionInfo)"
+      ],
+      "input": "25 fixed GRBL response lines (ok / error / ALARM / [MSG] / $settings / $H / $$ / [VER] / [OPT] / status reports / banners) decoded under 11 version contexts via installDecoders + csvData tables"
+    },
+    {
+      "case": "grbl-version",
+      "outputFile": "grbl-version.json",
+      "bytes": 22189,
+      "sha256": "a10c0e9abe1166977f34c72e785a9e7664d1549cf5407ca4d8f298375273ace6",
+      "entryCount": 19,
+      "entryCounts": {
+        "banners": 19,
+        "vendorVariants": 10,
+        "comparisonMatrixCells": 36,
+        "statusFallbacks": 3
+      },
+      "modules": [
+        "src/core/grbl/types.ts",
+        "src/core/grbl/GrblCore.ts (parseVersionBanner/parseVerMessage, transcribed)"
+      ],
+      "input": "16 real-world banner strings (Grbl x.y<letter> and [VER:...] incl. Ortur/Longer/Aufero vendor variants) + compareTo matrix + status-report fallbacks"
+    },
+    {
+      "case": "settings-preset",
+      "outputFile": "settings-preset.json",
+      "bytes": 2952,
+      "sha256": "e3d193d218aace5bb98cc3e4c15a82f01ed34596fe848bf05761ed410d304dff",
+      "entryCount": 19,
+      "entryCounts": {
+        "entries": 19,
+        "skipped": 8,
+        "emptyTextEntries": 0,
+        "commentOnlyEntries": 0
+      },
+      "modules": [
+        "src/core/grbl/SettingsPreset.ts"
+      ],
+      "input": "fixed .nc-style preset text with blank lines, ; and () comments, duplicate ids, invalid/junk lines, negative/+./dot/exponent values"
+    },
+    {
+      "case": "format-decimal",
+      "outputFile": "format-decimal.json",
+      "bytes": 2889,
+      "sha256": "c0b31086cce5628fc7c3644a1b8d2369920c536a939c647a0965f66544626fb2",
+      "entryCount": 24,
+      "entryCounts": {
+        "cases": 24,
+        "elementCases": 7
+      },
+      "modules": [
+        "src/core/grbl/GrblCommand.ts"
+      ],
+      "input": "fixed numeric sweep (0, -0, 0.5, 1/3, 1e-7, 12345.6789, -0.0001, 1e21, 1e-21, subnormals, MAX_VALUE, NaN, ±Infinity) through formatDecimal, plus Element.parse().toString() sweep"
+    },
+    {
+      "case": "fit-to-travel",
+      "outputFile": "fit-to-travel.json",
+      "bytes": 15283,
+      "sha256": "dea1c71c4797eba044a8b330c2162624a44ff28da343f644f6121bf725d616df",
+      "entryCount": 35,
+      "entryCounts": {
+        "fitCases": 20,
+        "checkTravelCases": 15,
+        "builtinProfiles": 4,
+        "defaultSettingsKeys": 28
+      },
+      "modules": [
+        "src/core/grbl/DeviceProfile.ts",
+        "src/core/grbl/GrblConfig.ts"
+      ],
+      "input": "17 fitSizeToTravel cases (Fit/Clamp/None, NaN/Infinity/zero/negative sizes, custom travel) + 15 checkGcodeWithinTravel line-set cases (comments, arcs, lowercase, exponents, epsilon boundary) + AppSettings-backed travel variant"
+    },
+    {
+      "case": "keepalive-format",
+      "outputFile": "keepalive-format.json",
+      "bytes": 8184,
+      "sha256": "ecf5711bc943a59d7cfdff79e3bd1ff952c6d564cb3c8567e052f785a4b8ee8e",
+      "entryCount": 58,
+      "entryCounts": {
+        "names": 25,
+        "percents": 20,
+        "formats": 13,
+        "notificationTitle": 1
+      },
+      "modules": [
+        "src/core/native/KeepAlive.ts"
+      ],
+      "input": "truncateName over 20 names (length 0/1/23/24/25/40, CJK, emoji surrogate pairs, whitespace/control chars), percentOf over 20 pairs (0/33.3/100/negative/over-total/NaN/Infinity), formatText over 13 name+percent combos"
+    },
+    {
+      "case": "raster-converter",
+      "outputFile": "raster-converter.json",
+      "bytes": 557086,
+      "sha256": "be10f9b1699ef8e89d86cded758e67c9c3649b6d235ab6c37f5767906ce4f2db",
+      "entryCount": 5,
+      "entryCounts": {
+        "variants": 5,
+        "totalLines": 2758,
+        "maxLines": 1302,
+        "resampledBitmaps": 5,
+        "optionFields": 26
+      },
+      "modules": [
+        "src/core/raster/RasterConverter.ts",
+        "src/core/raster/ImageTransform.ts",
+        "src/core/raster/dithering.ts"
+      ],
+      "input": "synthetic 48x32 RGBA source bitmap (white background + 16x16 black diagonal gradient block + 1 px black line at y=24 + 14x10 half-transparent block with alpha 32..224 + 8x6 fully transparent block + 4 saturated colour dots); 5 option sets covering Line2Line/Dithering x Horizontal/Vertical/Diagonal x pwm on/off x unidirectional on/off x threshold apply/composite, plus a degenerate 0-height target; resizeImage is replaced by a deterministic nearest-neighbour canvas shim (see result.resample)"
+    }
+  ],
+  "totals": {
+    "cases": 17,
+    "bytes": 1946670,
+    "entries": 302
+  }
+}

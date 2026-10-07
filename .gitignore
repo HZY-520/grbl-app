@@ -14,7 +14,14 @@ Thumbs.db
 .vscode/
 *.iml
 
-# Capacitor / Android 生成内容
+# iGRBL 3.0 原生工程（Gradle）
+.gradle/
+build/
+*/build/
+local.properties
+.kotlin/
+
+# Capacitor / Android 生成内容（v2 遗留）
 android/.gradle/
 android/build/
 android/app/build/
@@ -24,3 +31,12 @@ android/app/src/main/assets/capacitor.plugins.json
 android/app/src/main/res/xml/config.xml
 android/capacitor-cordova-android-plugins/
 android/local.properties
+
+# 签名密钥 —— 绝不入库（app/build.gradle.kts 的 release 签名读它）
+keystore/
+*.jks
+*.keystore
+keystore.properties
+
+# 验收取证的临时目录（截图 / uiautomator dump 的中间产物）
+.verify-tmp/

@@ -1,0 +1,654 @@
+{
+  "case": "fit-to-travel",
+  "generator": "tools/golden/generate.ts",
+  "generatorCommand": "npx --yes tsx tools/golden/generate.ts",
+  "modules": [
+    "src/core/grbl/DeviceProfile.ts",
+    "src/core/grbl/GrblConfig.ts"
+  ],
+  "input": "17 fitSizeToTravel cases (Fit/Clamp/None, NaN/Infinity/zero/negative sizes, custom travel) + 15 checkGcodeWithinTravel line-set cases (comments, arcs, lowercase, exponents, epsilon boundary) + AppSettings-backed travel variant",
+  "entryCount": 35,
+  "entryCounts": {
+    "fitCases": 20,
+    "checkTravelCases": 15,
+    "builtinProfiles": 4,
+    "defaultSettingsKeys": 28
+  },
+  "result": {
+    "fitCases": [
+      {
+        "name": "fits-exactly",
+        "input": {
+          "widthMm": "300",
+          "heightMm": "200",
+          "opts": null
+        },
+        "output": {
+          "widthMm": 300,
+          "heightMm": 200,
+          "adjusted": false
+        }
+      },
+      {
+        "name": "fits-inside",
+        "input": {
+          "widthMm": "120",
+          "heightMm": "80",
+          "opts": null
+        },
+        "output": {
+          "widthMm": 120,
+          "heightMm": 80,
+          "adjusted": false
+        }
+      },
+      {
+        "name": "too-wide-height-binds",
+        "input": {
+          "widthMm": "600",
+          "heightMm": "200",
+          "opts": null
+        },
+        "output": {
+          "widthMm": 300,
+          "heightMm": 100,
+          "adjusted": true,
+          "message": "尺寸超出 300×200mm 行程，已等比缩放至 X300×Y100mm"
+        }
+      },
+      {
+        "name": "too-big-both-fit",
+        "input": {
+          "widthMm": "1200",
+          "heightMm": "900",
+          "opts": null
+        },
+        "output": {
+          "widthMm": 266.667,
+          "heightMm": 200,
+          "adjusted": true,
+          "message": "尺寸超出 300×200mm 行程，已等比缩放至 X266.667×Y200mm"
+        }
+      },
+      {
+        "name": "too-big-both-clamp",
+        "input": {
+          "widthMm": "1200",
+          "heightMm": "900",
+          "opts": {
+            "mode": "Clamp"
+          }
+        },
+        "output": {
+          "widthMm": 300,
+          "heightMm": 200,
+          "adjusted": true,
+          "message": "尺寸超出 300×200mm 行程，已分别限制为 X300×Y200mm（未保持比例）"
+        }
+      },
+      {
+        "name": "clamp-one-axis-only",
+        "input": {
+          "widthMm": "500",
+          "heightMm": "100",
+          "opts": {
+            "mode": "Clamp"
+          }
+        },
+        "output": {
+          "widthMm": 300,
+          "heightMm": 100,
+          "adjusted": true,
+          "message": "尺寸超出 300×200mm 行程，已分别限制为 X300×Y100mm（未保持比例）"
+        }
+      },
+      {
+        "name": "none-mode-passthrough",
+        "input": {
+          "widthMm": "1200",
+          "heightMm": "900",
+          "opts": {
+            "mode": "None"
+          }
+        },
+        "output": {
+          "widthMm": 1200,
+          "heightMm": 900,
+          "adjusted": false
+        }
+      },
+      {
+        "name": "zero-size-floors-to-1",
+        "input": {
+          "widthMm": "0",
+          "heightMm": "0",
+          "opts": null
+        },
+        "output": {
+          "widthMm": 1,
+          "heightMm": 1,
+          "adjusted": false
+        }
+      },
+      {
+        "name": "negative-size-floors-to-1",
+        "input": {
+          "widthMm": "-50",
+          "heightMm": "-10",
+          "opts": null
+        },
+        "output": {
+          "widthMm": 1,
+          "heightMm": 1,
+          "adjusted": false
+        }
+      },
+      {
+        "name": "nan-width",
+        "input": {
+          "widthMm": "NaN",
+          "heightMm": "100",
+          "opts": null
+        },
+        "output": {
+          "widthMm": 1,
+          "heightMm": 100,
+          "adjusted": false
+        }
+      },
+      {
+        "name": "infinite-height",
+        "input": {
+          "widthMm": "100",
+          "heightMm": "Infinity",
+          "opts": null
+        },
+        "output": {
+          "widthMm": 100,
+          "heightMm": 1,
+          "adjusted": false
+        }
+      },
+      {
+        "name": "custom-travel-fit",
+        "input": {
+          "widthMm": "1000",
+          "heightMm": "500",
+          "opts": {
+            "travelX": 400,
+            "travelY": 400
+          }
+        },
+        "output": {
+          "widthMm": 400,
+          "heightMm": 200,
+          "adjusted": true,
+          "message": "尺寸超出 400×400mm 行程，已等比缩放至 X400×Y200mm"
+        }
+      },
+      {
+        "name": "custom-travel-clamp",
+        "input": {
+          "widthMm": "1000",
+          "heightMm": "500",
+          "opts": {
+            "travelX": 400,
+            "travelY": 400,
+            "mode": "Clamp"
+          }
+        },
+        "output": {
+          "widthMm": 400,
+          "heightMm": 400,
+          "adjusted": true,
+          "message": "尺寸超出 400×400mm 行程，已分别限制为 X400×Y400mm（未保持比例）"
+        }
+      },
+      {
+        "name": "tiny-travel-1mm",
+        "input": {
+          "widthMm": "50",
+          "heightMm": "25",
+          "opts": {
+            "travelX": 1,
+            "travelY": 1
+          }
+        },
+        "output": {
+          "widthMm": 1,
+          "heightMm": 1,
+          "adjusted": true,
+          "message": "尺寸超出 1×1mm 行程，已等比缩放至 X1×Y1mm"
+        }
+      },
+      {
+        "name": "upscale-never-happens",
+        "input": {
+          "widthMm": "10",
+          "heightMm": "5",
+          "opts": {
+            "travelX": 1000,
+            "travelY": 1000
+          }
+        },
+        "output": {
+          "widthMm": 10,
+          "heightMm": 5,
+          "adjusted": false
+        }
+      },
+      {
+        "name": "rounding-third-mm",
+        "input": {
+          "widthMm": "333.3333",
+          "heightMm": "111.1111",
+          "opts": null
+        },
+        "output": {
+          "widthMm": 300,
+          "heightMm": 100,
+          "adjusted": true,
+          "message": "尺寸超出 300×200mm 行程，已等比缩放至 X300×Y100mm"
+        }
+      },
+      {
+        "name": "rounding-third-mm-clamp",
+        "input": {
+          "widthMm": "333.3333",
+          "heightMm": "111.1111",
+          "opts": {
+            "mode": "Clamp"
+          }
+        },
+        "output": {
+          "widthMm": 300,
+          "heightMm": 111.111,
+          "adjusted": true,
+          "message": "尺寸超出 300×200mm 行程，已分别限制为 X300×Y111.111mm（未保持比例）"
+        }
+      },
+      {
+        "name": "clamp-below-round3-epsilon",
+        "input": {
+          "widthMm": "300.0004",
+          "heightMm": "200.0004",
+          "opts": {
+            "mode": "Clamp"
+          }
+        },
+        "output": {
+          "widthMm": 300,
+          "heightMm": 200,
+          "adjusted": false
+        }
+      },
+      {
+        "name": "fit-below-round3-epsilon",
+        "input": {
+          "widthMm": "300.0004",
+          "heightMm": "200.0004",
+          "opts": null
+        },
+        "output": {
+          "widthMm": 300,
+          "heightMm": 200,
+          "adjusted": true,
+          "message": "尺寸超出 300×200mm 行程，已等比缩放至 X300×Y200mm"
+        }
+      },
+      {
+        "name": "clamp-exactly-travel",
+        "input": {
+          "widthMm": "300",
+          "heightMm": "200",
+          "opts": {
+            "mode": "Clamp"
+          }
+        },
+        "output": {
+          "widthMm": 300,
+          "heightMm": 200,
+          "adjusted": false
+        }
+      }
+    ],
+    "checkTravelCases": [
+      {
+        "name": "inside",
+        "lines": [
+          "G0 X0 Y0",
+          "G1 X100 Y50 F600"
+        ],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 100,
+          "maxY": 50,
+          "minX": 0,
+          "minY": 0
+        }
+      },
+      {
+        "name": "overshoot-x",
+        "lines": [
+          "G0 X350 Y20"
+        ],
+        "opts": null,
+        "output": {
+          "ok": false,
+          "maxX": 350,
+          "maxY": 20,
+          "minX": 350,
+          "minY": 20,
+          "message": "G 代码超出 300×200mm 行程：X 最大 350mm、Y 最大 20mm"
+        }
+      },
+      {
+        "name": "negative-machine-coords-ok",
+        "lines": [
+          "G1 X-50 Y-20",
+          "G0 X10 Y10"
+        ],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 10,
+          "maxY": 10,
+          "minX": -50,
+          "minY": -20
+        }
+      },
+      {
+        "name": "epsilon-boundary-inside",
+        "lines": [
+          "G00 X299.9995 Y199.9995"
+        ],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 300,
+          "maxY": 200,
+          "minX": 300,
+          "minY": 200
+        }
+      },
+      {
+        "name": "epsilon-boundary-outside",
+        "lines": [
+          "G0 X300.002 Y10"
+        ],
+        "opts": null,
+        "output": {
+          "ok": false,
+          "maxX": 300.002,
+          "maxY": 10,
+          "minX": 300.002,
+          "minY": 10,
+          "message": "G 代码超出 300×200mm 行程：X 最大 300.002mm、Y 最大 10mm"
+        }
+      },
+      {
+        "name": "comments-only",
+        "lines": [
+          "; G0 X9999 Y9999",
+          "(G1 X500 Y500)"
+        ],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 0,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 0
+        }
+      },
+      {
+        "name": "arcs-counted",
+        "lines": [
+          "G2 X20 Y20 I5 J0",
+          "G03 X30 Y30"
+        ],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 30,
+          "maxY": 30,
+          "minX": 20,
+          "minY": 20
+        }
+      },
+      {
+        "name": "empty-list",
+        "lines": [],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 0,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 0
+        }
+      },
+      {
+        "name": "no-motion-lines",
+        "lines": [
+          "M5",
+          "S0",
+          "$H",
+          "not a move"
+        ],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 0,
+          "maxY": 0,
+          "minX": 0,
+          "minY": 0
+        }
+      },
+      {
+        "name": "feed-only-then-x-only",
+        "lines": [
+          "G1 F600",
+          "G1 X1"
+        ],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 1,
+          "maxY": 0,
+          "minX": 1,
+          "minY": 0
+        }
+      },
+      {
+        "name": "lowercase-no-spaces",
+        "lines": [
+          "g1x10y10",
+          "g0 X299Y199"
+        ],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 299,
+          "maxY": 199,
+          "minX": 10,
+          "minY": 10
+        }
+      },
+      {
+        "name": "exponent-not-supported",
+        "lines": [
+          "G1 X1.5e2 Y2"
+        ],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 1.5,
+          "maxY": 2,
+          "minX": 1.5,
+          "minY": 2
+        }
+      },
+      {
+        "name": "custom-travel-overshoot",
+        "lines": [
+          "G1 X500 Y10"
+        ],
+        "opts": {
+          "travelX": 400,
+          "travelY": 400
+        },
+        "output": {
+          "ok": false,
+          "maxX": 500,
+          "maxY": 10,
+          "minX": 500,
+          "minY": 10,
+          "message": "G 代码超出 400×400mm 行程：X 最大 500mm、Y 最大 10mm"
+        }
+      },
+      {
+        "name": "only-y",
+        "lines": [
+          "G1 Y250"
+        ],
+        "opts": null,
+        "output": {
+          "ok": false,
+          "maxX": 0,
+          "maxY": 250,
+          "minX": 0,
+          "minY": 250,
+          "message": "G 代码超出 300×200mm 行程：X 最大 0mm、Y 最大 250mm"
+        }
+      },
+      {
+        "name": "blank-lines",
+        "lines": [
+          "",
+          "G1 X10 Y10",
+          ""
+        ],
+        "opts": null,
+        "output": {
+          "ok": true,
+          "maxX": 10,
+          "maxY": 10,
+          "minX": 10,
+          "minY": 10
+        }
+      }
+    ],
+    "viaAppSettings": {
+      "args": {
+        "travelX": "(unset → AppSettings)"
+      },
+      "fit": {
+        "widthMm": 500,
+        "heightMm": 375,
+        "adjusted": true,
+        "message": "尺寸超出 500×400mm 行程，已等比缩放至 X500×Y375mm"
+      },
+      "clamp": {
+        "widthMm": 500,
+        "heightMm": 400,
+        "adjusted": true,
+        "message": "尺寸超出 500×400mm 行程，已分别限制为 X500×Y400mm（未保持比例）"
+      },
+      "check": {
+        "ok": false,
+        "maxX": 600,
+        "maxY": 350,
+        "minX": 450,
+        "minY": 10,
+        "message": "G 代码超出 500×400mm 行程：X 最大 600mm、Y 最大 350mm"
+      },
+      "explicitOverridesSettings": {
+        "widthMm": 266.667,
+        "heightMm": 200,
+        "adjusted": true,
+        "message": "尺寸超出 300×200mm 行程，已等比缩放至 X266.667×Y200mm"
+      }
+    },
+    "restoredDefaults": {
+      "settingsDefaults": {
+        "travelX": 300,
+        "travelY": 200
+      },
+      "fit": {
+        "widthMm": 266.667,
+        "heightMm": 200,
+        "adjusted": true,
+        "message": "尺寸超出 300×200mm 行程，已等比缩放至 X266.667×Y200mm"
+      }
+    },
+    "builtinProfiles": [
+      {
+        "id": "builtin-300x200-s1000",
+        "name": "300×200 桌面入门机（S1000）",
+        "travelX": 300,
+        "travelY": 200,
+        "firmware": "Grbl",
+        "maxPower": 1000,
+        "minPower": 0,
+        "markSpeed": 1000,
+        "travelSpeed": 3000,
+        "quality": 3,
+        "baud": 115200,
+        "active": false,
+        "createdAt": 0
+      },
+      {
+        "id": "builtin-400x400-s1000",
+        "name": "400×400 中端机（S1000）",
+        "travelX": 400,
+        "travelY": 400,
+        "firmware": "Grbl",
+        "maxPower": 1000,
+        "minPower": 0,
+        "markSpeed": 1000,
+        "travelSpeed": 3000,
+        "quality": 3,
+        "baud": 115200,
+        "active": false,
+        "createdAt": 0
+      },
+      {
+        "id": "builtin-500x500-s1000",
+        "name": "500×500 大幅面机（S1000）",
+        "travelX": 500,
+        "travelY": 500,
+        "firmware": "Grbl",
+        "maxPower": 1000,
+        "minPower": 0,
+        "markSpeed": 1000,
+        "travelSpeed": 3000,
+        "quality": 3,
+        "baud": 115200,
+        "active": false,
+        "createdAt": 0
+      },
+      {
+        "id": "builtin-300x180-s255",
+        "name": "300×180 简易机（S255）",
+        "travelX": 300,
+        "travelY": 180,
+        "firmware": "Grbl",
+        "maxPower": 255,
+        "minPower": 0,
+        "markSpeed": 1000,
+        "travelSpeed": 3000,
+        "quality": 3,
+        "baud": 115200,
+        "active": false,
+        "createdAt": 0
+      }
+    ],
+    "storageAfterRun": {
+      "savedProfiles": [],
+      "knownDeviceIds": [],
+      "deviceKnown": false
+    }
+  }
+}

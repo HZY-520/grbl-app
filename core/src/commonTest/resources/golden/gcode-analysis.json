@@ -1,0 +1,2280 @@
+{
+  "case": "gcode-analysis",
+  "generator": "tools/golden/generate.ts",
+  "generatorCommand": "npx --yes tsx tools/golden/generate.ts",
+  "modules": [
+    "src/core/gcode/GrblFile.ts",
+    "src/core/grbl/GrblCommand.ts"
+  ],
+  "input": "fixed 24-line G-code program (comments ; and (), G0/G1/G2, S values, $H, G92/G91, F-only line, T/M, blank line) parsed with parseGcode + analyze, plus command-lifecycle, Element, GrblConfSTIsSetConf and raw-line (un-stripped, with comments/spacing/lower case) sweeps",
+  "entryCount": 23,
+  "entryCounts": {
+    "commands": 23,
+    "previewMoves": 10,
+    "motionCommands": 10,
+    "lifecycleCases": 5,
+    "elementSweepCases": 8,
+    "confSweepCases": 8,
+    "rawCommandSweepCases": 12
+  },
+  "result": {
+    "name": "golden-sample.nc",
+    "stats": {
+      "totalLines": 23,
+      "motionCommands": 10,
+      "pathLengthMm": 69.82941892815815,
+      "estimatedSeconds": 2.196628378563163,
+      "bbox": {
+        "minX": 20,
+        "minY": 5.5,
+        "maxX": 30.0005,
+        "maxY": 5.5,
+        "valid": true
+      }
+    },
+    "preview": [
+      {
+        "rapid": true,
+        "x1": 0,
+        "y1": 0,
+        "x2": 0,
+        "y2": 0
+      },
+      {
+        "rapid": true,
+        "x1": 0,
+        "y1": 0,
+        "x2": 10,
+        "y2": 0
+      },
+      {
+        "rapid": true,
+        "x1": 10,
+        "y1": 0,
+        "x2": 10,
+        "y2": 5.5
+      },
+      {
+        "rapid": true,
+        "x1": 10,
+        "y1": 5.5,
+        "x2": 20,
+        "y2": 5.5
+      },
+      {
+        "rapid": false,
+        "x1": 20,
+        "y1": 5.5,
+        "x2": 30,
+        "y2": 5.5
+      },
+      {
+        "rapid": false,
+        "x1": 30,
+        "y1": 5.5,
+        "x2": 30.0005,
+        "y2": 5.5
+      },
+      {
+        "rapid": true,
+        "x1": 30.0005,
+        "y1": 5.5,
+        "x2": 0,
+        "y2": 0
+      },
+      {
+        "rapid": true,
+        "x1": 0,
+        "y1": 0,
+        "x2": 1,
+        "y2": 1
+      },
+      {
+        "rapid": true,
+        "x1": 1,
+        "y1": 1,
+        "x2": 0,
+        "y2": 0
+      },
+      {
+        "rapid": true,
+        "x1": 0,
+        "y1": 0,
+        "x2": 1,
+        "y2": 0
+      }
+    ],
+    "commands": [
+      {
+        "commandRaw": "G90",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": true,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G90",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G90\n",
+        "serialDataAfterBuildHelper": "G90\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G90",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 90,
+            "toString": "G90"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G21",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G21",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G21\n",
+        "serialDataAfterBuildHelper": "G21\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G21",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 21,
+            "toString": "G21"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "$H",
+        "isEmpty": false,
+        "isGrblCommand": true,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "$H",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "$H\n",
+        "serialDataAfterBuildHelper": "$H\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "$H",
+        "elements": {
+          "G": null,
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G0 X0 Y0",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": true,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G0 X0 Y0",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G0X0Y0\n",
+        "serialDataAfterBuildHelper": "G0X0Y0\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G0 X0 Y0",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 0,
+            "toString": "G0"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 0,
+            "toString": "X0"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 0,
+            "toString": "Y0"
+          },
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "M4 S0",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": true,
+        "isM3": false,
+        "isM4": true,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "M4 S0",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "M4S0\n",
+        "serialDataAfterBuildHelper": "M4S0\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "M4 S0",
+        "elements": {
+          "G": null,
+          "M": {
+            "command": "M",
+            "number": 4,
+            "toString": "M4"
+          },
+          "T": null,
+          "S": {
+            "command": "S",
+            "number": 0,
+            "toString": "S0"
+          },
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G1 X10 Y0 F600",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": true,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G1 X10 Y0 F600",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G1X10Y0F600\n",
+        "serialDataAfterBuildHelper": "G1X10Y0F600\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G1 X10 Y0 F600",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 1,
+            "toString": "G1"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 10,
+            "toString": "X10"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 0,
+            "toString": "Y0"
+          },
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": {
+            "command": "F",
+            "number": 600,
+            "toString": "F600"
+          },
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G1 X10 Y5.5",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": true,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G1 X10 Y5.5",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G1X10Y5.5\n",
+        "serialDataAfterBuildHelper": "G1X10Y5.5\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G1 X10 Y5.5",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 1,
+            "toString": "G1"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 10,
+            "toString": "X10"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 5.5,
+            "toString": "Y5.5"
+          },
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G2 X20 Y5.5 I5 J0",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": false,
+        "isArcMovement": true,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": true,
+        "repeatCount": 0,
+        "getDecodedMessage": "G2 X20 Y5.5 I5 J0",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G2X20Y5.5I5J0\n",
+        "serialDataAfterBuildHelper": "G2X20Y5.5I5J0\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G2 X20 Y5.5 I5 J0",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 2,
+            "toString": "G2"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 20,
+            "toString": "X20"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 5.5,
+            "toString": "Y5.5"
+          },
+          "Z": null,
+          "I": {
+            "command": "I",
+            "number": 5,
+            "toString": "I5"
+          },
+          "J": {
+            "command": "J",
+            "number": 0,
+            "toString": "J0"
+          },
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "S255",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "S255",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "S255\n",
+        "serialDataAfterBuildHelper": "S255\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "S255",
+        "elements": {
+          "G": null,
+          "M": null,
+          "T": null,
+          "S": {
+            "command": "S",
+            "number": 255,
+            "toString": "S255"
+          },
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G1 X30 Y5.5",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": true,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G1 X30 Y5.5",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G1X30Y5.5\n",
+        "serialDataAfterBuildHelper": "G1X30Y5.5\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G1 X30 Y5.5",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 1,
+            "toString": "G1"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 30,
+            "toString": "X30"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 5.5,
+            "toString": "Y5.5"
+          },
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G1 X30.0005 Y5.5",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": true,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G1 X30.0005 Y5.5",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G1X30.0005Y5.5\n",
+        "serialDataAfterBuildHelper": "G1X30.0005Y5.5\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G1 X30.0005 Y5.5",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 1,
+            "toString": "G1"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 30.0005,
+            "toString": "X30.0005"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 5.5,
+            "toString": "Y5.5"
+          },
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "M5",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": true,
+        "isM5": true,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "M5",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "M5\n",
+        "serialDataAfterBuildHelper": "M5\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "M5",
+        "elements": {
+          "G": null,
+          "M": {
+            "command": "M",
+            "number": 5,
+            "toString": "M5"
+          },
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G0 X0 Y0",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": true,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G0 X0 Y0",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G0X0Y0\n",
+        "serialDataAfterBuildHelper": "G0X0Y0\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G0 X0 Y0",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 0,
+            "toString": "G0"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 0,
+            "toString": "X0"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 0,
+            "toString": "Y0"
+          },
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G92 X0 Y0",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": true,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G92 X0 Y0",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G92X0Y0\n",
+        "serialDataAfterBuildHelper": "G92X0Y0\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G92 X0 Y0",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 92,
+            "toString": "G92"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 0,
+            "toString": "X0"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 0,
+            "toString": "Y0"
+          },
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G91",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": true,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G91",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G91\n",
+        "serialDataAfterBuildHelper": "G91\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G91",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 91,
+            "toString": "G91"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G1 X1 Y1",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": true,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G1 X1 Y1",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G1X1Y1\n",
+        "serialDataAfterBuildHelper": "G1X1Y1\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G1 X1 Y1",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 1,
+            "toString": "G1"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 1,
+            "toString": "X1"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 1,
+            "toString": "Y1"
+          },
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G90",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": true,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G90",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G90\n",
+        "serialDataAfterBuildHelper": "G90\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G90",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 90,
+            "toString": "G90"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G0 X0 Y0",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": true,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G0 X0 Y0",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G0X0Y0\n",
+        "serialDataAfterBuildHelper": "G0X0Y0\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G0 X0 Y0",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 0,
+            "toString": "G0"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 0,
+            "toString": "X0"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 0,
+            "toString": "Y0"
+          },
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "T1 M6",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "T1 M6",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "T1M6\n",
+        "serialDataAfterBuildHelper": "T1M6\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "T1 M6",
+        "elements": {
+          "G": null,
+          "M": {
+            "command": "M",
+            "number": 6,
+            "toString": "M6"
+          },
+          "T": {
+            "command": "T",
+            "number": 1,
+            "toString": "T1"
+          },
+          "S": null,
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G4 P0.5",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": true,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G4 P0.5",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G4P0.5\n",
+        "serialDataAfterBuildHelper": "G4P0.5\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G4 P0.5",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 4,
+            "toString": "G4"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": {
+            "command": "P",
+            "number": 0.5,
+            "toString": "P0.5"
+          },
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "F300",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "F300",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "F300\n",
+        "serialDataAfterBuildHelper": "F300\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "F300",
+        "elements": {
+          "G": null,
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": {
+            "command": "F",
+            "number": 300,
+            "toString": "F300"
+          },
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "S0",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": false,
+        "isLinearMovement": false,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "S0",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "S0\n",
+        "serialDataAfterBuildHelper": "S0\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "S0",
+        "elements": {
+          "G": null,
+          "M": null,
+          "T": null,
+          "S": {
+            "command": "S",
+            "number": 0,
+            "toString": "S0"
+          },
+          "P": null,
+          "X": null,
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      {
+        "commandRaw": "G1 X1",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": true,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G1 X1",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G1X1\n",
+        "serialDataAfterBuildHelper": "G1X1\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G1 X1",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 1,
+            "toString": "G1"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 1,
+            "toString": "X1"
+          },
+          "Y": null,
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      }
+    ],
+    "lifecycle": [
+      {
+        "setResult": "ok",
+        "initialStatus": "Queued",
+        "sendingStatus": "WaitingResponse",
+        "statusAfter": "ResponseGood",
+        "codedResult": "OK",
+        "commandStored": "G1 X1.5 Y2"
+      },
+      {
+        "setResult": "error:9",
+        "initialStatus": "Queued",
+        "sendingStatus": "WaitingResponse",
+        "statusAfter": "ResponseBad",
+        "codedResult": "ERROR:9",
+        "commandStored": "G1 X1.5 Y2"
+      },
+      {
+        "setResult": "weird",
+        "initialStatus": "Queued",
+        "sendingStatus": "WaitingResponse",
+        "statusAfter": "InvalidResponse",
+        "codedResult": "WEIRD",
+        "commandStored": "G1 X1.5 Y2"
+      },
+      {
+        "setResult": "",
+        "initialStatus": "Queued",
+        "sendingStatus": "WaitingResponse",
+        "statusAfter": "WaitingResponse",
+        "codedResult": "",
+        "commandStored": "G1 X1.5 Y2"
+      },
+      {
+        "setResult": "(cleared)",
+        "initialStatus": "Queued",
+        "sendingStatus": "Queued",
+        "statusAfter": "Queued",
+        "codedResult": null,
+        "commandStored": "G0 X1"
+      }
+    ],
+    "elementSweep": [
+      {
+        "input": "G1",
+        "command": "G",
+        "number": 1,
+        "toString": "G1",
+        "equalsSelf": true
+      },
+      {
+        "input": "X10.5",
+        "command": "X",
+        "number": 10.5,
+        "toString": "X10.5",
+        "equalsSelf": true
+      },
+      {
+        "input": "S0",
+        "command": "S",
+        "number": 0,
+        "toString": "S0",
+        "equalsSelf": true
+      },
+      {
+        "input": "Y-2.25",
+        "command": "Y",
+        "number": -2.25,
+        "toString": "Y-2.25",
+        "equalsSelf": true
+      },
+      {
+        "input": "F",
+        "command": "F",
+        "number": "NaN",
+        "toString": "FNaN",
+        "equalsSelf": false
+      },
+      {
+        "input": "T1",
+        "command": "T",
+        "number": 1,
+        "toString": "T1",
+        "equalsSelf": true
+      },
+      {
+        "input": "M3",
+        "command": "M",
+        "number": 3,
+        "toString": "M3",
+        "equalsSelf": true
+      },
+      {
+        "input": "Z0.001",
+        "command": "Z",
+        "number": 0.001,
+        "toString": "Z0.001",
+        "equalsSelf": true
+      }
+    ],
+    "elementEdge": {
+      "nanToString": "YNaN",
+      "nanEqualsSelf": false,
+      "nanEqualsNull": false,
+      "fromElements": "G1 X1.5",
+      "combine": "G1 X2 Y3",
+      "clonePreservesResult": {
+        "command": "G1 X1",
+        "repeatCount": 3,
+        "codedResult": "OK",
+        "status": "ResponseGood"
+      }
+    },
+    "confSweep": [
+      {
+        "input": "$100=250.000",
+        "isSetConf": true,
+        "isGrblCommand": true
+      },
+      {
+        "input": "$H",
+        "isSetConf": false,
+        "isGrblCommand": true
+      },
+      {
+        "input": "$$",
+        "isSetConf": false,
+        "isGrblCommand": true
+      },
+      {
+        "input": "$",
+        "isSetConf": false,
+        "isGrblCommand": true
+      },
+      {
+        "input": "$1=0",
+        "isSetConf": true,
+        "isGrblCommand": true
+      },
+      {
+        "input": "$X",
+        "isSetConf": false,
+        "isGrblCommand": true
+      },
+      {
+        "input": " $32 = 1",
+        "isSetConf": false,
+        "isGrblCommand": true
+      },
+      {
+        "input": "$100 =250",
+        "isSetConf": true,
+        "isGrblCommand": true
+      }
+    ],
+    "rawCommandSweep": [
+      {
+        "input": "(c) G1  X1",
+        "detail": {
+          "commandRaw": " G1 X1",
+          "isEmpty": false,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": true,
+          "isLinearMovement": true,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": " G1 X1",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "(C)G1X1\n",
+          "serialDataAfterBuildHelper": "G1X1\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": " G1 X1",
+          "elements": {
+            "G": {
+              "command": "G",
+              "number": 1,
+              "toString": "G1"
+            },
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": {
+              "command": "X",
+              "number": 1,
+              "toString": "X1"
+            },
+            "Y": null,
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "g1 x1 ; trailing comment",
+        "detail": {
+          "commandRaw": "G1 X1 ",
+          "isEmpty": false,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": true,
+          "isLinearMovement": true,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "G1 X1 ",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "G1X1;TRAILINGCOMMENT\n",
+          "serialDataAfterBuildHelper": "G1X1\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "G1 X1 ",
+          "elements": {
+            "G": {
+              "command": "G",
+              "number": 1,
+              "toString": "G1"
+            },
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": {
+              "command": "X",
+              "number": 1,
+              "toString": "X1"
+            },
+            "Y": null,
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "G1X1Y2",
+        "detail": {
+          "commandRaw": "G1X1Y2",
+          "isEmpty": false,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": true,
+          "isLinearMovement": true,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "G1X1Y2",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "G1X1Y2\n",
+          "serialDataAfterBuildHelper": "G1X1Y2\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "G1X1Y2",
+          "elements": {
+            "G": {
+              "command": "G",
+              "number": 1,
+              "toString": "G1"
+            },
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": {
+              "command": "X",
+              "number": 1,
+              "toString": "X1"
+            },
+            "Y": {
+              "command": "Y",
+              "number": 2,
+              "toString": "Y2"
+            },
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "  G0   X0    Y0  ",
+        "detail": {
+          "commandRaw": "G0 X0 Y0",
+          "isEmpty": false,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": true,
+          "isLinearMovement": true,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "G0 X0 Y0",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "G0X0Y0\n",
+          "serialDataAfterBuildHelper": "G0X0Y0\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "G0 X0 Y0",
+          "elements": {
+            "G": {
+              "command": "G",
+              "number": 0,
+              "toString": "G0"
+            },
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": {
+              "command": "X",
+              "number": 0,
+              "toString": "X0"
+            },
+            "Y": {
+              "command": "Y",
+              "number": 0,
+              "toString": "Y0"
+            },
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "$100=250.000  ; step resolution",
+        "detail": {
+          "commandRaw": "$100=250.000  ; STEP RESOLUTION",
+          "isEmpty": false,
+          "isGrblCommand": true,
+          "isWriteEEPROM": true,
+          "isSetWCO": false,
+          "isMovement": false,
+          "isLinearMovement": false,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "$100=250.000  ; STEP RESOLUTION",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "$100=250.000  ; STEP RESOLUTION\n",
+          "serialDataAfterBuildHelper": "$100=250.000  ; STEP RESOLUTION\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "$100=250.000  ; STEP RESOLUTION",
+          "elements": {
+            "G": null,
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": null,
+            "Y": null,
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "G1 X1 (mid-line) Y2",
+        "detail": {
+          "commandRaw": "G1 X1  Y2",
+          "isEmpty": false,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": true,
+          "isLinearMovement": true,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "G1 X1  Y2",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "G1X1(MID-LINE)Y2\n",
+          "serialDataAfterBuildHelper": "G1X1Y2\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "G1 X1  Y2",
+          "elements": {
+            "G": {
+              "command": "G",
+              "number": 1,
+              "toString": "G1"
+            },
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": {
+              "command": "X",
+              "number": 1,
+              "toString": "X1"
+            },
+            "Y": {
+              "command": "Y",
+              "number": 2,
+              "toString": "Y2"
+            },
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "M3 S255",
+        "detail": {
+          "commandRaw": "M3 S255",
+          "isEmpty": false,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": false,
+          "isLinearMovement": false,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": true,
+          "isM3": true,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "M3 S255",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "M3S255\n",
+          "serialDataAfterBuildHelper": "M3S255\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "M3 S255",
+          "elements": {
+            "G": null,
+            "M": {
+              "command": "M",
+              "number": 3,
+              "toString": "M3"
+            },
+            "T": null,
+            "S": {
+              "command": "S",
+              "number": 255,
+              "toString": "S255"
+            },
+            "P": null,
+            "X": null,
+            "Y": null,
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "g91",
+        "detail": {
+          "commandRaw": "G91",
+          "isEmpty": false,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": false,
+          "isLinearMovement": false,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": true,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "G91",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "G91\n",
+          "serialDataAfterBuildHelper": "G91\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "G91",
+          "elements": {
+            "G": {
+              "command": "G",
+              "number": 91,
+              "toString": "G91"
+            },
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": null,
+            "Y": null,
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "G1 X-1.5 Y+2",
+        "detail": {
+          "commandRaw": "G1 X-1.5 Y+2",
+          "isEmpty": false,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": true,
+          "isLinearMovement": true,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "G1 X-1.5 Y+2",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "G1X-1.5Y+2\n",
+          "serialDataAfterBuildHelper": "G1X-1.5Y+2\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "G1 X-1.5 Y+2",
+          "elements": {
+            "G": {
+              "command": "G",
+              "number": 1,
+              "toString": "G1"
+            },
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": {
+              "command": "X",
+              "number": -1.5,
+              "toString": "X-1.5"
+            },
+            "Y": {
+              "command": "Y",
+              "number": 2,
+              "toString": "Y2"
+            },
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "   ",
+        "detail": {
+          "commandRaw": "",
+          "isEmpty": true,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": false,
+          "isLinearMovement": false,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "\n",
+          "serialDataAfterBuildHelper": "\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "",
+          "elements": {
+            "G": null,
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": null,
+            "Y": null,
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "G1 X1 Y2 (unterminated",
+        "detail": {
+          "commandRaw": "G1 X1 Y2 ",
+          "isEmpty": false,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": true,
+          "isLinearMovement": true,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "G1 X1 Y2 ",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "G1X1Y2(UNTERMINATED\n",
+          "serialDataAfterBuildHelper": "G1X1Y2\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "G1 X1 Y2 ",
+          "elements": {
+            "G": {
+              "command": "G",
+              "number": 1,
+              "toString": "G1"
+            },
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": {
+              "command": "X",
+              "number": 1,
+              "toString": "X1"
+            },
+            "Y": {
+              "command": "Y",
+              "number": 2,
+              "toString": "Y2"
+            },
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      },
+      {
+        "input": "(only a comment)",
+        "detail": {
+          "commandRaw": "",
+          "isEmpty": true,
+          "isGrblCommand": false,
+          "isWriteEEPROM": false,
+          "isSetWCO": false,
+          "isMovement": false,
+          "isLinearMovement": false,
+          "isArcMovement": false,
+          "isPause": false,
+          "isAbsoluteCoord": false,
+          "isRelativeCoord": false,
+          "isLaserON": false,
+          "isM3": false,
+          "isM4": false,
+          "isLaserOFF": false,
+          "isM5": false,
+          "isCW_withTrue": true,
+          "isCW_withFalse": false,
+          "repeatCount": 0,
+          "getDecodedMessage": "",
+          "status": "Queued",
+          "codedResult": null,
+          "serialDataBeforeBuildHelper": "(ONLYACOMMENT)\n",
+          "serialDataAfterBuildHelper": "\n",
+          "justBuilt": true,
+          "commandAfterBuildHelper": "",
+          "elements": {
+            "G": null,
+            "M": null,
+            "T": null,
+            "S": null,
+            "P": null,
+            "X": null,
+            "Y": null,
+            "Z": null,
+            "I": null,
+            "J": null,
+            "F": null,
+            "R": null
+          }
+        }
+      }
+    ],
+    "duplicateWordSemantics": {
+      "buildHelper": {
+        "commandRaw": "G1 X1 Y2 X3 G0",
+        "isEmpty": false,
+        "isGrblCommand": false,
+        "isWriteEEPROM": false,
+        "isSetWCO": false,
+        "isMovement": true,
+        "isLinearMovement": true,
+        "isArcMovement": false,
+        "isPause": false,
+        "isAbsoluteCoord": false,
+        "isRelativeCoord": false,
+        "isLaserON": false,
+        "isM3": false,
+        "isM4": false,
+        "isLaserOFF": false,
+        "isM5": false,
+        "isCW_withTrue": true,
+        "isCW_withFalse": false,
+        "repeatCount": 0,
+        "getDecodedMessage": "G1 X1 Y2 X3 G0",
+        "status": "Queued",
+        "codedResult": null,
+        "serialDataBeforeBuildHelper": "G1X1Y2X3G0\n",
+        "serialDataAfterBuildHelper": "G1X1Y2X3G0\n",
+        "justBuilt": true,
+        "commandAfterBuildHelper": "G1 X1 Y2 X3 G0",
+        "elements": {
+          "G": {
+            "command": "G",
+            "number": 0,
+            "toString": "G0"
+          },
+          "M": null,
+          "T": null,
+          "S": null,
+          "P": null,
+          "X": {
+            "command": "X",
+            "number": 3,
+            "toString": "X3"
+          },
+          "Y": {
+            "command": "Y",
+            "number": 2,
+            "toString": "Y2"
+          },
+          "Z": null,
+          "I": null,
+          "J": null,
+          "F": null,
+          "R": null
+        }
+      },
+      "fileAnalyze": {
+        "stats": {
+          "totalLines": 1,
+          "motionCommands": 1,
+          "pathLengthMm": 2.23606797749979,
+          "estimatedSeconds": 0.0447213595499958,
+          "bbox": {
+            "minX": 0,
+            "minY": 0,
+            "maxX": 0,
+            "maxY": 0,
+            "valid": false
+          }
+        },
+        "preview": [
+          {
+            "rapid": true,
+            "x1": 0,
+            "y1": 0,
+            "x2": 1,
+            "y2": 2
+          }
+        ]
+      },
+      "fileParse": {
+        "name": "dup.nc",
+        "commands": [
+          {
+            "mLine": "G1 X1 Y2 X3",
+            "mCodedResult": null,
+            "mTimeOffset": 0,
+            "mHelper": null,
+            "repeatCount": 0
+          }
+        ],
+        "stats": {
+          "totalLines": 1,
+          "motionCommands": 1,
+          "pathLengthMm": 2.23606797749979,
+          "estimatedSeconds": 0.0447213595499958,
+          "bbox": {
+            "minX": 0,
+            "minY": 0,
+            "maxX": 0,
+            "maxY": 0,
+            "valid": false
+          }
+        },
+        "preview": [
+          {
+            "rapid": true,
+            "x1": 0,
+            "y1": 0,
+            "x2": 1,
+            "y2": 2
+          }
+        ]
+      }
+    },
+    "commentEdgeCases": {
+      "text": "G1 X1 ) Y2\nG1 X1 ((nested)) Y2\n; only a comment\n(a) b\nG1 X1(A)B Y2",
+      "commands": [
+        "G1 X1 ) Y2",
+        "G1 X1 ) Y2",
+        "B",
+        "G1 X1B Y2"
+      ],
+      "stats": {
+        "totalLines": 4,
+        "motionCommands": 3,
+        "pathLengthMm": 2.23606797749979,
+        "estimatedSeconds": 0.0447213595499958,
+        "bbox": {
+          "minX": 0,
+          "minY": 0,
+          "maxX": 0,
+          "maxY": 0,
+          "valid": false
+        }
+      }
+    },
+    "reanalyze": {
+      "stats": {
+        "totalLines": 23,
+        "motionCommands": 10,
+        "pathLengthMm": 69.82941892815815,
+        "estimatedSeconds": 2.196628378563163,
+        "bbox": {
+          "minX": 20,
+          "minY": 5.5,
+          "maxX": 30.0005,
+          "maxY": 5.5,
+          "valid": true
+        }
+      },
+      "preview": [
+        {
+          "rapid": true,
+          "x1": 0,
+          "y1": 0,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "rapid": true,
+          "x1": 0,
+          "y1": 0,
+          "x2": 10,
+          "y2": 0
+        },
+        {
+          "rapid": true,
+          "x1": 10,
+          "y1": 0,
+          "x2": 10,
+          "y2": 5.5
+        },
+        {
+          "rapid": true,
+          "x1": 10,
+          "y1": 5.5,
+          "x2": 20,
+          "y2": 5.5
+        },
+        {
+          "rapid": false,
+          "x1": 20,
+          "y1": 5.5,
+          "x2": 30,
+          "y2": 5.5
+        },
+        {
+          "rapid": false,
+          "x1": 30,
+          "y1": 5.5,
+          "x2": 30.0005,
+          "y2": 5.5
+        },
+        {
+          "rapid": true,
+          "x1": 30.0005,
+          "y1": 5.5,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "rapid": true,
+          "x1": 0,
+          "y1": 0,
+          "x2": 1,
+          "y2": 1
+        },
+        {
+          "rapid": true,
+          "x1": 1,
+          "y1": 1,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "rapid": true,
+          "x1": 0,
+          "y1": 0,
+          "x2": 1,
+          "y2": 0
+        }
+      ]
+    }
+  }
+}

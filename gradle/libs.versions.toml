@@ -1,0 +1,44 @@
+[versions]
+agp = "9.3.2"
+kotlin = "2.4.10"
+compose = "1.12.0"
+
+# 唯一视觉基准：Kyant0/AndroidLiquidGlass（Apache-2.0）
+kyantBackdrop = "2.0.1"
+kyantShapes = "1.2.1"
+
+activity = "1.13.0"
+core = "1.19.0"
+coroutines = "1.11.0"
+serialization = "1.11.0"
+
+# Phase 3 外设层：USB 串口驱动（只发布在 JitPack，仓库声明见 settings.gradle.kts）。
+# 说明：v2 用的是 3.7.0；本工程采用 3.11.0（该库当前最新稳定发行版，多两年半的设备兼容修复），
+# 理由与 API 核对记录见 app/build.gradle.kts 里 usb-serial-for-android 那一段注释。
+usbSerial = "3.11.0"
+
+[libraries]
+compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "compose" }
+compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "compose" }
+compose-ui-graphics = { group = "org.jetbrains.compose.ui", name = "ui-graphics", version.ref = "compose" }
+kyant-backdrop = { group = "io.github.kyant0", name = "backdrop", version.ref = "kyantBackdrop" }
+kyant-shapes = { group = "io.github.kyant0", name = "shapes", version.ref = "kyantShapes" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
+# 上游 androidMain 的 awaitFrame() actual 依赖它（kotlinx.coroutines.android.awaitFrame）
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+# 仅测试用：解析 tools/golden 生成的黄金样本（不需要序列化编译器插件，只用到 JsonElement）
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+# USB 串口驱动（Phase 3）：UsbSerialProber / UsbSerialDriver / UsbSerialPort
+# ⚠️ 别名里不能有 Kotlin 关键字：`usb-serial-for-android` 的访问器是 libs.usb.serial.for.android，
+#    加反引号写成 libs.usb.serial.`for`.android 也**不行**（Gradle 不为关键字段生成访问器，
+#    实测报 "Unresolved reference 'for'"）。所以别名改成 usb-serial-driver（访问器 libs.usb.serial.driver）。
+usb-serial-driver = { group = "com.github.mik3y", name = "usb-serial-for-android", version.ref = "usbSerial" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose" }

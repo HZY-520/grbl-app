@@ -1,0 +1,127 @@
+{
+  "case": "settings-preset",
+  "generator": "tools/golden/generate.ts",
+  "generatorCommand": "npx --yes tsx tools/golden/generate.ts",
+  "modules": [
+    "src/core/grbl/SettingsPreset.ts"
+  ],
+  "input": "fixed .nc-style preset text with blank lines, ; and () comments, duplicate ids, invalid/junk lines, negative/+./dot/exponent values",
+  "entryCount": 19,
+  "entryCounts": {
+    "entries": 19,
+    "skipped": 8,
+    "emptyTextEntries": 0,
+    "commentOnlyEntries": 0
+  },
+  "result": {
+    "text": "; iGRBL / LaserGRBL style settings preset ($-settings export)\n$$\n$0=250.000\n$1=250.000 (X/Y step resolution)\n$30=1000 ; max spindle/laser power\n\n   \n$32=1\n$32=0\n$100=250.000\n$101=250.000\n$110=500.000\n$111=500.000\n$120=30.000\n$130 = 400.000\n$131=400\n$22=1\n$22=0\nnot a setting\n$=10\n$abc=10\n$100=abc\n$10=10.5.5\n$31=-0.001\n$33=.5\n$34=+1.5\n$35=1e3\n$36=1. (trailing dot)\n$37=100 extra\n$38=-\n; trailing comment only",
+    "parse": {
+      "entries": [
+        {
+          "id": 0,
+          "value": 250,
+          "raw": "$0=250.000"
+        },
+        {
+          "id": 1,
+          "value": 250,
+          "raw": "$1=250.000"
+        },
+        {
+          "id": 30,
+          "value": 1000,
+          "raw": "$30=1000"
+        },
+        {
+          "id": 32,
+          "value": 0,
+          "raw": "$32=0"
+        },
+        {
+          "id": 100,
+          "value": 250,
+          "raw": "$100=250.000"
+        },
+        {
+          "id": 101,
+          "value": 250,
+          "raw": "$101=250.000"
+        },
+        {
+          "id": 110,
+          "value": 500,
+          "raw": "$110=500.000"
+        },
+        {
+          "id": 111,
+          "value": 500,
+          "raw": "$111=500.000"
+        },
+        {
+          "id": 120,
+          "value": 30,
+          "raw": "$120=30.000"
+        },
+        {
+          "id": 130,
+          "value": 400,
+          "raw": "$130 = 400.000"
+        },
+        {
+          "id": 131,
+          "value": 400,
+          "raw": "$131=400"
+        },
+        {
+          "id": 22,
+          "value": 0,
+          "raw": "$22=0"
+        },
+        {
+          "id": 10,
+          "value": 10.5,
+          "raw": "$10=10.5.5"
+        },
+        {
+          "id": 31,
+          "value": -0.001,
+          "raw": "$31=-0.001"
+        },
+        {
+          "id": 33,
+          "value": 0.5,
+          "raw": "$33=.5"
+        },
+        {
+          "id": 34,
+          "value": 1.5,
+          "raw": "$34=+1.5"
+        },
+        {
+          "id": 35,
+          "value": 1,
+          "raw": "$35=1e3"
+        },
+        {
+          "id": 36,
+          "value": 1,
+          "raw": "$36=1."
+        },
+        {
+          "id": 37,
+          "value": 100,
+          "raw": "$37=100 extra"
+        }
+      ],
+      "skipped": 8
+    },
+    "emptyText": {
+      "entries": [],
+      "skipped": 0
+    },
+    "commentOnlyText": {
+      "entries": [],
+      "skipped": 2
+    }
+  }
+}

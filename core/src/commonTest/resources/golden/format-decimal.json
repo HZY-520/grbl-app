@@ -1,0 +1,144 @@
+{
+  "case": "format-decimal",
+  "generator": "tools/golden/generate.ts",
+  "generatorCommand": "npx --yes tsx tools/golden/generate.ts",
+  "modules": [
+    "src/core/grbl/GrblCommand.ts"
+  ],
+  "input": "fixed numeric sweep (0, -0, 0.5, 1/3, 1e-7, 12345.6789, -0.0001, 1e21, 1e-21, subnormals, MAX_VALUE, NaN, ±Infinity) through formatDecimal, plus Element.parse().toString() sweep",
+  "entryCount": 24,
+  "entryCounts": {
+    "cases": 24,
+    "elementCases": 7
+  },
+  "result": {
+    "cases": [
+      {
+        "input": "0",
+        "output": "0"
+      },
+      {
+        "input": "-0",
+        "output": "0"
+      },
+      {
+        "input": "0.5",
+        "output": "0.5"
+      },
+      {
+        "input": "0.3333333333333333",
+        "output": "0.3333333333333333"
+      },
+      {
+        "input": "1e-7",
+        "output": "1e-7"
+      },
+      {
+        "input": "12345.6789",
+        "output": "12345.6789"
+      },
+      {
+        "input": "-0.0001",
+        "output": "-0.0001"
+      },
+      {
+        "input": "1e+21",
+        "output": "1e+21"
+      },
+      {
+        "input": "1e-21",
+        "output": "1e-21"
+      },
+      {
+        "input": "-1e+21",
+        "output": "-1e+21"
+      },
+      {
+        "input": "100",
+        "output": "100"
+      },
+      {
+        "input": "-100",
+        "output": "-100"
+      },
+      {
+        "input": "0.30000000000000004",
+        "output": "0.30000000000000004"
+      },
+      {
+        "input": "1.005",
+        "output": "1.005"
+      },
+      {
+        "input": "9007199254740991",
+        "output": "9007199254740991"
+      },
+      {
+        "input": "-9007199254740991",
+        "output": "-9007199254740991"
+      },
+      {
+        "input": "0.000001",
+        "output": "0.000001"
+      },
+      {
+        "input": "2147483648",
+        "output": "2147483648"
+      },
+      {
+        "input": "9007199254740992",
+        "output": "9007199254740992"
+      },
+      {
+        "input": "1.7976931348623157e+308",
+        "output": "1.7976931348623157e+308"
+      },
+      {
+        "input": "5e-324",
+        "output": "5e-324"
+      },
+      {
+        "input": "NaN",
+        "output": "NaN"
+      },
+      {
+        "input": "Infinity",
+        "output": "Infinity"
+      },
+      {
+        "input": "-Infinity",
+        "output": "-Infinity"
+      }
+    ],
+    "elementToString": [
+      {
+        "input": "G1",
+        "elementToString": "G1"
+      },
+      {
+        "input": "X10.5",
+        "elementToString": "X10.5"
+      },
+      {
+        "input": "S0",
+        "elementToString": "S0"
+      },
+      {
+        "input": "Y-2.25",
+        "elementToString": "Y-2.25"
+      },
+      {
+        "input": "F",
+        "elementToString": "FNaN"
+      },
+      {
+        "input": "T1",
+        "elementToString": "T1"
+      },
+      {
+        "input": "M3",
+        "elementToString": "M3"
+      }
+    ]
+  }
+}

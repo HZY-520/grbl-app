@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- USB Host 能力：USB 通信本身通过 USB 权限机制（运行时按设备授权）处理，无需额外 uses-permission。
+         v2 的 android/app/src/main/AndroidManifest.xml 即为如此，这里原样保留语义。 -->
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="true" />
+
+    <application
+        android:name=".IgRblApplication"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.iGRBL">
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- USB 设备插入时启动/前台化本应用（v2 的过滤器原样保留） -->
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/usb_device_filter" />
+        </activity>
+
+        <!-- 雕刻任务前台服务：运行期间保活并在通知栏显示进度（v2 EngraveService 的等价重写）。
+             dataSync 类型是 Android 14（API 34）起的硬性声明，配套 FOREGROUND_SERVICE_DATA_SYNC 权限。 -->
+        <service
+            android:name=".keepalive.EngraveService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false" />
+    </application>
+
+    <!-- USB 串口不需要 uses-permission：权限由 UsbManager.requestPermission + 广播在运行时按设备授予
+         （见 UsbSerialTransport / UsbPermissionGate）。 -->
+
+    <!-- 蓝牙串口（经典 SPP）：
+         Android 11 及以下用安装期权限 BLUETOOTH / BLUETOOTH_ADMIN；
+         Android 12（API 31）及以上改为运行时权限 BLUETOOTH_CONNECT。 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- 前台服务 + 常驻进度通知：
+         FOREGROUND_SERVICE 是基础权限；
+         FOREGROUND_SERVICE_DATA_SYNC 是 Android 14（API 34）起 dataSync 类型必需；
+         POST_NOTIFICATIONS 是 Android 13（API 33）起的运行时权限（未授权时仅通知不可见，保活照常）。 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+</manifest>

@@ -1,0 +1,5109 @@
+{
+  "case": "grbl-messages",
+  "generator": "tools/golden/generate.ts",
+  "generatorCommand": "npx --yes tsx tools/golden/generate.ts",
+  "modules": [
+    "src/core/grbl/GrblCommand.ts",
+    "src/core/grbl/csvData.ts",
+    "src/core/grbl/types.ts (GrblVersionInfo)"
+  ],
+  "input": "25 fixed GRBL response lines (ok / error / ALARM / [MSG] / $settings / $H / $$ / [VER] / [OPT] / status reports / banners) decoded under 11 version contexts via installDecoders + csvData tables",
+  "entryCount": 11,
+  "entryCounts": {
+    "contexts": 11,
+    "messagesPerContext": 25,
+    "totalMessageDecodings": 275,
+    "settingLookups": 143,
+    "alarmLookups": 33
+  },
+  "result": {
+    "responseLines": [
+      "ok",
+      "error:9",
+      "error:1",
+      "ALARM:1",
+      "ALARM:9",
+      "[MSG:Check Door]",
+      "[MSG:'$H'|'$X' to unlock]",
+      "$100=250.000",
+      "$130=300.000",
+      "$30=1000",
+      "$32=1",
+      "$22=1",
+      "$H",
+      "$$",
+      "[VER:1.1h.20190825:]",
+      "[VER:1.1f.20170801:]",
+      "[VER:1.3a.20210210:]",
+      "[OPT:V,15,128]",
+      "[OPT:VMZ,35,255]",
+      "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+      "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+      "Grbl 1.1h ['$' for help]",
+      "Grbl 0.9j ['$' for help]",
+      "Grbl 1.1f ['$' for help]",
+      "   ok   "
+    ],
+    "messageTypes": {
+      "Startup": "Startup",
+      "Config": "Config",
+      "Alarm": "Alarm",
+      "Feedback": "Feedback",
+      "Position": "Position",
+      "Others": "Others",
+      "Warning": "Warning",
+      "Diagnostic": "Diagnostic",
+      "Command": "Command"
+    },
+    "contexts": [
+      {
+        "context": "no-version (defaults to v1.1 group)",
+        "constructorArgs": null,
+        "lookupGroup": "v1.1",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "X-axis travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. [millimeters]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedTooltip": "Maximum spindle speed. Sets PWM to 100% duty cycle. [RPM]",
+            "decodedGetDecodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedTooltip": "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed. [boolean]",
+            "decodedGetDecodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on all axes. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 3usec."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled with no delay."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signal. Set axis bit to invert (00000ZYX)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert step enable pin",
+              "boolean",
+              "Inverts the stepper driver enable pin signal."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              "Maximum spindle speed",
+              "RPM",
+              "Maximum spindle speed. Sets PWM to 100% duty cycle."
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              "Minimum spindle speed",
+              "RPM",
+              "Minimum spindle speed. Sets PWM to 0.4% or lowest duty cycle."
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              "Laser-mode enable",
+              "boolean",
+              "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed."
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "X-axis travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "X-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Y-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "millimeters",
+              "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "millimeters",
+              "Maximum Y-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "G-code words consist of a letter and a value. Letter was not found."
+          },
+          {
+            "code": "9",
+            "description": "G-code commands are locked out during alarm or jog state."
+          },
+          {
+            "code": "20",
+            "description": "Unsupported or invalid g-code command found in block."
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      },
+      {
+        "context": "v1.1h",
+        "constructorArgs": [
+          1,
+          1,
+          "h"
+        ],
+        "lookupGroup": "v1.1",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "X-axis travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. [millimeters]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedTooltip": "Maximum spindle speed. Sets PWM to 100% duty cycle. [RPM]",
+            "decodedGetDecodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedTooltip": "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed. [boolean]",
+            "decodedGetDecodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on all axes. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 3usec."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled with no delay."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signal. Set axis bit to invert (00000ZYX)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert step enable pin",
+              "boolean",
+              "Inverts the stepper driver enable pin signal."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              "Maximum spindle speed",
+              "RPM",
+              "Maximum spindle speed. Sets PWM to 100% duty cycle."
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              "Minimum spindle speed",
+              "RPM",
+              "Minimum spindle speed. Sets PWM to 0.4% or lowest duty cycle."
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              "Laser-mode enable",
+              "boolean",
+              "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed."
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "X-axis travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "X-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Y-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "millimeters",
+              "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "millimeters",
+              "Maximum Y-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "G-code words consist of a letter and a value. Letter was not found."
+          },
+          {
+            "code": "9",
+            "description": "G-code commands are locked out during alarm or jog state."
+          },
+          {
+            "code": "20",
+            "description": "Unsupported or invalid g-code command found in block."
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      },
+      {
+        "context": "v0.9",
+        "constructorArgs": [
+          0,
+          9
+        ],
+        "lookupGroup": "v0.9",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "X-axis travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. [millimeters]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$30=1000",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$32=1",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on all axes. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 3usec."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled with no delay."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signal. Set axis bit to invert (00000ZYX)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert step enable pin",
+              "boolean",
+              "Inverts the stepper driver enable pin signal."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "X-axis travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "X-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Y-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "millimeters",
+              "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "millimeters",
+              "Maximum Y-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "G-code words consist of a letter and a value. Letter was not found."
+          },
+          {
+            "code": "9",
+            "description": "G-code commands are locked out during alarm or jog state."
+          },
+          {
+            "code": "20",
+            "description": "Unsupported or invalid g-code command found in block."
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      },
+      {
+        "context": "v1.0c",
+        "constructorArgs": [
+          1,
+          0,
+          "c"
+        ],
+        "lookupGroup": "v1.0",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "X-axis travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. [millimeters]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedTooltip": "Maximum spindle speed. Sets PWM to 100% duty cycle. [RPM]",
+            "decodedGetDecodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedTooltip": "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed. [boolean]",
+            "decodedGetDecodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on all axes. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 3usec."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled with no delay."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signal. Set axis bit to invert (00000ZYX)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert step enable pin",
+              "boolean",
+              "Inverts the stepper driver enable pin signal."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              "Maximum spindle speed",
+              "RPM",
+              "Maximum spindle speed. Sets PWM to 100% duty cycle."
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              "Minimum spindle speed",
+              "RPM",
+              "Minimum spindle speed. Sets PWM to 0.4% or lowest duty cycle."
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              "Laser-mode enable",
+              "boolean",
+              "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed."
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "X-axis travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "X-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Y-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "millimeters",
+              "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "millimeters",
+              "Maximum Y-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "G-code words consist of a letter and a value. Letter was not found."
+          },
+          {
+            "code": "9",
+            "description": "G-code commands are locked out during alarm or jog state."
+          },
+          {
+            "code": "20",
+            "description": "Unsupported or invalid g-code command found in block."
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      },
+      {
+        "context": "Ortur Laser Master 2 / 1.4",
+        "constructorArgs": [
+          1,
+          1,
+          "h",
+          "Ortur Laser Master 2",
+          "1.4"
+        ],
+        "lookupGroup": "ortur.v1.4.x",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "X-axis travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. [millimeters]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedTooltip": "Maximum spindle speed. Sets PWM to 100% duty cycle. [RPM]",
+            "decodedGetDecodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedTooltip": "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed. [boolean]",
+            "decodedGetDecodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on all axes. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 3usec."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled with no delay."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signal. Set axis bit to invert (00000ZYX)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert step enable pin",
+              "boolean",
+              "Inverts the stepper driver enable pin signal."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              "Maximum spindle speed",
+              "RPM",
+              "Maximum spindle speed. Sets PWM to 100% duty cycle."
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              "Minimum spindle speed",
+              "RPM",
+              "Minimum spindle speed. Sets PWM to 0.4% or lowest duty cycle."
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              "Laser-mode enable",
+              "boolean",
+              "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed."
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "X-axis travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "X-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Y-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "millimeters",
+              "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "millimeters",
+              "Maximum Y-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "G-code words consist of a letter and a value. Letter was not found."
+          },
+          {
+            "code": "9",
+            "description": "G-code commands are locked out during alarm or jog state."
+          },
+          {
+            "code": "20",
+            "description": "Unsupported or invalid g-code command found in block."
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      },
+      {
+        "context": "Ortur Laser Master 3 / 1.5",
+        "constructorArgs": [
+          1,
+          1,
+          "h",
+          "Ortur Laser Master 3",
+          "1.5"
+        ],
+        "lookupGroup": "ortur.v1.5.x",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "X-axis travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum X-axis travel distance from homing switch. Determines valid machine space for. [mm]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedTooltip": "Maximum spindle speed. Sets PWM to maximum duty cycle. [RPM]",
+            "decodedGetDecodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1 (Mode of operation)",
+            "decodedTooltip": "Laser mode: consecutive G1/2/3 commands will not halt when spindle speed is changed. Lathe mode: allows use of G7/G8/G96 and G97. [integer]",
+            "decodedGetDecodedMessage": "$32=1 (Mode of operation)",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on all axes. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 3 microseconds."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signals (active low)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert step enable pin",
+              "boolean",
+              "Inverts the stepper driver enable signals (active low). If the stepper drivers shares the same enable signal only X is used."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              "Maximum spindle speed",
+              "RPM",
+              "Maximum spindle speed. Sets PWM to maximum duty cycle."
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              "Minimum spindle speed",
+              "RPM",
+              "Minimum spindle speed. Sets PWM to minimum duty cycle."
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              "Mode of operation",
+              "integer",
+              "Laser mode: consecutive G1/2/3 commands will not halt when spindle speed is changed. Lathe mode: allows use of G7/G8/G96 and G97."
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "X-axis travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "X-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Y-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "mm",
+              "Maximum X-axis travel distance from homing switch. Determines valid machine space for."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "mm",
+              "Maximum Y-axis travel distance from homing switch. Determines valid machine space for."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "G-code words consist of a letter and a value. Letter was not found."
+          },
+          {
+            "code": "9",
+            "description": "G-code commands are locked out during alarm or jog state."
+          },
+          {
+            "code": "20",
+            "description": "Unsupported or invalid g-code command found in block."
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      },
+      {
+        "context": "Ortur Laser Master 3 / 1.7",
+        "constructorArgs": [
+          1,
+          1,
+          "h",
+          "Ortur Laser Master 3",
+          "1.7"
+        ],
+        "lookupGroup": "ortur.v1.7.x",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "X-axis travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum X-axis travel distance from homing switch. Determines valid machine space for. [mm]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedTooltip": "Maximum spindle speed. Sets PWM to maximum duty cycle. [RPM]",
+            "decodedGetDecodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1 (Mode of operation)",
+            "decodedTooltip": "Laser mode: consecutive G1/2/3 commands will not halt when spindle speed is changed. Lathe mode: allows use of G7/G8/G96 and G97. [integer]",
+            "decodedGetDecodedMessage": "$32=1 (Mode of operation)",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on all axes. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 3 microseconds."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signals (active low)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert step enable pin",
+              "boolean",
+              "Inverts the stepper driver enable signals (active low). If the stepper drivers shares the same enable signal only X is used."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              "Maximum spindle speed",
+              "RPM",
+              "Maximum spindle speed. Sets PWM to maximum duty cycle."
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              "Minimum spindle speed",
+              "RPM",
+              "Minimum spindle speed. Sets PWM to minimum duty cycle."
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              "Mode of operation",
+              "integer",
+              "Laser mode: consecutive G1/2/3 commands will not halt when spindle speed is changed. Lathe mode: allows use of G7/G8/G96 and G97."
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "X-axis travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "X-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Y-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "mm",
+              "Maximum X-axis travel distance from homing switch. Determines valid machine space for."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "mm",
+              "Maximum Y-axis travel distance from homing switch. Determines valid machine space for."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "G-code words consist of a letter and a value. Letter was not found."
+          },
+          {
+            "code": "9",
+            "description": "G-code commands are locked out during alarm or jog state."
+          },
+          {
+            "code": "20",
+            "description": "Unsupported or invalid g-code command found in block."
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      },
+      {
+        "context": "Ortur HAL",
+        "constructorArgs": [
+          1,
+          1,
+          "h",
+          "Ortur Laser Master 3",
+          "1.7",
+          true
+        ],
+        "lookupGroup": "ortur.GrblHal",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "Travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. [mm]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedTooltip": "Maximum spindle speed. Sets PWM to maximum duty cycle. [RPM]",
+            "decodedGetDecodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1 (Mode of operation)",
+            "decodedTooltip": "Laser mode: consecutive G1/2/3 commands will not halt when spindle speed is changed.  Lathe mode: allows use of G7 G8 G96 and G97. [integer]",
+            "decodedGetDecodedMessage": "$32=1 (Mode of operation)",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on axes to be automatically homed. When `Enable single axis commands` is checked single axis homing can be performed by $H<axis letter> commands.    When `Allow manual` is checked axes not homed automatically ay be  manually by $H or $H<axis letter> commands.    `Override locks` is for allowing a soft reset to disable `Homing on startup required`.  NOTE: Block delete Optional stop and EStop are optional signals availability is driver dependent. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 2 microseconds.    This needs to be reduced from the default value of 10 when max. step rates exceed approximately 80 kHz."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signals (active low)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert stepper enable pin(s)",
+              "boolean",
+              "Inverts the stepper driver enable signals. Most drivers uses active low enable requiring inversion.    NOTE: If the stepper drivers shares the same enable signal only X is used."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              "Maximum spindle speed",
+              "RPM",
+              "Maximum spindle speed. Sets PWM to maximum duty cycle."
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              "Minimum spindle speed",
+              "RPM",
+              "Minimum spindle speed. Sets PWM to minimum duty cycle."
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              "Mode of operation",
+              "integer",
+              "Laser mode: consecutive G1/2/3 commands will not halt when spindle speed is changed.  Lathe mode: allows use of G7 G8 G96 and G97."
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "Travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "Maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "mm",
+              "Maximum axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "mm",
+              "Maximum axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "G-code words consist of a letter and a value. Letter was not found."
+          },
+          {
+            "code": "9",
+            "description": "G-code commands are locked out during alarm or jog state."
+          },
+          {
+            "code": "20",
+            "description": "Unsupported or invalid g-code command found in block."
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      },
+      {
+        "context": "Aufero Laser 1 / 1.4",
+        "constructorArgs": [
+          1,
+          1,
+          "h",
+          "Aufero Laser 1",
+          "1.4"
+        ],
+        "lookupGroup": "ortur.v1.4.x",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "X-axis travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. [millimeters]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedTooltip": "Maximum spindle speed. Sets PWM to 100% duty cycle. [RPM]",
+            "decodedGetDecodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedTooltip": "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed. [boolean]",
+            "decodedGetDecodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on all axes. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 3usec."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled with no delay."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signal. Set axis bit to invert (00000ZYX)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert step enable pin",
+              "boolean",
+              "Inverts the stepper driver enable pin signal."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              "Maximum spindle speed",
+              "RPM",
+              "Maximum spindle speed. Sets PWM to 100% duty cycle."
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              "Minimum spindle speed",
+              "RPM",
+              "Minimum spindle speed. Sets PWM to 0.4% or lowest duty cycle."
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              "Laser-mode enable",
+              "boolean",
+              "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed."
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "X-axis travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "X-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Y-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "millimeters",
+              "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "millimeters",
+              "Maximum Y-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "G-code words consist of a letter and a value. Letter was not found."
+          },
+          {
+            "code": "9",
+            "description": "G-code commands are locked out during alarm or jog state."
+          },
+          {
+            "code": "20",
+            "description": "Unsupported or invalid g-code command found in block."
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      },
+      {
+        "context": "Longer Nano",
+        "constructorArgs": [
+          1,
+          1,
+          "h",
+          "Longer Nano",
+          "1.1"
+        ],
+        "lookupGroup": "v1.1",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "X-axis travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. [millimeters]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedTooltip": "Maximum spindle speed. Sets PWM to 100% duty cycle. [RPM]",
+            "decodedGetDecodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedTooltip": "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed. [boolean]",
+            "decodedGetDecodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on all axes. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 3usec."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled with no delay."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signal. Set axis bit to invert (00000ZYX)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert step enable pin",
+              "boolean",
+              "Inverts the stepper driver enable pin signal."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              "Maximum spindle speed",
+              "RPM",
+              "Maximum spindle speed. Sets PWM to 100% duty cycle."
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              "Minimum spindle speed",
+              "RPM",
+              "Minimum spindle speed. Sets PWM to 0.4% or lowest duty cycle."
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              "Laser-mode enable",
+              "boolean",
+              "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed."
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "X-axis travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "X-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Y-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "millimeters",
+              "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "millimeters",
+              "Maximum Y-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "G-code words consist of a letter and a value. Letter was not found."
+          },
+          {
+            "code": "9",
+            "description": "G-code commands are locked out during alarm or jog state."
+          },
+          {
+            "code": "20",
+            "description": "Unsupported or invalid g-code command found in block."
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      },
+      {
+        "context": "NanoDuo",
+        "constructorArgs": [
+          1,
+          1,
+          "h",
+          "NanoDuo",
+          "1.1"
+        ],
+        "lookupGroup": "longer.nanoduo",
+        "messages": [
+          {
+            "line": "ok",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:9",
+            "type": "Others",
+            "nativeMessage": "error:9",
+            "messageWithoutDecode": "error:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:9",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:9",
+            "decodedGetNativeMessage": "error:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "error:1",
+            "type": "Others",
+            "nativeMessage": "error:1",
+            "messageWithoutDecode": "error:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "error:1",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "error:1",
+            "decodedGetNativeMessage": "error:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:1",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:1",
+            "messageWithoutDecode": "ALARM:1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Hard limit",
+            "decodedTooltip": "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended.",
+            "decodedGetDecodedMessage": "Hard limit",
+            "decodedGetNativeMessage": "ALARM:1",
+            "imageIndex": 3
+          },
+          {
+            "line": "ALARM:9",
+            "type": "Alarm",
+            "nativeMessage": "ALARM:9",
+            "messageWithoutDecode": "ALARM:9",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Homing fail",
+            "decodedTooltip": "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring.",
+            "decodedGetDecodedMessage": "Homing fail",
+            "decodedGetNativeMessage": "ALARM:9",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:Check Door]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:Check Door]",
+            "messageWithoutDecode": "[MSG:Check Door]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:Check Door]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:Check Door]",
+            "decodedGetNativeMessage": "[MSG:Check Door]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[MSG:'$H'|'$X' to unlock]",
+            "type": "Feedback",
+            "nativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "messageWithoutDecode": "[MSG:'$H'|'$X' to unlock]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[MSG:'$H'|'$X' to unlock]",
+            "decodedGetNativeMessage": "[MSG:'$H'|'$X' to unlock]",
+            "imageIndex": 3
+          },
+          {
+            "line": "$100=250.000",
+            "type": "Config",
+            "nativeMessage": "$100=250.000",
+            "messageWithoutDecode": "$100=250.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedTooltip": "X-axis travel resolution in steps per millimeter. [step/mm]",
+            "decodedGetDecodedMessage": "$100=250.000 (X-axis travel resolution)",
+            "decodedGetNativeMessage": "$100=250.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$130=300.000",
+            "type": "Config",
+            "nativeMessage": "$130=300.000",
+            "messageWithoutDecode": "$130=300.000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedTooltip": "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. [millimeters]",
+            "decodedGetDecodedMessage": "$130=300.000 (X-axis maximum travel)",
+            "decodedGetNativeMessage": "$130=300.000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$30=1000",
+            "type": "Config",
+            "nativeMessage": "$30=1000",
+            "messageWithoutDecode": "$30=1000",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedTooltip": "Maximum spindle speed. Sets PWM to 100% duty cycle. [RPM]",
+            "decodedGetDecodedMessage": "$30=1000 (Maximum spindle speed)",
+            "decodedGetNativeMessage": "$30=1000",
+            "imageIndex": 3
+          },
+          {
+            "line": "$32=1",
+            "type": "Config",
+            "nativeMessage": "$32=1",
+            "messageWithoutDecode": "$32=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedTooltip": "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed. [boolean]",
+            "decodedGetDecodedMessage": "$32=1 (Laser-mode enable)",
+            "decodedGetNativeMessage": "$32=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$22=1",
+            "type": "Config",
+            "nativeMessage": "$22=1",
+            "messageWithoutDecode": "$22=1",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedTooltip": "Enables homing cycle. Requires limit switches on all axes. [boolean]",
+            "decodedGetDecodedMessage": "$22=1 (Homing cycle enable)",
+            "decodedGetNativeMessage": "$22=1",
+            "imageIndex": 3
+          },
+          {
+            "line": "$H",
+            "type": "Others",
+            "nativeMessage": "$H",
+            "messageWithoutDecode": "$H",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$H",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$H",
+            "decodedGetNativeMessage": "$H",
+            "imageIndex": 3
+          },
+          {
+            "line": "$$",
+            "type": "Others",
+            "nativeMessage": "$$",
+            "messageWithoutDecode": "$$",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "$$",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "$$",
+            "decodedGetNativeMessage": "$$",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1h.20190825:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1h.20190825:]",
+            "messageWithoutDecode": "[VER:1.1h.20190825:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1h.20190825:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1h.20190825:]",
+            "decodedGetNativeMessage": "[VER:1.1h.20190825:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.1f.20170801:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.1f.20170801:]",
+            "messageWithoutDecode": "[VER:1.1f.20170801:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.1f.20170801:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.1f.20170801:]",
+            "decodedGetNativeMessage": "[VER:1.1f.20170801:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[VER:1.3a.20210210:]",
+            "type": "Feedback",
+            "nativeMessage": "[VER:1.3a.20210210:]",
+            "messageWithoutDecode": "[VER:1.3a.20210210:]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[VER:1.3a.20210210:]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[VER:1.3a.20210210:]",
+            "decodedGetNativeMessage": "[VER:1.3a.20210210:]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:V,15,128]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:V,15,128]",
+            "messageWithoutDecode": "[OPT:V,15,128]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:V,15,128]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:V,15,128]",
+            "decodedGetNativeMessage": "[OPT:V,15,128]",
+            "imageIndex": 3
+          },
+          {
+            "line": "[OPT:VMZ,35,255]",
+            "type": "Feedback",
+            "nativeMessage": "[OPT:VMZ,35,255]",
+            "messageWithoutDecode": "[OPT:VMZ,35,255]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "[OPT:VMZ,35,255]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "[OPT:VMZ,35,255]",
+            "decodedGetNativeMessage": "[OPT:VMZ,35,255]",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "type": "Position",
+            "nativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "messageWithoutDecode": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "decodedGetNativeMessage": "<Idle|MPos:0.000,0.000,0.000|FS:0,0>",
+            "imageIndex": 3
+          },
+          {
+            "line": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "type": "Position",
+            "nativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "messageWithoutDecode": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "decodedGetNativeMessage": "<Run|MPos:10.500,-2.000,0.000|FS:600,255|Ov:100,100,100>",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1h ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1h ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1h ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1h ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1h ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 0.9j ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 0.9j ['$' for help]",
+            "messageWithoutDecode": "Grbl 0.9j ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 0.9j ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 0.9j ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "Grbl 1.1f ['$' for help]",
+            "type": "Startup",
+            "nativeMessage": "Grbl 1.1f ['$' for help]",
+            "messageWithoutDecode": "Grbl 1.1f ['$' for help]",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "Grbl 1.1f ['$' for help]",
+            "decodedGetNativeMessage": "Grbl 1.1f ['$' for help]",
+            "imageIndex": 3
+          },
+          {
+            "line": "   ok   ",
+            "type": "Others",
+            "nativeMessage": "ok",
+            "messageWithoutDecode": "ok",
+            "tooltipWithoutDecode": "",
+            "decodedMessage": "ok",
+            "decodedTooltip": "",
+            "decodedGetDecodedMessage": "ok",
+            "decodedGetNativeMessage": "ok",
+            "imageIndex": 3
+          }
+        ],
+        "settingLookup": [
+          {
+            "key": "0",
+            "values": [
+              "Step pulse time",
+              "microseconds",
+              "Sets time length per step. Minimum 1 usec."
+            ]
+          },
+          {
+            "key": "1",
+            "values": [
+              "Step idle delay",
+              "milliseconds",
+              "Sets a short hold delay when stopping to let dynamics settle before disabling steppers. Value 255 keeps motors enabled with no delay."
+            ]
+          },
+          {
+            "key": "3",
+            "values": [
+              "Step direction invert",
+              "mask",
+              "Inverts the direction signal. Set axis bit to invert (000000YX)."
+            ]
+          },
+          {
+            "key": "4",
+            "values": [
+              "Invert step enable pin",
+              "boolean",
+              "Inverts the stepper driver enable pin signal."
+            ]
+          },
+          {
+            "key": "30",
+            "values": [
+              "Maximum spindle speed",
+              "RPM",
+              "Maximum spindle speed. Sets PWM to 100% duty cycle."
+            ]
+          },
+          {
+            "key": "31",
+            "values": [
+              "Minimum spindle speed",
+              "RPM",
+              "Minimum spindle speed. Sets PWM to 0.4% or lowest duty cycle."
+            ]
+          },
+          {
+            "key": "32",
+            "values": [
+              "Laser-mode enable",
+              "boolean",
+              "Enables laser mode. Consecutive G1/2/3 commands will not halt when spindle speed is changed."
+            ]
+          },
+          {
+            "key": "100",
+            "values": [
+              "X-axis travel resolution",
+              "step/mm",
+              "X-axis travel resolution in steps per millimeter."
+            ]
+          },
+          {
+            "key": "110",
+            "values": [
+              "X-axis maximum rate",
+              "mm/min",
+              "X-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "111",
+            "values": [
+              "Y-axis maximum rate",
+              "mm/min",
+              "Y-axis maximum rate. Used as G0 rapid rate."
+            ]
+          },
+          {
+            "key": "130",
+            "values": [
+              "X-axis maximum travel",
+              "millimeters",
+              "Maximum X-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "131",
+            "values": [
+              "Y-axis maximum travel",
+              "millimeters",
+              "Maximum Y-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "alarmLookup": [
+          {
+            "key": "1",
+            "values": [
+              "Hard limit",
+              "Hard limit has been triggered. Machine position is likely lost due to sudden halt. Re-homing is highly recommended."
+            ]
+          },
+          {
+            "key": "9",
+            "values": [
+              "Homing fail",
+              "Homing fail. Could not find limit switch within search distances. Try increasing max travel or decreasing pull-off distance or check wiring."
+            ]
+          },
+          {
+            "key": "999",
+            "values": [
+              null,
+              null
+            ]
+          }
+        ],
+        "errorLookup": [
+          {
+            "code": "1",
+            "description": "Expected GCodecommand letter"
+          },
+          {
+            "code": "9",
+            "description": "GCode cannot be executed in lock or alarm state"
+          },
+          {
+            "code": "20",
+            "description": "Gcode modal group violation"
+          },
+          {
+            "code": "999",
+            "description": null
+          }
+        ]
+      }
+    ]
+  }
+}
